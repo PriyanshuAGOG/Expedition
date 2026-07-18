@@ -1,7 +1,6 @@
 (() => {
   const root = document.documentElement;
   const hero = document.querySelector('.parallax-hero');
-  const progressNumber = document.querySelector('.progress-number');
   const depthSections = [...document.querySelectorAll('[data-depth-section]')];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -36,7 +35,6 @@
     mouseY += (targetMouseY - mouseY) * (reducedMotion ? 1 : .045);
     const descent = clamp(currentProgress / .76);
     const exit = smoothstep(phone ? .88 : .79, 1, currentProgress);
-    root.style.setProperty('--p', currentProgress.toFixed(5));
     root.style.setProperty('--d', descent.toFixed(5));
     root.style.setProperty('--exit', exit.toFixed(5));
     root.style.setProperty('--mx', mouseX.toFixed(4));
@@ -59,7 +57,6 @@
     root.style.setProperty('--title-front-x', vw(mouseX * .24)); root.style.setProperty('--title-front-y', svh(descent * (phone ? 64 : 69) + mouseY * .2));
     root.style.setProperty('--rays-o', Math.max(0, .3 - exit * .22).toFixed(4)); root.style.setProperty('--rays-x', vw(descent * -1)); root.style.setProperty('--rays-y', svh(descent));
     root.style.setProperty('--chrome-o', Math.max(0, 1 - exit * .92).toFixed(4)); root.style.setProperty('--scroll-o', Math.max(0, 1 - descent * 1.55).toFixed(4));
-    if (progressNumber) progressNumber.textContent = String(Math.round(currentProgress * 100)).padStart(2, '0');
     frameId = requestAnimationFrame(render);
   };
 
