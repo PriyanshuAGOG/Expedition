@@ -7,12 +7,19 @@
   const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
   const smoothstep = (a, b, v) => { const x = clamp((v - a) / (b - a)); return x * x * (3 - 2 * x); };
 
+  // Scope the per-frame parallax variables to the hero element. Every consumer of
+  // these variables lives inside .parallax-hero, so writing them here keeps style
+  // invalidation contained to the hero subtree instead of the whole document.
+  const styleHost = hero || root;
+  const setVar = (name, value) => styleHost.style.setProperty(name, value);
+
   let targetProgress = 0, currentProgress = 0;
   let targetMouseX = 0, targetMouseY = 0, mouseX = 0, mouseY = 0;
   let frameId = 0, measureFrameId = 0, lastFrameTime = performance.now();
+  let heroVisible = true;
 
   const requestRender = () => {
-    if (!frameId && !document.hidden) frameId = requestAnimationFrame(render);
+    if (!frameId && !document.hidden && heroVisible) frameId = requestAnimationFrame(render);
   };
 
   const measure = () => {
@@ -21,6 +28,7 @@
     const sectionRects = depthSections.map(section => [section, section.getBoundingClientRect()]);
     if (hero) {
       targetProgress = clamp(-heroRect.top / Math.max(1, hero.offsetHeight - innerHeight));
+      heroVisible = heroRect.bottom > 0 && heroRect.top < innerHeight;
     }
     root.style.setProperty('--page-progress', clamp(scrollY / documentDistance).toFixed(5));
     sectionRects.forEach(([section, rect]) => {
@@ -53,28 +61,28 @@
     mouseY += (targetMouseY - mouseY) * pointerEase;
     const descent = clamp(currentProgress / .76);
     const exit = smoothstep(phone ? .88 : .79, 1, currentProgress);
-    root.style.setProperty('--d', descent.toFixed(5));
-    root.style.setProperty('--exit', exit.toFixed(5));
-    root.style.setProperty('--mx', mouseX.toFixed(4));
-    root.style.setProperty('--my', mouseY.toFixed(4));
-    root.style.setProperty('--back-o', (1 - smoothstep(.47, .72, currentProgress)).toFixed(4));
-    root.style.setProperty('--middle-o', (1 - smoothstep(.57, .82, currentProgress)).toFixed(4));
-    root.style.setProperty('--front-o', (1 - smoothstep(.69, .93, currentProgress)).toFixed(4));
+    setVar('--d', descent.toFixed(5));
+    setVar('--exit', exit.toFixed(5));
+    setVar('--mx', mouseX.toFixed(4));
+    setVar('--my', mouseY.toFixed(4));
+    setVar('--back-o', (1 - smoothstep(.47, .72, currentProgress)).toFixed(4));
+    setVar('--middle-o', (1 - smoothstep(.57, .82, currentProgress)).toFixed(4));
+    setVar('--front-o', (1 - smoothstep(.69, .93, currentProgress)).toFixed(4));
     const vw = value => `${value.toFixed(4)}vw`;
     const svh = value => `${value.toFixed(4)}svh`;
-    root.style.setProperty('--bg-x', vw(mouseX * -.16)); root.style.setProperty('--bg-y', svh(descent * -2.2 + mouseY * -.12));
-    root.style.setProperty('--sun-x', vw(mouseX * -.25)); root.style.setProperty('--sun-y', svh(descent * -2));
-    root.style.setProperty('--mist-a-x', vw(descent * -5 + mouseX * .3)); root.style.setProperty('--mist-a-y', svh(descent * -2)); root.style.setProperty('--mist-a-o', Math.max(0, .65 - exit * .45).toFixed(4));
-    root.style.setProperty('--mist-b-x', vw(descent * 7 + mouseX * -.2)); root.style.setProperty('--mist-b-y', svh(descent * -3.5)); root.style.setProperty('--mist-b-o', Math.max(0, .46 - exit * .38).toFixed(4));
-    root.style.setProperty('--far-left-x', vw(descent * .7 + mouseX * -.24)); root.style.setProperty('--far-right-x', vw(descent * -.7 + mouseX * -.24)); root.style.setProperty('--far-y', svh(descent * (phone ? -3.2 : -2.4) + mouseY * -.15));
-    root.style.setProperty('--mid-left-x', vw(descent * 1.2 + mouseX * -.42)); root.style.setProperty('--mid-right-x', vw(descent * -1.2 + mouseX * -.42)); root.style.setProperty('--mid-y', svh(-2 + descent * (phone ? -5.3 : -3.8) + mouseY * -.24));
-    root.style.setProperty('--near-left-x', vw(descent * 1.8 + mouseX * -.68)); root.style.setProperty('--near-right-x', vw(descent * -1.8 + mouseX * -.68)); root.style.setProperty('--near-y', svh(-4 + descent * (phone ? -6.4 : -5) + mouseY * -.38));
-    root.style.setProperty('--foreground-x', vw(mouseX * -.95)); root.style.setProperty('--foreground-y', svh(-1 + descent * (phone ? -8 : -4.8) + mouseY * -.55));
-    root.style.setProperty('--title-back-x', vw(mouseX * .12)); root.style.setProperty('--title-back-y', svh(descent * (phone ? 48 : 52) + mouseY * .1));
-    root.style.setProperty('--title-middle-x', vw(mouseX * .18)); root.style.setProperty('--title-middle-y', svh(descent * (phone ? 56 : 61) + mouseY * .14));
-    root.style.setProperty('--title-front-x', vw(mouseX * .24)); root.style.setProperty('--title-front-y', svh(descent * (phone ? 64 : 69) + mouseY * .2));
-    root.style.setProperty('--rays-o', Math.max(0, .3 - exit * .22).toFixed(4)); root.style.setProperty('--rays-x', vw(descent * -1)); root.style.setProperty('--rays-y', svh(descent));
-    root.style.setProperty('--chrome-o', Math.max(0, 1 - exit * .92).toFixed(4)); root.style.setProperty('--scroll-o', Math.max(0, 1 - descent * 1.55).toFixed(4));
+    setVar('--bg-x', vw(mouseX * -.16)); setVar('--bg-y', svh(descent * -2.2 + mouseY * -.12));
+    setVar('--sun-x', vw(mouseX * -.25)); setVar('--sun-y', svh(descent * -2));
+    setVar('--mist-a-x', vw(descent * -5 + mouseX * .3)); setVar('--mist-a-y', svh(descent * -2)); setVar('--mist-a-o', Math.max(0, .65 - exit * .45).toFixed(4));
+    setVar('--mist-b-x', vw(descent * 7 + mouseX * -.2)); setVar('--mist-b-y', svh(descent * -3.5)); setVar('--mist-b-o', Math.max(0, .46 - exit * .38).toFixed(4));
+    setVar('--far-left-x', vw(descent * .7 + mouseX * -.24)); setVar('--far-right-x', vw(descent * -.7 + mouseX * -.24)); setVar('--far-y', svh(descent * (phone ? -3.2 : -2.4) + mouseY * -.15));
+    setVar('--mid-left-x', vw(descent * 1.2 + mouseX * -.42)); setVar('--mid-right-x', vw(descent * -1.2 + mouseX * -.42)); setVar('--mid-y', svh(-2 + descent * (phone ? -5.3 : -3.8) + mouseY * -.24));
+    setVar('--near-left-x', vw(descent * 1.8 + mouseX * -.68)); setVar('--near-right-x', vw(descent * -1.8 + mouseX * -.68)); setVar('--near-y', svh(-4 + descent * (phone ? -6.4 : -5) + mouseY * -.38));
+    setVar('--foreground-x', vw(mouseX * -.95)); setVar('--foreground-y', svh(-1 + descent * (phone ? -8 : -4.8) + mouseY * -.55));
+    setVar('--title-back-x', vw(mouseX * .12)); setVar('--title-back-y', svh(descent * (phone ? 48 : 52) + mouseY * .1));
+    setVar('--title-middle-x', vw(mouseX * .18)); setVar('--title-middle-y', svh(descent * (phone ? 56 : 61) + mouseY * .14));
+    setVar('--title-front-x', vw(mouseX * .24)); setVar('--title-front-y', svh(descent * (phone ? 64 : 69) + mouseY * .2));
+    setVar('--rays-o', Math.max(0, .3 - exit * .22).toFixed(4)); setVar('--rays-x', vw(descent * -1)); setVar('--rays-y', svh(descent));
+    setVar('--chrome-o', Math.max(0, 1 - exit * .92).toFixed(4)); setVar('--scroll-o', Math.max(0, 1 - descent * 1.55).toFixed(4));
     const unsettled = Math.abs(targetProgress - currentProgress) > .00012 || Math.abs(targetMouseX - mouseX) > .0008 || Math.abs(targetMouseY - mouseY) > .0008;
     if (unsettled) requestRender();
   }

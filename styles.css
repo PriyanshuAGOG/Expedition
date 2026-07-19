@@ -55,7 +55,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .parallax-hero { position:relative; z-index:1; height:285vh; min-height:1650px; background:var(--ink); }
 .hero-sticky { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; isolation: isolate; background: #9ca59b; }
 .scene, .hero-chrome { position: absolute; inset: 0; }.scene { overflow: hidden; }
-.layer { --side-shift: 0vw; position: absolute; z-index: 0; top: -6svh; left: -7vw; width: 114vw; height: 112svh; object-fit: cover; object-position: center; pointer-events: none; user-select: none; will-change: transform; backface-visibility: hidden; }
+.layer { --side-shift: 0vw; position: absolute; z-index: 0; top: -6svh; left: -7vw; width: 114vw; height: 112svh; max-width: none; object-fit: cover; object-position: center; pointer-events: none; user-select: none; will-change: transform; backface-visibility: hidden; }
 .mobile-layer { display: none; }
 .layer-bg { transform: translate3d(calc(var(--side-shift) + var(--bg-x)),var(--bg-y),0); }
 .sun-bloom { position: absolute; z-index: 1; top: -28svh; left: -18vw; width: 78vw; height: 78vw; border-radius: 50%; background: radial-gradient(circle,rgba(255,245,195,.3),rgba(255,225,155,.09) 38%,transparent 70%); mix-blend-mode: screen; transform: translate3d(var(--sun-x),var(--sun-y),0); pointer-events:none; }
@@ -214,3 +214,14 @@ h2 em { color:var(--leaf); font-family:Georgia,"Times New Roman",serif; font-wei
 @media (max-height: 700px) and (min-width:681px){.title-back{top:24svh}.title-middle{top:38svh}.title-front{top:53svh}}
 @media (max-width:680px){.archive-filters{scrollbar-width:none}.archive-filters::-webkit-scrollbar{display:none}.archive-filters button{min-height:42px;padding-inline:15px}.form-actions button{min-height:46px}.faq-list summary{min-height:64px;align-items:center}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ambient-pulse i,.film-grain,.scroll-line i,.drifting-mist,.trail-mist,.prep-orbit,.live-dot,.camp-glow{animation:none!important}.layer,.mobile-layer,.title-band,.mist,.world-bg{will-change:auto}.reveal{opacity:1;transform:none;transition:none}}
+
+/* ---- Scroll performance ----
+   backdrop-filter re-samples and blurs the backdrop on every frame as content
+   scrolls behind it, which is the heaviest per-frame cost on this page. Cards
+   that sit on a near-opaque background hide the blur anyway, so drop it there;
+   genuinely translucent panels keep a lighter, cheaper blur. */
+.briefing-card,.briefing-facts,.route-moment>div,.prep-pillars,.check-panel{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.form-shell{-webkit-backdrop-filter:blur(10px) saturate(1.12);backdrop-filter:blur(10px) saturate(1.12)}
+.telemetry,.phase-compass,.faq-list,.archive-console{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* Full-screen soft-light grain repaints constantly; halve its repaint rate. */
+.film-grain{animation-duration:.5s}
