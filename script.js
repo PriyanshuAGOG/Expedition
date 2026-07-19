@@ -1,6 +1,7 @@
 (() => {
   const root = document.documentElement;
   const hero = document.querySelector('.parallax-hero');
+  const progressNumber = document.querySelector('.progress-number');
   const depthSections = [...document.querySelectorAll('[data-depth-section]')];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -9,21 +10,17 @@
 
   let targetProgress = 0, currentProgress = 0;
   let targetMouseX = 0, targetMouseY = 0, mouseX = 0, mouseY = 0;
-  let frameId = 0, measureFrameId = 0, lastFrameTime = performance.now();
-
-  const requestRender = () => {
-    if (!frameId && !document.hidden) frameId = requestAnimationFrame(render);
-  };
+  let frameId = 0;
 
   const measure = () => {
-    const heroRect = hero?.getBoundingClientRect();
-    const documentDistance = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-    const sectionRects = depthSections.map(section => [section, section.getBoundingClientRect()]);
     if (hero) {
-      targetProgress = clamp(-heroRect.top / Math.max(1, hero.offsetHeight - innerHeight));
+      const rect = hero.getBoundingClientRect();
+      targetProgress = clamp(-rect.top / Math.max(1, hero.offsetHeight - innerHeight));
     }
+    const documentDistance = Math.max(1, document.documentElement.scrollHeight - innerHeight);
     root.style.setProperty('--page-progress', clamp(scrollY / documentDistance).toFixed(5));
-    sectionRects.forEach(([section, rect]) => {
+    depthSections.forEach(section => {
+      const rect = section.getBoundingClientRect();
       const p = clamp((innerHeight - rect.top) / (innerHeight + rect.height));
       section.style.setProperty('--section-y', (p * 2 - 1).toFixed(4));
       section.style.setProperty('--section-shift-bg', `${((p * 2 - 1) * -2.5).toFixed(4)}svh`);
@@ -32,27 +29,14 @@
     });
   };
 
-  const scheduleMeasure = () => {
-    if (measureFrameId || document.hidden) return;
-    measureFrameId = requestAnimationFrame(() => {
-      measureFrameId = 0;
-      measure();
-      requestRender();
-    });
-  };
-
-  function render(time = performance.now()) {
-    frameId = 0;
+  const render = () => {
     const phone = innerWidth <= 680;
-    const delta = Math.min(40, Math.max(8, time - lastFrameTime || 16.667));
-    lastFrameTime = time;
-    const scrollEase = reducedMotion ? 1 : 1 - Math.pow(1 - (phone ? .27 : .24), delta / 16.667);
-    const pointerEase = reducedMotion ? 1 : 1 - Math.pow(1 - .085, delta / 16.667);
-    currentProgress += (targetProgress - currentProgress) * scrollEase;
-    mouseX += (targetMouseX - mouseX) * pointerEase;
-    mouseY += (targetMouseY - mouseY) * pointerEase;
+    currentProgress += (targetProgress - currentProgress) * (reducedMotion ? 1 : phone ? .19 : .16);
+    mouseX += (targetMouseX - mouseX) * (reducedMotion ? 1 : .045);
+    mouseY += (targetMouseY - mouseY) * (reducedMotion ? 1 : .045);
     const descent = clamp(currentProgress / .76);
     const exit = smoothstep(phone ? .88 : .79, 1, currentProgress);
+    root.style.setProperty('--p', currentProgress.toFixed(5));
     root.style.setProperty('--d', descent.toFixed(5));
     root.style.setProperty('--exit', exit.toFixed(5));
     root.style.setProperty('--mx', mouseX.toFixed(4));
@@ -75,20 +59,19 @@
     root.style.setProperty('--title-front-x', vw(mouseX * .24)); root.style.setProperty('--title-front-y', svh(descent * (phone ? 64 : 69) + mouseY * .2));
     root.style.setProperty('--rays-o', Math.max(0, .3 - exit * .22).toFixed(4)); root.style.setProperty('--rays-x', vw(descent * -1)); root.style.setProperty('--rays-y', svh(descent));
     root.style.setProperty('--chrome-o', Math.max(0, 1 - exit * .92).toFixed(4)); root.style.setProperty('--scroll-o', Math.max(0, 1 - descent * 1.55).toFixed(4));
-    const unsettled = Math.abs(targetProgress - currentProgress) > .00012 || Math.abs(targetMouseX - mouseX) > .0008 || Math.abs(targetMouseY - mouseY) > .0008;
-    if (unsettled) requestRender();
-  }
+    if (progressNumber) progressNumber.textContent = String(Math.round(currentProgress * 100)).padStart(2, '0');
+    frameId = requestAnimationFrame(render);
+  };
 
   if (finePointer) {
     addEventListener('pointermove', event => {
       targetMouseX = clamp((event.clientX / innerWidth - .5) * 2, -1, 1);
       targetMouseY = clamp((event.clientY / innerHeight - .5) * 2, -1, 1);
-      requestRender();
     }, { passive: true });
-    document.documentElement.addEventListener('mouseleave', () => { targetMouseX = 0; targetMouseY = 0; requestRender(); });
+    document.documentElement.addEventListener('mouseleave', () => { targetMouseX = 0; targetMouseY = 0; });
   }
-  addEventListener('scroll', scheduleMeasure, { passive: true });
-  addEventListener('resize', scheduleMeasure, { passive: true });
+  addEventListener('scroll', measure, { passive: true });
+  addEventListener('resize', measure, { passive: true });
 
   const revealElements = document.querySelectorAll('.reveal');
   if (reducedMotion || !('IntersectionObserver' in window)) revealElements.forEach(el => el.classList.add('visible'));
@@ -96,7 +79,7 @@
     const revealObserver = new IntersectionObserver((entries, observer) => entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('visible'); observer.unobserve(entry.target);
-    }), { rootMargin: '0px 0px 12% 0px', threshold: .02 });
+    }), { rootMargin: '0px 0px -7% 0px', threshold: .07 });
     revealElements.forEach(el => revealObserver.observe(el));
   }
 
@@ -104,7 +87,7 @@
   if (routeMoments.length && 'IntersectionObserver' in window) {
     const routeObserver = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('route-active');
-    }), { rootMargin: '-18% 0px -18% 0px', threshold: .04 });
+    }), { rootMargin: '-38% 0px -38% 0px', threshold: .1 });
     routeMoments.forEach(moment => routeObserver.observe(moment));
   }
 
@@ -196,15 +179,12 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       cancelAnimationFrame(frameId);
-      cancelAnimationFrame(measureFrameId);
-      frameId = 0;
-      measureFrameId = 0;
       ambientAudio?.pause();
+      audioContext?.suspend();
     } else {
-      lastFrameTime = performance.now();
-      scheduleMeasure();
+      frameId = requestAnimationFrame(render);
       if (natureOn) startNature();
     }
   });
-  measure(); requestRender();
+  measure(); render();
 })();
