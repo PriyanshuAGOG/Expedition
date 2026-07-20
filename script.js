@@ -119,16 +119,6 @@
   addEventListener('scroll', scheduleMeasure, { passive: true });
   addEventListener('resize', scheduleMeasure, { passive: true });
 
-  const expeditionIntro = document.querySelector('.expedition-intro');
-  const finishIntro = () => {
-    document.body.classList.remove('intro-running');
-    expeditionIntro?.setAttribute('data-complete', 'true');
-    setTimeout(() => expeditionIntro?.remove(), 800);
-  };
-  if (reducedMotion) setTimeout(finishIntro, 180);
-  else setTimeout(finishIntro, 3850);
-  addEventListener('pageshow', event => { if (event.persisted) finishIntro(); }, { once: true });
-
   const revealElements = document.querySelectorAll('.reveal');
   if (reducedMotion || !('IntersectionObserver' in window)) revealElements.forEach(el => el.classList.add('visible'));
   else {

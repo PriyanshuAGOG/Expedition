@@ -9,27 +9,15 @@
   <title>World Diabetes Day Expedition 2026 · NirogBhumi</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="intro-running">
+<body>
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <audio id="nature-audio" src="assets/audio/himalayan-nature-ambience.mp3" autoplay loop preload="auto" playsinline></audio>
+  <audio id="nature-audio" loop preload="none" playsinline>
+    <source src="assets/audio/sources/gentle-breeze-birds.ogg" type="audio/ogg">
+    <source src="assets/audio/himalayan-nature-ambience.mp3" type="audio/mpeg">
+  </audio>
   <button class="ambient-control" type="button" aria-pressed="true" aria-label="Mute nature ambience">
     <span class="ambient-pulse" aria-hidden="true"><i></i><i></i><i></i></span><span data-ambient-label>Sound on</span>
   </button>
-
-  <div class="expedition-intro" aria-hidden="true">
-    <div class="intro-atmosphere">
-      <img class="intro-cloud intro-cloud-veil" src="assets/clouds/webp/72-split-cloud-veil.webp" alt="">
-      <img class="intro-cloud intro-cloud-bank" src="assets/clouds/webp/71-valley-cloud-bank.webp" alt="">
-      <img class="intro-cloud intro-cloud-fog" src="assets/clouds/webp/73-foreground-fog-ribbon.webp" alt="">
-    </div>
-    <div class="intro-reticle"><i></i><i></i><span></span></div>
-    <div class="intro-copy">
-      <p><span>NirogBhumi</span><b>Field arrival · Edition 01</b></p>
-      <div class="intro-title"><span>Enter</span><em>the valley</em></div>
-      <div class="intro-bearing"><span>30° N · HIMALAYAS</span><i></i><span>14 · 11 · 2026</span></div>
-    </div>
-    <div class="intro-progress"><i></i><span>Opening the expedition field system</span></div>
-  </div>
 
   <main id="main-content">
     <section class="parallax-hero" id="top" aria-labelledby="hero-title">

@@ -6,12 +6,12 @@ let html = await readFile(resolve(root, 'index.html'), 'utf8');
 let css = await readFile(resolve(root, 'styles.css'), 'utf8');
 const js = await readFile(resolve(root, 'script.js'), 'utf8');
 
-const assetPattern = /assets\/[\w/-]+\.(?:webp|mp3)/g;
+const assetPattern = /assets\/[\w/-]+\.(?:webp|mp3|ogg)/g;
 const imagePaths = [...new Set([...(html.match(assetPattern) ?? []), ...(css.match(assetPattern) ?? [])])];
 
 for (const relativePath of imagePaths) {
   const buffer = await readFile(resolve(root, relativePath));
-  const mime = extname(relativePath) === '.webp' ? 'image/webp' : extname(relativePath) === '.mp3' ? 'audio/mpeg' : 'application/octet-stream';
+  const mime = extname(relativePath) === '.webp' ? 'image/webp' : extname(relativePath) === '.mp3' ? 'audio/mpeg' : extname(relativePath) === '.ogg' ? 'audio/ogg' : 'application/octet-stream';
   html = html.replaceAll(relativePath, `data:${mime};base64,${buffer.toString('base64')}`);
   css = css.replaceAll(relativePath, `data:${mime};base64,${buffer.toString('base64')}`);
 }

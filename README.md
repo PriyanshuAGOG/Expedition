@@ -19,7 +19,7 @@ A complete, responsive pre-expedition landing page for Edition 01, prepared to b
 - Eligibility guidance
 - Post-expedition evidence archive preserved in the source but intentionally hidden until real material is ready
 - Accessible three-step registration prototype
-- Embedded supplied five-minute forest recording
+- Lightweight looping nature ambience (gentle breeze and birdsong) that loads on demand, with an MP3 fallback
 - FAQs, medical disclaimers and NirogBhumi footer
 
 ## Run locally
@@ -34,7 +34,7 @@ The project has no runtime dependencies. `World-Diabetes-Day-Expedition-2026-V6-
 
 ## Nature soundscape
 
-The site uses the supplied five-minute forest recording and requests playback immediately. Browsers that restrict audible autoplay begin it on the first touch, scroll or key interaction. A small persistent control lets visitors mute or restore the sound without being required to start the experience. See `AUDIO-CREDITS.md` for the release note.
+The site loops a small gentle-breeze-and-birdsong field recording and requests playback immediately. The `<audio>` element uses `preload="none"`, so the file is only fetched when playback actually begins — the page no longer downloads a large audio file up front. Browsers that restrict audible autoplay begin it on the first touch, scroll or key interaction. A small persistent control lets visitors mute or restore the sound without being required to start the experience. See `AUDIO-CREDITS.md` for the release note.
 
 ## Registration safety
 
