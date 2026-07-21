@@ -136,26 +136,52 @@
     routeMoments.forEach(moment => routeObserver.observe(moment));
   }
 
-  /* Authentic field-recorded ambience: request immediately, then retry on the first allowed gesture. */
+  /* Authentic field-recorded ambience: request immediately, then retry on the first allowed gesture.
+     The source recording is mixed quiet (~-31dBFS RMS), so a Web Audio gain stage brings it up to a
+     comfortable ambience level with a limiter as a safety net against clipping. */
   const ambientAudio = document.querySelector('#nature-audio');
   const ambientControl = document.querySelector('.ambient-control');
   const ambientLabel = ambientControl?.querySelector('[data-ambient-label]');
-  let natureStarting = false, natureOn = true;
+  let natureStarting = false, natureOn = true, hasGesture = false, audioCtx, audioGraphReady = false;
   const setAmbientUI = (playing, label = playing ? 'Sound on' : 'Sound ready') => {
     ambientControl?.setAttribute('aria-pressed', String(playing));
     ambientControl?.setAttribute('aria-label', playing ? 'Mute nature ambience' : 'Play nature ambience');
     if (ambientLabel) ambientLabel.textContent = label;
   };
-  const activationEvents = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
-  const removeNatureActivation = () => activationEvents.forEach(type => window.removeEventListener(type, startNature));
+  const ensureAudioGraph = () => {
+    /* Building the graph before any gesture leaves the AudioContext permanently suspended in some
+       browsers even after a later resume() inside a real gesture, so this only ever runs once we
+       know we're inside one. */
+    if (audioGraphReady || !ambientAudio || !hasGesture) return;
+    audioGraphReady = true;
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      audioCtx = new Ctx();
+      const source = audioCtx.createMediaElementSource(ambientAudio);
+      const gain = audioCtx.createGain();
+      gain.gain.value = 2.8;
+      const limiter = audioCtx.createDynamicsCompressor();
+      limiter.threshold.value = -6; limiter.knee.value = 4; limiter.ratio.value = 12; limiter.attack.value = .003; limiter.release.value = .25;
+      source.connect(gain).connect(limiter).connect(audioCtx.destination);
+    } catch (_) { /* Web Audio unavailable: element still plays at its native (quieter) volume */ }
+  };
+  /* pointerdown/mousedown/touchstart/touchend/keydown/click are the gestures browsers treat as
+     activation; scroll/wheel are included too so a later real click after an ignored scroll still
+     starts playback immediately (no need to remove the harmless extra listeners). */
+  const activationEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click', 'scroll', 'wheel'];
+  const onActivationEvent = () => { hasGesture = true; startNature(); };
+  const removeNatureActivation = () => activationEvents.forEach(type => window.removeEventListener(type, onActivationEvent));
   async function startNature() {
     if (natureStarting || !natureOn) return;
     if (ambientAudio && !ambientAudio.paused) { setAmbientUI(true); removeNatureActivation(); return; }
     natureStarting = true;
     if (ambientAudio) {
+      ensureAudioGraph();
       try {
-        ambientAudio.volume = .55;
+        ambientAudio.volume = 1;
         ambientAudio.muted = false;
+        if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
         await ambientAudio.play();
         setAmbientUI(true);
         removeNatureActivation();
@@ -168,7 +194,7 @@
     }
     natureStarting = false;
   }
-  activationEvents.forEach(type => window.addEventListener(type, startNature, { passive: true }));
+  activationEvents.forEach(type => window.addEventListener(type, onActivationEvent, { passive: true }));
   ambientControl?.addEventListener('click', () => {
     if (natureOn && ambientAudio && !ambientAudio.paused) {
       natureOn = false; ambientAudio.pause(); setAmbientUI(false, 'Sound off');
