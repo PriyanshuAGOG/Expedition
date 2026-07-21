@@ -125,7 +125,7 @@
     const revealObserver = new IntersectionObserver((entries, observer) => entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('visible'); observer.unobserve(entry.target);
-    }), { rootMargin: '0px 0px 12% 0px', threshold: .02 });
+    }), { rootMargin: '0px 0px 22% 0px', threshold: .02 });
     revealElements.forEach(el => revealObserver.observe(el));
   }
 
@@ -136,13 +136,19 @@
     routeMoments.forEach(moment => routeObserver.observe(moment));
   }
 
-  /* Authentic field-recorded ambience: request immediately, then retry on the first allowed gesture.
+  /* Authentic field-recorded ambience. Browsers never allow audible autoplay before any user
+     gesture on the page, full stop -- no script can honestly bypass that. The closest possible
+     approximation of "plays the moment the page loads": start MUTED playback immediately (always
+     permitted), so the instant a gesture happens the sound is a synchronous mute-toggle away with
+     no further play()/AudioContext delay. If the browser's own autoplay heuristics ever allow
+     audible playback with no gesture at all (a high per-site media engagement score), the unmute
+     attempted right after the muted play() below will simply succeed immediately.
      The source recording is mixed quiet (~-31dBFS RMS), so a Web Audio gain stage brings it up to a
      comfortable ambience level with a limiter as a safety net against clipping. */
   const ambientAudio = document.querySelector('#nature-audio');
   const ambientControl = document.querySelector('.ambient-control');
   const ambientLabel = ambientControl?.querySelector('[data-ambient-label]');
-  let natureStarting = false, natureOn = true, hasGesture = false, audioCtx, audioGraphReady = false;
+  let natureOn = true, audible = false, audioCtx, audioGraphReady = false;
   const setAmbientUI = (playing, label = playing ? 'Sound on' : 'Sound ready') => {
     ambientControl?.setAttribute('aria-pressed', String(playing));
     ambientControl?.setAttribute('aria-label', playing ? 'Mute nature ambience' : 'Play nature ambience');
@@ -150,9 +156,9 @@
   };
   const ensureAudioGraph = () => {
     /* Building the graph before any gesture leaves the AudioContext permanently suspended in some
-       browsers even after a later resume() inside a real gesture, so this only ever runs once we
-       know we're inside one. */
-    if (audioGraphReady || !ambientAudio || !hasGesture) return;
+       browsers even after a later resume() inside a real gesture, so this only ever runs once
+       inside one -- ensureAudioGraph() itself is only ever called from a gesture handler below. */
+    if (audioGraphReady || !ambientAudio) return;
     audioGraphReady = true;
     try {
       const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -166,43 +172,41 @@
       source.connect(gain).connect(limiter).connect(audioCtx.destination);
     } catch (_) { /* Web Audio unavailable: element still plays at its native (quieter) volume */ }
   };
+  const markAudible = () => { audible = true; setAmbientUI(true); removeNatureActivation(); };
+  /* Start muted playback the instant the audio element can (no gesture required for this). */
+  function primeNature() {
+    if (!ambientAudio || !natureOn) return;
+    ambientAudio.volume = 1;
+    ambientAudio.muted = true;
+    ambientAudio.play().then(() => {
+      /* Some browsers' autoplay heuristics allow audible playback with no gesture at all
+         (a high per-site media engagement score); try, and keep the muted fallback otherwise. */
+      ambientAudio.muted = false;
+      setTimeout(() => { if (!ambientAudio.muted && !ambientAudio.paused) markAudible(); }, 60);
+    }).catch(() => {});
+  }
   /* pointerdown/mousedown/touchstart/touchend/keydown/click are the gestures browsers treat as
      activation; scroll/wheel are included too so a later real click after an ignored scroll still
      starts playback immediately (no need to remove the harmless extra listeners). */
   const activationEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click', 'scroll', 'wheel'];
-  const onActivationEvent = () => { hasGesture = true; startNature(); };
   const removeNatureActivation = () => activationEvents.forEach(type => window.removeEventListener(type, onActivationEvent));
-  async function startNature() {
-    if (natureStarting || !natureOn) return;
-    if (ambientAudio && !ambientAudio.paused) { setAmbientUI(true); removeNatureActivation(); return; }
-    natureStarting = true;
-    if (ambientAudio) {
-      ensureAudioGraph();
-      try {
-        ambientAudio.volume = 1;
-        ambientAudio.muted = false;
-        if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
-        await ambientAudio.play();
-        setAmbientUI(true);
-        removeNatureActivation();
-      } catch (_) {
-        setAmbientUI(false);
-      } finally {
-        natureStarting = false;
-      }
-      return;
-    }
-    natureStarting = false;
+  function onActivationEvent() {
+    if (audible || !natureOn || !ambientAudio) return;
+    ensureAudioGraph();
+    ambientAudio.muted = false;
+    if (audioCtx?.state === 'suspended') audioCtx.resume();
+    if (ambientAudio.paused) { ambientAudio.play().then(markAudible).catch(() => {}); }
+    else markAudible();
   }
   activationEvents.forEach(type => window.addEventListener(type, onActivationEvent, { passive: true }));
   ambientControl?.addEventListener('click', () => {
-    if (natureOn && ambientAudio && !ambientAudio.paused) {
-      natureOn = false; ambientAudio.pause(); setAmbientUI(false, 'Sound off');
+    if (natureOn && ambientAudio && !ambientAudio.paused && !ambientAudio.muted) {
+      natureOn = false; audible = false; ambientAudio.pause(); setAmbientUI(false, 'Sound off');
     } else {
-      natureOn = true; startNature();
+      natureOn = true; onActivationEvent();
     }
   });
-  startNature();
+  primeNature();
 
   const archiveButtons = [...document.querySelectorAll('[data-filter]')];
   const archiveCards = [...document.querySelectorAll('[data-category]')];
@@ -257,7 +261,7 @@
     } else {
       lastFrameTime = performance.now();
       scheduleMeasure();
-      if (natureOn) startNature();
+      if (natureOn) { if (audible) ambientAudio?.play().catch(() => {}); else primeNature(); }
     }
   });
   measure(); requestRender();

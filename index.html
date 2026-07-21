@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07120d">
-  <meta name="build-version" content="2026.07.21-hero-sections-audio-v8">
+  <meta name="build-version" content="2026.07.21-map-markers-audio-v9">
   <meta name="description" content="Apply for NirogBhumi's World Diabetes Day Expedition 2026: medical screening, a 60-day preparation journey and a supported Himalayan expedition.">
   <title>World Diabetes Day Expedition 2026 · NirogBhumi</title>
   <link rel="icon" type="image/webp" href="assets/branding/webp/nirogbhumi-icon.webp">
@@ -12,7 +12,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <audio id="nature-audio" loop preload="none" playsinline>
+  <audio id="nature-audio" loop preload="auto" playsinline>
     <source src="assets/audio/sources/gentle-breeze-birds.ogg" type="audio/ogg">
     <source src="assets/audio/himalayan-nature-ambience.mp3" type="audio/mpeg">
   </audio>
@@ -24,6 +24,10 @@
     <section class="parallax-hero" id="top" aria-labelledby="hero-title">
       <h1 id="hero-title" class="sr-only">World Diabetes Day Expedition 2026</h1>
       <div class="hero-sticky">
+        <div class="hero-presents">
+          <img class="hero-presents-logo" src="assets/branding/webp/nirogbhumi-wordmark.webp" alt="NirogBhumi" width="900" height="206" decoding="async">
+          <span class="hero-presents-tag">Presents</span>
+        </div>
         <div class="scene" aria-hidden="true">
           <img class="layer layer-bg" src="assets/webp/01-background-valley.webp" alt="" fetchpriority="high" decoding="async">
           <img class="mobile-layer mobile-bg" src="assets/mobile/webp/17-mobile-background.webp" alt="" fetchpriority="high" decoding="async">
@@ -68,30 +72,32 @@
           <h2 id="briefing-title">What is this <em>expedition?</em></h2>
           <p class="xp-lead">A medically reviewed preparation programme and a supported Himalayan field experience for adults living with Type&nbsp;2 diabetes. Four coordinates define the mission before you follow the selection trail.</p>
         </header>
+      </div>
 
-        <figure class="xp-atlas reveal">
-          <img class="xp-atlas-map" src="assets/map/webp/26-expedition-relief-map.webp" alt="An overhead relief map of a green Himalayan valley with forests, clearings and a winding river" loading="lazy" decoding="async">
-          <span class="xp-atlas-glow" aria-hidden="true"></span>
-          <svg class="xp-atlas-route" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
-            <path class="xp-route-bed" d="M110 440 C250 415 300 315 430 280 S650 250 720 175 S850 120 905 62"/>
-            <path class="xp-route-live" pathLength="1" d="M110 440 C250 415 300 315 430 280 S650 250 720 175 S850 120 905 62"/>
+      <div class="xp-map-wrap">
+        <div class="xp-map-stage reveal">
+          <img class="xp-map-bg" src="assets/map/webp/26-expedition-relief-map.webp" alt="An overhead relief map of a green Himalayan valley with forests, clearings and a winding river" loading="lazy" decoding="async" fetchpriority="high">
+          <span class="xp-map-glow" aria-hidden="true"></span>
+          <svg class="xp-map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="xp-route-bed" d="M16 78 C18 55 20 35 24 22 S50 15 76 18 S86 45 84 74"/>
+            <path class="xp-route-live" pathLength="1" d="M16 78 C18 55 20 35 24 22 S50 15 76 18 S86 45 84 74"/>
           </svg>
-          <span class="xp-atlas-pin" style="--x:11%;--y:84%"><i></i><b>01</b></span>
-          <span class="xp-atlas-pin" style="--x:43%;--y:54%"><i></i><b>02</b></span>
-          <span class="xp-atlas-pin" style="--x:72%;--y:34%"><i></i><b>03</b></span>
-          <span class="xp-atlas-pin" style="--x:90%;--y:12%"><i></i><b>04</b></span>
-          <img class="xp-atlas-compass" src="assets/map/webp/27-field-compass.webp" alt="" loading="lazy" decoding="async">
-          <figcaption class="xp-atlas-tag" aria-hidden="true"><strong>Expedition field system</strong><span>30°N · Himalayas · Edition 01 · 14.11.26</span></figcaption>
-        </figure>
-
-        <div class="xp-spine" aria-label="Four expedition coordinates">
-          <span class="xp-spine-vine" aria-hidden="true"></span>
-          <article class="xp-coord reveal"><span class="xp-coord-node">01</span><p class="xp-coord-label">Mission coordinate</p><h3>Why this exists</h3><p>To explore what becomes possible when medical review, daily habits, progressive movement and community support are practised consistently.</p><strong>Diabetes should not make life smaller.</strong></article>
-          <article class="xp-coord reveal"><span class="xp-coord-node">02</span><p class="xp-coord-label">Programme coordinate</p><h3>More than a trek</h3><p>Application and screening, sixty days of preparation, a supported 5–7 day Himalayan field experience, then responsible public learning.</p></article>
-          <article class="xp-coord reveal"><span class="xp-coord-node">03</span><p class="xp-coord-label">Participant coordinate</p><h3>Who may apply</h3><p>Adults living with Type 2 diabetes, from across India, ready for daily practice, clinical guidance and group accountability.</p><strong>No trekking experience required.</strong></article>
-          <article class="xp-coord reveal"><span class="xp-coord-node">04</span><p class="xp-coord-label">Safety coordinate</p><h3>Medicine leads</h3><p>Screen. Prepare. Clear. Monitor. The doctor and mountain team can change or stop the plan at every stage.</p><a href="#safety">Open the safety system ↓</a></article>
+          <span class="xp-map-pin" style="--x:16%;--y:78%"><i></i><b>01</b></span>
+          <span class="xp-map-pin" style="--x:24%;--y:22%"><i></i><b>02</b></span>
+          <span class="xp-map-pin" style="--x:76%;--y:18%"><i></i><b>03</b></span>
+          <span class="xp-map-pin" style="--x:84%;--y:74%"><i></i><b>04</b></span>
+          <img class="xp-map-compass" src="assets/map/webp/27-field-compass.webp" alt="" loading="lazy" decoding="async">
+          <div class="xp-map-tag" aria-hidden="true"><strong>Expedition field system</strong><span>30°N · Himalayas · Edition 01 · 14.11.26</span></div>
         </div>
+        <div class="xp-map-notes" aria-label="Four expedition coordinates">
+          <article class="xp-map-note note-1 reveal"><b class="xp-map-note-no">01</b><p class="xp-coord-label">Mission coordinate</p><h3>Why this exists</h3><p>To explore what becomes possible when medical review, daily habits, progressive movement and community support are practised consistently.</p><strong>Diabetes should not make life smaller.</strong></article>
+          <article class="xp-map-note note-2 reveal"><b class="xp-map-note-no">02</b><p class="xp-coord-label">Programme coordinate</p><h3>More than a trek</h3><p>Application and screening, sixty days of preparation, a supported 5–7 day Himalayan field experience, then responsible public learning.</p></article>
+          <article class="xp-map-note note-3 reveal"><b class="xp-map-note-no">03</b><p class="xp-coord-label">Participant coordinate</p><h3>Who may apply</h3><p>Adults living with Type 2 diabetes, from across India, ready for daily practice, clinical guidance and group accountability.</p><strong>No trekking experience required.</strong></article>
+          <article class="xp-map-note note-4 reveal"><b class="xp-map-note-no">04</b><p class="xp-coord-label">Safety coordinate</p><h3>Medicine leads</h3><p>Screen. Prepare. Clear. Monitor. The doctor and mountain team can change or stop the plan at every stage.</p><a href="#safety">Open the safety system ↓</a></article>
+        </div>
+      </div>
 
+      <div class="xp-inner">
         <div class="xp-dossier reveal">
           <div class="xp-dossier-head"><span>Field dossier · 01</span><h3>One programme. Three environments.</h3><small>Not a race · not a cure claim · not automatic selection</small></div>
           <ol>
@@ -100,12 +106,6 @@
             <li><b>03</b><strong>After</strong><span>Recovery, learning and responsible continuity</span></li>
           </ol>
         </div>
-
-        <div class="xp-facts reveal" aria-label="Edition one facts">
-          <div><small>Edition</small><strong>01</strong></div><div><small>Field group</small><strong>≈15</strong></div><div><small>Preparation</small><strong>60 days</strong></div><div><small>Expedition</small><strong>5–7 days</strong></div><div><small>Goal day</small><strong>14.11.26</strong></div>
-        </div>
-        <div class="xp-boundary reveal"><strong>This is not</strong><span>emergency care</span><span>a cure promise</span><span>automatic selection</span><span>permission to change medication</span></div>
-        <div class="xp-enter reveal"><p>The map explains the mission. The trail explains your selection.</p><a href="#trail">Follow the five thresholds <span>↓</span></a></div>
       </div>
       <img class="section-seam seam-bottom terrain-seam" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy" decoding="async">
     </section>
@@ -144,23 +144,23 @@
         <ol class="xp-timeline">
           <span class="xp-timeline-fill" aria-hidden="true"></span>
           <li class="xp-step reveal" data-step="1">
-            <div class="xp-step-marker"><img src="assets/thresholds/webp/31-application-marker.webp" alt="A moss-covered Himalayan stone kilometre marker"><span class="xp-node"><b>01</b></span></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/31-application-marker.webp" alt="A moss-covered Himalayan stone kilometre marker"><span class="xp-node" style="--number-top:48%;--number-left:50%;--number-color:#12241a">01</span></span></div>
             <div class="xp-step-copy"><p class="xp-step-tag">Threshold 01 · Application</p><h3>Tell us who you are.</h3><p>Identity, diabetes history, readiness and why this journey matters to you.</p><small>Participant action · 8–10 minutes</small></div>
           </li>
           <li class="xp-step reveal" data-step="2">
-            <div class="xp-step-marker"><img src="assets/thresholds/webp/32-medical-cairn.webp" alt="A Himalayan safety cairn with a bronze marker plate"><span class="xp-node"><b>02</b></span></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/32-medical-cairn.webp" alt="A Himalayan safety cairn with a bronze marker plate"><span class="xp-node" style="--number-top:78%;--number-left:50%;--number-color:#f0ead0">02</span></span></div>
             <div class="xp-step-copy"><p class="xp-step-tag">Threshold 02 · Medical screening</p><h3>Safety before selection.</h3><p>Baseline investigations, physician review, fitness and individual risk assessment.</p><small>Medical decision · not first-come-first-served</small></div>
           </li>
           <li class="xp-step reveal" data-step="3">
-            <div class="xp-step-marker"><img src="assets/thresholds/webp/33-preparation-waymarker.webp" alt="A rope-lashed Himalayan cedar trail waymarker"><span class="xp-node"><b>03</b></span></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/33-preparation-waymarker.webp" alt="A rope-lashed Himalayan cedar trail waymarker"><span class="xp-node" style="--number-top:25%;--number-left:40%;--number-color:#f0e8cd">03</span></span></div>
             <div class="xp-step-copy"><p class="xp-step-tag">Threshold 03 · Transformation</p><h3>Build the everyday foundation.</h3><p>Daily practice, weekly reviews, progressive movement and health monitoring.</p><small>About one focused hour each morning</small></div>
           </li>
           <li class="xp-step reveal" data-step="4">
-            <div class="xp-step-marker"><img src="assets/thresholds/webp/34-expedition-monolith.webp" alt="A high-altitude Himalayan granite route monolith"><span class="xp-node"><b>04</b></span></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/34-expedition-monolith.webp" alt="A high-altitude Himalayan granite route monolith"><span class="xp-node" style="--number-top:34%;--number-left:51%;--number-color:#f2ead0">04</span></span></div>
             <div class="xp-step-copy"><p class="xp-step-tag">Threshold 04 · Himalayan expedition</p><h3>Carry the work onto the trail.</h3><p>A professionally guided, medically supported 5–7 day field experience.</p><small>World Diabetes Day goal · 14 Nov 2026</small></div>
           </li>
           <li class="xp-step reveal" data-step="5">
-            <div class="xp-step-marker"><img src="assets/thresholds/webp/35-return-gateway.webp" alt="A Himalayan stone return gateway with ferns"><span class="xp-node"><b>05</b></span></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/35-return-gateway.webp" alt="A Himalayan stone return gateway with ferns"><span class="xp-node" style="--number-top:14%;--number-left:54%;--number-color:#f2ead0">05</span></span></div>
             <div class="xp-step-copy"><p class="xp-step-tag">Threshold 05 · Field debrief</p><h3>Return. Recover. Carry it home.</h3><p>Close the journey carefully, review what was learned and continue the practices beyond the mountain.</p><small>Responsible return · long-term continuity</small></div>
           </li>
         </ol>
