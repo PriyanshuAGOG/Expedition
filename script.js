@@ -140,9 +140,7 @@
      gesture on the page, full stop -- no script can honestly bypass that. The closest possible
      approximation of "plays the moment the page loads": start MUTED playback immediately (always
      permitted), so the instant a gesture happens the sound is a synchronous mute-toggle away with
-     no further play()/AudioContext delay. If the browser's own autoplay heuristics ever allow
-     audible playback with no gesture at all (a high per-site media engagement score), the unmute
-     attempted right after the muted play() below will simply succeed immediately.
+     no further play()/AudioContext delay.
      The source recording is mixed quiet (~-31dBFS RMS), so a Web Audio gain stage brings it up to a
      comfortable ambience level with a limiter as a safety net against clipping. */
   const ambientAudio = document.querySelector('#nature-audio');
@@ -173,30 +171,32 @@
     } catch (_) { /* Web Audio unavailable: element still plays at its native (quieter) volume */ }
   };
   const markAudible = () => { audible = true; setAmbientUI(true); removeNatureActivation(); };
-  /* Start muted playback the instant the audio element can (no gesture required for this). */
+  /* Start muted playback the instant the audio element can (no gesture required for this).
+     Deliberately does NOT try to flip muted=false on its own afterwards: Chrome's autoplay
+     policy explicitly warns that programmatically unmuting an autoplaying element without a
+     user gesture can get the browser to pause it outright, which would silently break the
+     muted-priming benefit too. Becoming audible only ever happens inside a real gesture,
+     below, where it's unconditionally allowed. */
   function primeNature() {
     if (!ambientAudio || !natureOn) return;
     ambientAudio.volume = 1;
     ambientAudio.muted = true;
-    ambientAudio.play().then(() => {
-      /* Some browsers' autoplay heuristics allow audible playback with no gesture at all
-         (a high per-site media engagement score); try, and keep the muted fallback otherwise. */
-      ambientAudio.muted = false;
-      setTimeout(() => { if (!ambientAudio.muted && !ambientAudio.paused) markAudible(); }, 60);
-    }).catch(() => {});
+    ambientAudio.play().catch(() => {});
   }
   /* pointerdown/mousedown/touchstart/touchend/keydown/click are the gestures browsers treat as
      activation; scroll/wheel are included too so a later real click after an ignored scroll still
      starts playback immediately (no need to remove the harmless extra listeners). */
   const activationEvents = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click', 'scroll', 'wheel'];
   const removeNatureActivation = () => activationEvents.forEach(type => window.removeEventListener(type, onActivationEvent));
+  let unlocking = false;
   function onActivationEvent() {
-    if (audible || !natureOn || !ambientAudio) return;
+    if (audible || unlocking || !natureOn || !ambientAudio) return;
+    unlocking = true;
     ensureAudioGraph();
     ambientAudio.muted = false;
     if (audioCtx?.state === 'suspended') audioCtx.resume();
-    if (ambientAudio.paused) { ambientAudio.play().then(markAudible).catch(() => {}); }
-    else markAudible();
+    if (ambientAudio.paused) { ambientAudio.play().then(markAudible).catch(() => { unlocking = false; }); }
+    else { markAudible(); unlocking = false; }
   }
   activationEvents.forEach(type => window.addEventListener(type, onActivationEvent, { passive: true }));
   ambientControl?.addEventListener('click', () => {
