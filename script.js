@@ -7,6 +7,8 @@
   const mapStops = [...document.querySelectorAll('.map-stop')];
   const trailStory = document.querySelector('.trail-story');
   const routeMoments = [...document.querySelectorAll('.route-moment')];
+  const thresholdTrail = document.querySelector('.xp-trail');
+  const thresholdSteps = [...document.querySelectorAll('.xp-step')];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -15,6 +17,7 @@
   let targetProgress = 0, currentProgress = 0;
   let targetMouseX = 0, targetMouseY = 0, mouseX = 0, mouseY = 0;
   let frameId = 0, measureFrameId = 0, lastFrameTime = performance.now();
+  let updateFloatingNav = () => {};
 
   const requestRender = () => {
     if (!frameId && !document.hidden) frameId = requestAnimationFrame(render);
@@ -56,6 +59,14 @@
       trailStory.style.setProperty('--trail-dot', `${(8 + trailTrack * 84).toFixed(3)}vw`);
       if (innerWidth > 680) routeMoments.forEach((moment, index) => moment.classList.toggle('route-active', trailTrack >= Math.max(0, index / 4 - .035)));
     }
+    if (thresholdTrail && thresholdSteps.length) {
+      const rect = thresholdTrail.getBoundingClientRect();
+      const thresholdProgress = innerWidth <= 680 ? 0 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
+      thresholdTrail.style.setProperty('--threshold-progress', thresholdProgress.toFixed(4));
+      const activeThreshold = Math.min(thresholdSteps.length - 1, Math.round(thresholdProgress * (thresholdSteps.length - 1)));
+      thresholdSteps.forEach((step, index) => step.classList.toggle('threshold-active', innerWidth <= 680 || index === activeThreshold));
+    }
+    updateFloatingNav();
   };
 
   const scheduleMeasure = () => {
@@ -146,7 +157,7 @@
   const ambientAudio = document.querySelector('#nature-audio');
   const ambientControl = document.querySelector('.ambient-control');
   const ambientLabel = ambientControl?.querySelector('[data-ambient-label]');
-  let natureOn = true, audible = false, audioCtx, audioGraphReady = false;
+  let natureOn = false, audible = false, audioCtx, audioGraphReady = false;
   const setAmbientUI = (playing, label = playing ? 'Sound on' : 'Sound ready') => {
     ambientControl?.setAttribute('aria-pressed', String(playing));
     ambientControl?.setAttribute('aria-label', playing ? 'Mute nature ambience' : 'Play nature ambience');
@@ -206,7 +217,7 @@
       natureOn = true; onActivationEvent();
     }
   });
-  primeNature();
+  setAmbientUI(false, 'Sound off');
 
   const archiveButtons = [...document.querySelectorAll('[data-filter]')];
   const archiveCards = [...document.querySelectorAll('[data-category]')];
@@ -250,6 +261,55 @@
   document.querySelectorAll('.faq-list details').forEach(detail => detail.addEventListener('toggle', () => {
     if (detail.open) document.querySelectorAll('.faq-list details[open]').forEach(other => { if (other !== detail) other.open = false; });
   }));
+  document.querySelectorAll('.purpose-reading details').forEach(detail => {
+    detail.open = false;
+    detail.addEventListener('toggle', () => {
+      if (detail.open) document.querySelectorAll('.purpose-reading details[open]').forEach(other => { if (other !== detail) other.open = false; });
+    });
+  });
+
+  const countdowns = [...document.querySelectorAll('[data-countdown-days]')];
+  if (countdowns.length) {
+    const goalDate = new Date('2026-11-14T00:00:00+05:30');
+    const daysRemaining = Math.max(0, Math.ceil((goalDate - new Date()) / 86400000));
+    countdowns.forEach(countdown => { countdown.textContent = daysRemaining; });
+  }
+
+  const applicationDrawer = document.querySelector('.application-drawer');
+  document.querySelectorAll('a[href="#register"]').forEach(link => link.addEventListener('click', () => {
+    if (applicationDrawer) applicationDrawer.open = true;
+  }));
+  if (location.hash === '#register' && applicationDrawer) applicationDrawer.open = true;
+
+  const floatingLinks = [...document.querySelectorAll('.floating-nav a[href^="#"]')];
+  const navTargets = floatingLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  floatingLinks.forEach(link => link.addEventListener('click', event => {
+    const href = link.getAttribute('href');
+    const target = document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    const previousBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    target.scrollIntoView({ block: 'start' });
+    history.pushState(null, '', href);
+    requestAnimationFrame(() => {
+      root.style.scrollBehavior = previousBehavior;
+      updateFloatingNav();
+    });
+  }));
+  updateFloatingNav = () => {
+    if (!navTargets.length) return;
+    const focusLine = innerHeight * .42;
+    const orderedTargets = [...navTargets].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+    let activeTarget = orderedTargets[0];
+    orderedTargets.forEach(target => {
+      if (target.getBoundingClientRect().top <= focusLine) activeTarget = target;
+    });
+    floatingLinks.forEach(link => link.classList.toggle('is-active', link.getAttribute('href') === `#${activeTarget.id}`));
+  };
+  addEventListener('scroll', updateFloatingNav, { passive: true });
+  addEventListener('resize', updateFloatingNav, { passive: true });
+  updateFloatingNav();
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {

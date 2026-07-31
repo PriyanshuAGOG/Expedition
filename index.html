@@ -4,20 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07120d">
-  <meta name="build-version" content="2026.07.21-darkgreen-center-fixes-v10">
+  <meta name="build-version" content="2026.07.31-hero-presenter-visibility-v18">
   <meta name="description" content="Apply for NirogBhumi's World Diabetes Day Expedition 2026: medical screening, a 60-day preparation journey and a supported Himalayan expedition.">
   <title>World Diabetes Day Expedition 2026 · NirogBhumi</title>
   <link rel="icon" type="image/webp" href="assets/branding/webp/nirogbhumi-icon.webp">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="campaign-v14">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <audio id="nature-audio" loop preload="auto" playsinline>
     <source src="assets/audio/sources/gentle-breeze-birds.ogg" type="audio/ogg">
-    <source src="assets/audio/himalayan-nature-ambience.mp3" type="audio/mpeg">
   </audio>
-  <button class="ambient-control" type="button" aria-pressed="true" aria-label="Mute nature ambience">
-    <span class="ambient-pulse" aria-hidden="true"><i></i><i></i><i></i></span><span data-ambient-label>Sound on</span>
+  <button class="ambient-control" type="button" aria-pressed="false" aria-label="Play nature ambience">
+    <span class="ambient-pulse" aria-hidden="true"><i></i><i></i><i></i></span><span data-ambient-label>Sound off</span>
   </button>
 
   <main id="main-content">
@@ -35,12 +34,12 @@
           <img class="layer layer-far layer-far-left" src="assets/webp/02-far-left-ridge.webp" alt="" decoding="async">
           <img class="layer layer-far layer-far-right" src="assets/webp/03-far-right-ridge.webp" alt="" decoding="async">
           <img class="mobile-layer mobile-far" src="assets/mobile/webp/18-mobile-far-ridges.webp" alt="" decoding="async">
-          <div class="title-band title-back"><div class="title-line"><span>World</span><span>Diabetes</span></div></div>
+          <div class="title-band title-back"><div class="title-line"><span>World Diabetes Day</span></div></div>
           <div class="hero-cloud hero-cloud-far"><img src="assets/clouds/webp/71-valley-cloud-bank.webp" alt="" fetchpriority="high" decoding="async"></div>
           <img class="layer layer-mid layer-mid-left" src="assets/webp/04-mid-left-valley.webp" alt="" decoding="async">
           <img class="layer layer-mid layer-mid-right" src="assets/webp/05-mid-right-valley.webp" alt="" decoding="async">
           <img class="mobile-layer mobile-mid" src="assets/mobile/webp/19-mobile-mid-forest.webp" alt="" decoding="async">
-          <div class="title-band title-middle"><div class="title-line"><span>Day</span><span>Expedition</span></div></div>
+          <div class="title-band title-middle"><div class="title-line"><span>Himalayan Expedition</span></div></div>
           <div class="hero-cloud hero-cloud-middle"><img src="assets/clouds/webp/72-split-cloud-veil.webp" alt="" fetchpriority="high" decoding="async"></div>
           <img class="layer layer-near layer-near-left" src="assets/webp/06-near-left-pines.webp" alt="" decoding="async">
           <img class="layer layer-near layer-near-right" src="assets/webp/07-near-right-pines.webp" alt="" decoding="async">
@@ -57,66 +56,115 @@
           <img class="layer layer-foreground" src="assets/webp/08-foreground-rocks-ferns.webp" alt="" decoding="async">
           <div class="light-rays"></div><div class="cinematic-grade"></div><div class="film-grain"></div><div class="exit-shade"></div>
         </div>
+        <div class="hero-campaign" aria-label="Expedition overview">
+          <p><strong>21 people</strong> · 60 days · one six-day Himalayan expedition</p>
+          <div class="hero-ctas">
+            <a class="hero-cta hero-cta-primary" href="apply.html" target="_top">Apply Now <span>↗</span></a>
+            <a class="hero-cta" href="mailto:nirogbhumi@gmail.com?subject=World%20Diabetes%20Day%20Expedition%20Partnership">Become a Partner</a>
+            <a class="hero-cta" href="#trail">Explore the Journey</a>
+          </div>
+        </div>
+        <div class="descent-cue" aria-hidden="true"><span>Scroll to descend</span><i></i></div>
       </div>
     </section>
 
-    <section class="xp-brief" id="briefing" aria-labelledby="briefing-title">
-      <img class="section-seam seam-top canopy-seam seam-flip-x" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy" decoding="async">
-      <div class="xp-brief-aura" aria-hidden="true"></div>
-      <div class="botanical-field xpb-flora" aria-hidden="true">
-        <img class="flora flora-a" src="assets/botanicals/webp/41-fern-corner-left.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/42-fern-corner-right.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/48-hanging-tendril.webp" alt=""><img class="flora flora-d" src="assets/botanicals/webp/53-white-wildflowers.webp" alt="">
+    <section class="founder-note" id="founder-note" aria-labelledby="founder-note-title">
+      <div class="founder-note-greenery" aria-hidden="true">
+        <img class="founder-fern founder-fern-left" src="assets/botanicals/webp/41-fern-corner-left.webp" alt="" loading="lazy" decoding="async">
+        <img class="founder-fern founder-fern-right" src="assets/botanicals/webp/42-fern-corner-right.webp" alt="" loading="lazy" decoding="async">
+        <img class="founder-vine founder-vine-left" src="assets/botanicals/webp/50-ivy-vertical.webp" alt="" loading="lazy" decoding="async">
+        <img class="founder-vine founder-vine-right" src="assets/botanicals/webp/48-hanging-tendril.webp" alt="" loading="lazy" decoding="async">
       </div>
-      <div class="xp-inner">
-        <header class="xp-brief-head reveal">
-          <p class="kicker">Open the expedition field map</p>
-          <h2 id="briefing-title">What is this <em>expedition?</em></h2>
-          <p class="xp-lead">A medically reviewed preparation programme and a supported Himalayan field experience for adults living with Type&nbsp;2 diabetes. Four coordinates define the mission before you follow the selection trail.</p>
+      <div class="founder-note-inner">
+        <header class="founder-note-heading reveal">
+          <p class="kicker">A note from our founder</p>
+          <h2 id="founder-note-title">A message from <em>our founder.</em></h2>
+          <p>A personal introduction to the purpose, responsibility and hope behind the journey.</p>
         </header>
-      </div>
-
-      <div class="xp-map-wrap">
-        <div class="xp-map-stage reveal">
-          <img class="xp-map-bg" src="assets/map/webp/26-expedition-relief-map.webp" alt="An overhead relief map of a green Himalayan valley with forests, clearings and a winding river" loading="lazy" decoding="async" fetchpriority="high">
-          <span class="xp-map-glow" aria-hidden="true"></span>
-          <svg class="xp-map-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <path class="xp-route-bed" d="M16 78 C18 55 20 35 24 22 S50 15 76 18 S86 45 84 74"/>
-            <path class="xp-route-live" pathLength="1" d="M16 78 C18 55 20 35 24 22 S50 15 76 18 S86 45 84 74"/>
-          </svg>
-          <span class="xp-map-pin" style="--x:16%;--y:78%"><i></i><b>01</b></span>
-          <span class="xp-map-pin" style="--x:24%;--y:22%"><i></i><b>02</b></span>
-          <span class="xp-map-pin" style="--x:76%;--y:18%"><i></i><b>03</b></span>
-          <span class="xp-map-pin" style="--x:84%;--y:74%"><i></i><b>04</b></span>
-          <img class="xp-map-compass" src="assets/map/webp/27-field-compass.webp" alt="" loading="lazy" decoding="async">
-          <div class="xp-map-tag" aria-hidden="true"><strong>Expedition field system</strong><span>30°N · Himalayas · Edition 01 · 14.11.26</span></div>
-        </div>
-        <div class="xp-map-notes" aria-label="Four expedition coordinates">
-          <article class="xp-map-note note-1 reveal"><b class="xp-map-note-no">01</b><p class="xp-coord-label">Mission coordinate</p><h3>Why this exists</h3><p>To explore what becomes possible when medical review, daily habits, progressive movement and community support are practised consistently.</p><strong>Diabetes should not make life smaller.</strong></article>
-          <article class="xp-map-note note-2 reveal"><b class="xp-map-note-no">02</b><p class="xp-coord-label">Programme coordinate</p><h3>More than a trek</h3><p>Application and screening, sixty days of preparation, a supported 5–7 day Himalayan field experience, then responsible public learning.</p></article>
-          <article class="xp-map-note note-3 reveal"><b class="xp-map-note-no">03</b><p class="xp-coord-label">Participant coordinate</p><h3>Who may apply</h3><p>Adults living with Type 2 diabetes, from across India, ready for daily practice, clinical guidance and group accountability.</p><strong>No trekking experience required.</strong></article>
-          <article class="xp-map-note note-4 reveal"><b class="xp-map-note-no">04</b><p class="xp-coord-label">Safety coordinate</p><h3>Medicine leads</h3><p>Screen. Prepare. Clear. Monitor. The doctor and mountain team can change or stop the plan at every stage.</p><a href="#safety">Open the safety system ↓</a></article>
+        <div class="founder-video-wrap reveal">
+          <div class="founder-video-stage" role="img" aria-label="Founder’s Note video placeholder">
+            <img src="assets/sections/webp/11-expedition-team.webp" alt="" loading="lazy" decoding="async">
+            <div class="founder-video-shade"></div>
+            <div class="founder-video-status">
+              <span class="founder-play" aria-hidden="true">▶</span>
+              <div><small>Founder’s Note</small><strong>Video coming soon</strong></div>
+            </div>
+          </div>
+          <img class="founder-frame-vine founder-frame-vine-top" src="assets/botanicals/webp/49-fern-vine-border.webp" alt="" loading="lazy" decoding="async">
+          <img class="founder-frame-vine founder-frame-vine-bottom" src="assets/botanicals/webp/63-groundcover-strip.webp" alt="" loading="lazy" decoding="async">
         </div>
       </div>
-
-      <img class="section-seam seam-bottom terrain-seam" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy" decoding="async">
     </section>
 
-    <section class="waterfall-gateway immersive-panel" id="journey" aria-labelledby="gateway-title" data-depth-section>
+    <div class="leafy-join" aria-hidden="true"><img src="assets/botanicals/webp/41-fern-corner-left.webp" alt=""><span></span><img src="assets/botanicals/webp/42-fern-corner-right.webp" alt=""></div>
+
+    <section class="purpose-section" id="briefing" aria-labelledby="briefing-title">
+      <div class="purpose-glow" aria-hidden="true"></div>
+      <div class="purpose-greenery" aria-hidden="true">
+        <img class="purpose-leaf purpose-leaf-left" src="assets/botanicals/webp/41-fern-corner-left.webp" alt="" loading="lazy" decoding="async">
+        <img class="purpose-leaf purpose-leaf-right" src="assets/botanicals/webp/42-fern-corner-right.webp" alt="" loading="lazy" decoding="async">
+        <img class="purpose-leaf purpose-leaf-ground" src="assets/botanicals/webp/63-groundcover-strip.webp" alt="" loading="lazy" decoding="async">
+      </div>
+      <div class="purpose-inner">
+        <header class="purpose-heading reveal">
+          <p class="kicker">The purpose</p>
+          <h2 id="briefing-title">Why we are doing <em>this.</em></h2>
+          <p>We are bringing 21 people living with Type&nbsp;2 diabetes together to prepare carefully, act visibly and learn responsibly.</p>
+        </header>
+
+        <div class="purpose-reading reveal">
+          <details>
+            <summary><span><small>Purpose 01</small>Why illness should not limit life’s possibilities</span><i aria-hidden="true">+</i></summary>
+            <div class="purpose-detail">
+              <p>A diagnosis can become more than a medical condition. It can become a psychological boundary, making people believe that certain experiences, ambitions and adventures are no longer meant for them. We want to challenge that belief.</p>
+              <p>Diabetes requires awareness, preparation and responsibility, but it should not automatically require a smaller life. With appropriate medical screening, physical preparation, acclimatisation, glucose monitoring and professional support, people living with Type 2 diabetes can continue to pursue meaningful and challenging goals.</p>
+              <blockquote>Take your health seriously, but do not allow your diagnosis to define the boundaries of your life.</blockquote>
+              <p>This is not a claim that everyone with diabetes should climb a mountain. Participants will be medically screened and trained, and the expedition will be supported by experienced trekking professionals and a medical and scientific governance framework. Safety remains the summit.</p>
+            </div>
+          </details>
+          <details>
+            <summary><span><small>Purpose 02</small>What we hope to learn about altitude and glucose</span><i aria-hidden="true">+</i></summary>
+            <div class="purpose-detail">
+              <p>The expedition also offers an opportunity to observe how sustained physical activity at altitude may affect glucose regulation in appropriately selected people living with Type 2 diabetes.</p>
+              <p>Existing research is limited and not fully consistent. Hypoxia has sometimes been associated with lower glucose or improved glucose utilisation, while rapid ascent, physical stress, poor sleep, dehydration and acute mountain sickness can also worsen glycaemic control. We will not present altitude as a therapy or claim that climbing a mountain reverses diabetes.</p>
+              <p>Subject to appropriate medical and research oversight, measures such as continuous glucose monitoring, Time in Range, glucose variability, physical activity, sleep, oxygen saturation and symptoms may be observed before, during and after the expedition.</p>
+              <p class="purpose-boundary">The initiative is hypothesis-generating, not a clinical trial or treatment claim. Even if the summit is not reached, every participant returning safely and well is the priority.</p>
+            </div>
+          </details>
+        </div>
+        <a class="inline-apply reveal" href="apply.html" target="_top"><span>Interested in joining the expedition?</span><strong>Apply Now ↗</strong></a>
+      </div>
+    </section>
+
+    <div class="leafy-join leafy-join-deep" aria-hidden="true"><img src="assets/botanicals/webp/49-fern-vine-border.webp" alt=""><span></span><img src="assets/botanicals/webp/42-fern-corner-right.webp" alt=""></div>
+
+    <section class="waterfall-gateway glance-section immersive-panel" id="glance" aria-labelledby="gateway-title" data-depth-section>
       <img class="section-seam seam-top canopy-seam" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy">
       <img class="world-bg" src="assets/experience/webp/13-waterfall-ravine.webp" alt="A waterfall descending through a misty emerald mountain ravine" loading="eager" decoding="async">
       <div class="world-grade"></div><div class="drifting-mist mist-left"></div><div class="drifting-mist mist-right"></div>
       <img class="foliage-frame" src="assets/experience/webp/16-fern-frame.webp" alt="" loading="lazy" decoding="async">
       <div class="botanical-field gateway-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/49-fern-vine-border.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/50-ivy-vertical.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/55-seedhead-sprig.webp" alt=""><img class="flora flora-d" src="assets/botanicals/webp/56-mint-sprig.webp" alt=""></div>
-      <div class="gateway-copy reveal">
-        <p class="kicker">The expedition begins before the mountain</p>
-        <h2 id="gateway-title">Prepare.<br><em>Ascend.</em><br>Return with evidence.</h2>
-        <p>This is a medically reviewed transformation programme, a supported Himalayan field experience and a permanent public record of what we learn.</p>
+      <div class="glance-content">
+        <header class="glance-heading reveal">
+          <p class="kicker">The expedition at a glance</p>
+          <h2 id="gateway-title">The expedition<br><em>at a glance.</em></h2>
+          <div class="glance-live"><span>Preparation begins before the mountain</span><strong><b data-countdown-days>—</b> days to World Diabetes Day</strong></div>
+        </header>
+        <div class="glance-grid reveal" aria-label="Expedition facts">
+          <div><small>Participants</small><strong>21</strong><span>adults with Type 2 diabetes</span></div>
+          <div><small>Preparation</small><strong>60</strong><span>structured days</span></div>
+          <div><small>Expedition</small><strong>6</strong><span>supported days</span></div>
+          <div><small>Altitude</small><strong>11–13k</strong><span>feet, subject to approval</span></div>
+          <div><small>Goal date</small><strong>14 Nov</strong><span>World Diabetes Day 2026</span></div>
+          <div><small>Experience</small><strong>Not required</strong><span>readiness is built progressively</span></div>
+          <div><small>Route</small><strong>In review</strong><span>medical and mountain-safety approval</span></div>
+          <div class="glance-fee"><small>Programme amount</small><strong>₹ XX,XXX</strong><span>placeholder, to be confirmed</span></div>
+        </div>
+        <details class="glance-more reveal">
+          <summary>Selection and support <span>+</span></summary>
+          <div><p><b>Selection</b>Medical safety, readiness, commitment and group suitability.</p><p><b>Support</b>Trek professionals, medical oversight and NirogBhumi coordination.</p></div>
+        </details>
       </div>
-      <div class="phase-compass reveal" aria-label="Three expedition phases">
-        <div class="active"><b>01</b><span>Before</span><small>Build readiness</small></div><i></i>
-        <div><b>02</b><span>On expedition</span><small>Move together</small></div><i></i>
-        <div><b>03</b><span>After</span><small>Publish learning</small></div>
-      </div>
-      <a class="down-link" href="#trail"><span>Follow your route</span><i>↓</i></a>
     </section>
 
     <section class="xp-trail" id="trail" aria-labelledby="trail-title" data-depth-section>
@@ -125,33 +173,37 @@
       <div class="botanical-field xpt-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/45-fiddlehead-accent.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/46-alpine-grass.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/58-lichen-stones.webp" alt=""><img class="flora flora-d" src="assets/botanicals/webp/57-clover-cluster.webp" alt=""></div>
       <div class="xp-inner">
         <header class="xp-trail-head reveal">
-          <p class="kicker">The selection trail</p>
-          <h2 id="trail-title">Five thresholds. <em>Earn the next marker.</em></h2>
-          <p class="xp-lead">The participant's road from first application to responsible return. Every physical milestone protects both the individual and the expedition group.</p>
-          <div class="xp-legend" aria-label="Trail legend"><span><i class="dot-done"></i>Completed ground</span><span><i class="dot-next"></i>Next threshold</span><strong>Route · 05 markers</strong></div>
+          <p class="kicker">The participant journey</p>
+          <h2 id="trail-title">How the participant<br><em>journey works.</em></h2>
+          <p class="xp-lead">From the first application to continuing the practices at home. Each stage has a clear purpose and a safety decision.</p>
+          <div class="xp-legend" aria-label="Trail legend"><span><i class="dot-done"></i>Completed threshold</span><span><i class="dot-next"></i>Next threshold</span><strong>Five thresholds · then return</strong></div>
         </header>
 
         <ol class="xp-timeline">
           <span class="xp-timeline-fill" aria-hidden="true"></span>
           <li class="xp-step reveal" data-step="1">
-            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/31-application-marker.webp" alt="A moss-covered Himalayan stone kilometre marker"><span class="xp-node" style="--number-top:48%;--number-left:50%;--number-color:#12241a">01</span></span></div>
-            <div class="xp-step-copy"><p class="xp-step-tag">Threshold 01 · Application</p><h3>Tell us who you are.</h3><p>Identity, diabetes history, readiness and why this journey matters to you.</p><small>Participant action · 8–10 minutes</small></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds-user/01.webp" alt="Stone milestone one, marking the application threshold"></span></div>
+            <div class="xp-step-copy"><p class="xp-step-tag">Stage 01 · Apply</p><h3>Tell us about yourself.</h3><p>Share your diabetes journey and why this expedition matters to you.</p><small>Initial application · 8–10 minutes</small></div>
           </li>
           <li class="xp-step reveal" data-step="2">
-            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/32-medical-cairn.webp" alt="A Himalayan safety cairn with a bronze marker plate"><span class="xp-node" style="--number-top:78%;--number-left:50%;--number-color:#f0ead0">02</span></span></div>
-            <div class="xp-step-copy"><p class="xp-step-tag">Threshold 02 · Medical screening</p><h3>Safety before selection.</h3><p>Baseline investigations, physician review, fitness and individual risk assessment.</p><small>Medical decision · not first-come-first-served</small></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds-user/02.webp" alt="Stone milestone two, marking the medical review threshold"></span></div>
+            <div class="xp-step-copy"><p class="xp-step-tag">Stage 02 · Medical review</p><h3>Assess individual risk.</h3><p>Complete the required health investigations and physician review.</p><small>Medical decision · not first-come-first-served</small></div>
           </li>
           <li class="xp-step reveal" data-step="3">
-            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/33-preparation-waymarker.webp" alt="A rope-lashed Himalayan cedar trail waymarker"><span class="xp-node" style="--number-top:25%;--number-left:40%;--number-color:#f0e8cd">03</span></span></div>
-            <div class="xp-step-copy"><p class="xp-step-tag">Threshold 03 · Transformation</p><h3>Build the everyday foundation.</h3><p>Daily practice, weekly reviews, progressive movement and health monitoring.</p><small>About one focused hour each morning</small></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds-user/03.webp" alt="Stone milestone three, marking the preparation threshold"></span></div>
+            <div class="xp-step-copy"><p class="xp-step-tag">Stage 03 · Prepare for 60 days</p><h3>Build readiness at home.</h3><p>Follow the daily programme, attend reviews and progress gradually.</p><small>About one focused hour each morning</small></div>
           </li>
           <li class="xp-step reveal" data-step="4">
-            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/34-expedition-monolith.webp" alt="A high-altitude Himalayan granite route monolith"><span class="xp-node" style="--number-top:34%;--number-left:51%;--number-color:#f2ead0">04</span></span></div>
-            <div class="xp-step-copy"><p class="xp-step-tag">Threshold 04 · Himalayan expedition</p><h3>Carry the work onto the trail.</h3><p>A professionally guided, medically supported 5–7 day field experience.</p><small>World Diabetes Day goal · 14 Nov 2026</small></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds-user/04.webp" alt="Stone milestone four, marking final medical and fitness clearance"></span></div>
+            <div class="xp-step-copy"><p class="xp-step-tag">Stage 04 · Final clearance</p><h3>Receive approval to travel.</h3><p>Participation remains conditional on medical and fitness clearance.</p><small>Safety decision · before departure</small></div>
           </li>
           <li class="xp-step reveal" data-step="5">
-            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds/webp/35-return-gateway.webp" alt="A Himalayan stone return gateway with ferns"><span class="xp-node" style="--number-top:14%;--number-left:54%;--number-color:#f2ead0">05</span></span></div>
-            <div class="xp-step-copy"><p class="xp-step-tag">Threshold 05 · Field debrief</p><h3>Return. Recover. Carry it home.</h3><p>Close the journey carefully, review what was learned and continue the practices beyond the mountain.</p><small>Responsible return · long-term continuity</small></div>
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds-user/05.webp" alt="Stone milestone five, marking the Himalayan expedition"></span></div>
+            <div class="xp-step-copy"><p class="xp-step-tag">Stage 05 · Join the expedition</p><h3>Take the work onto the trail.</h3><p>Complete the supported six-day route with the selected group.</p><small>World Diabetes Day goal · 14 Nov 2026</small></div>
+          </li>
+          <li class="xp-step reveal" data-step="6">
+            <div class="xp-step-marker"><span class="xp-marker-frame"><img src="assets/thresholds-user/06.webp" alt="Stone milestone six, marking the return and continuation"></span></div>
+            <div class="xp-step-copy"><p class="xp-step-tag">Stage 06 · Return and continue</p><h3>Recover. Review. Continue.</h3><p>Bring the learning home and continue the practices beyond the mountain.</p><small>Responsible return · long-term continuity</small></div>
           </li>
         </ol>
       </div>
@@ -163,14 +215,14 @@
       <img class="world-bg" src="assets/sections/webp/09-preparation.webp" alt="Adults preparing together in a lush forest clearing" loading="lazy" decoding="async">
       <div class="world-grade prep-grade"></div><div class="drifting-mist prep-mist"></div>
       <div class="botanical-field preparation-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/59-dew-leaves.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/60-flowering-weed.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/61-vine-loop.webp" alt=""><img class="flora flora-d" src="assets/botanicals/webp/62-mountain-herb.webp" alt=""><img class="flora flora-e" src="assets/botanicals/webp/63-groundcover-strip.webp" alt=""></div>
-      <div class="prep-intro reveal"><p class="kicker">Chapter 01 · Before the trail</p><h2 id="preparation-title">Sixty days to build<br><em>a capable everyday.</em></h2><p>The preparation is practical, progressive and reviewed. No previous trekking experience is required.</p></div>
+      <div class="prep-intro reveal"><p class="kicker">60 days before departure</p><h2 id="preparation-title">How participants<br><em>will prepare.</em></h2><p>Sixty days of practical, progressive preparation across six connected pillars.</p></div>
       <div class="prep-pillars" aria-label="Six preparation systems">
-        <article class="reveal"><b>01</b><h3>Medical</h3><p>Baseline review and progress monitoring.</p></article>
-        <article class="reveal"><b>02</b><h3>Movement</h3><p>Walking, mobility and progressive strength.</p></article>
-        <article class="reveal"><b>03</b><h3>Nutrition</h3><p>Whole-food routines and practical habits.</p></article>
-        <article class="reveal"><b>04</b><h3>Recovery</h3><p>Sleep rhythm and restorative practice.</p></article>
-        <article class="reveal"><b>05</b><h3>Mind</h3><p>Yoga, breathwork and stress regulation.</p></article>
-        <article class="reveal"><b>06</b><h3>Community</h3><p>Weekly reviews, support and accountability.</p></article>
+        <article class="reveal"><b>01</b><h3>Medical readiness</h3><p>Baseline assessment, physician review, monitoring and final clearance.</p></article>
+        <article class="reveal"><b>02</b><h3>Yoga & mobility</h3><p>Mobility, balance, strength, breathing, recovery and body awareness.</p></article>
+        <article class="reveal"><b>03</b><h3>Walking & strength</h3><p>Progressive walking, stairs, mobility and functional strength.</p></article>
+        <article class="reveal"><b>04</b><h3>Nutrition & habits</h3><p>Practical whole-food routines and sustainable metabolic habits.</p></article>
+        <article class="reveal"><b>05</b><h3>Sleep & recovery</h3><p>Sleep regularity, restorative practices and training-fatigue management.</p></article>
+        <article class="reveal"><b>06</b><h3>Mind & community</h3><p>Breathwork, meditation, stress regulation, reviews and accountability.</p></article>
       </div>
       <div class="field-note reveal"><span>Daily field note</span><strong>≈ 1 hour each morning</strong><small>Adjusted to individual progress</small></div>
       <img class="section-seam seam-bottom terrain-seam" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy">
@@ -181,84 +233,124 @@
       <img class="world-bg" src="assets/sections/webp/11-expedition-team.webp" alt="A supported group walking through a green Himalayan valley" loading="lazy" decoding="async">
       <div class="world-grade expedition-grade"></div><div class="altitude-lines" aria-hidden="true"></div>
       <div class="botanical-field expedition-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/64-moss-leaf-divider.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/42-fern-corner-right.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/53-white-wildflowers.webp" alt=""></div>
-      <div class="expedition-copy reveal"><p class="kicker">Chapter 02 · On expedition</p><h2 id="expedition-title">Not a race<br><em>to the summit.</em></h2><p>The approved route will prioritise gradual progression, professional support and access appropriate to the selected group. The detailed itinerary follows route and medical review.</p></div>
-      <div class="telemetry reveal" aria-label="Expedition facts">
-        <div><small>Duration</small><strong>5–7</strong><span>days</span></div><div><small>Field group</small><strong>≈15</strong><span>participants</span></div><div><small>Altitude band</small><strong>11–13k</strong><span>ft, only if approved</span></div><div><small>Goal day</small><strong>14.11</strong><span>World Diabetes Day</span></div>
-      </div>
+      <div class="expedition-copy reveal"><p class="kicker">The six-day expedition</p><h2 id="expedition-title">What the expedition<br><em>will involve.</em></h2><p>The approved route will prioritise gradual progression, professional support and access appropriate to the selected group. The detailed itinerary follows route and medical review.</p></div>
+      <div class="route-status reveal"><span>Route status</span><strong>Under medical and mountain-safety evaluation</strong><p>Region, elevation profile, walking distances and acclimatisation plan will be published after approval.</p></div>
+      <details class="route-reveal reveal">
+        <summary>What the route reveal will include <span>+</span></summary>
+        <div><span>Region</span><span>Elevation profile</span><span>Daily distance</span><span>Terrain</span><span>Accommodation</span><span>Acclimatisation</span><span>Why this route</span></div>
+      </details>
       <blockquote class="valley-quote reveal">“Diabetes should not make life smaller.”</blockquote>
       <img class="section-seam seam-bottom canopy-seam seam-flip-y" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy">
     </section>
 
+    <div class="leafy-join leafy-join-canopy" aria-hidden="true"><img src="assets/botanicals/webp/41-fern-corner-left.webp" alt=""><span></span><img src="assets/botanicals/webp/49-fern-vine-border.webp" alt=""></div>
+
     <section class="safety-world" id="safety" aria-labelledby="safety-title" data-depth-section>
       <img class="section-seam seam-top canopy-seam" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy">
       <div class="botanical-field safety-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/45-fiddlehead-accent.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/55-seedhead-sprig.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/56-mint-sprig.webp" alt=""><img class="flora flora-d" src="assets/botanicals/webp/62-mountain-herb.webp" alt=""></div>
-      <div class="safety-image"><img src="assets/sections/webp/10-medical-screening.webp" alt="An expedition doctor checking a participant's blood pressure" loading="lazy" decoding="async"><div></div></div>
+      <div class="safety-image"><img src="assets/sections/webp/10-medical-screening.webp" alt="A health professional checking a participant's blood pressure" loading="lazy" decoding="async"><div></div></div>
       <div class="safety-copy">
-        <p class="kicker reveal">The expedition operating system</p><h2 id="safety-title" class="reveal">The mountain never<br><em>outranks medicine.</em></h2><p class="safety-lead reveal">Final participation depends on medical review. Clinical and mountain-safety decisions override personal goals at every stage.</p>
+        <p class="kicker reveal">Safety and screening</p><h2 id="safety-title" class="reveal">Medical safety<br><em>comes first.</em></h2><p class="safety-lead reveal">Final participation depends on medical review. Medical and mountain-safety decisions take priority over personal goals at every stage.</p>
         <ol class="safety-sequence">
           <li class="reveal"><b>01</b><div><h3>Screen before selection</h3><p>Health history, baseline investigations, physician approval and individual risk assessment.</p></div></li>
           <li class="reveal"><b>02</b><div><h3>Prepare progressively</h3><p>Fitness and health response are reviewed throughout the 60 days.</p></div></li>
           <li class="reveal"><b>03</b><div><h3>Clear before travel</h3><p>A final medical decision is required before joining the expedition.</p></div></li>
-          <li class="reveal"><b>04</b><div><h3>Monitor in the field</h3><p>Expedition doctor, guides, daily checks and emergency response protocols.</p></div></li>
+          <li class="reveal"><b>04</b><div><h3>Monitor in the field</h3><p>Daily checks, trained expedition professionals and emergency response protocols.</p></div></li>
         </ol>
-        <div class="governance reveal"><span>Science & medical governance</span><strong>Collaboration planned with GMHA</strong></div>
+        <div class="governance reveal"><span>Science & medical governance</span><strong>Framework and collaborations under review</strong></div>
       </div>
       <img class="section-seam seam-bottom terrain-seam seam-flip-x" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy">
     </section>
+
+    <div class="leafy-join leafy-join-deep" aria-hidden="true"><img src="assets/botanicals/webp/49-fern-vine-border.webp" alt=""><span></span><img src="assets/botanicals/webp/42-fern-corner-right.webp" alt=""></div>
 
     <section class="basecamp-check" id="eligibility" aria-labelledby="eligibility-title">
       <img class="section-fern-top" src="assets/experience/webp/16-fern-frame.webp" alt="" loading="lazy">
       <div class="botanical-field eligibility-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/43-moss-corner.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/54-yellow-wildflowers.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/57-clover-cluster.webp" alt=""></div>
-      <div class="check-heading reveal"><p class="kicker">Before you pack</p><h2 id="eligibility-title">You need commitment.<br><em>Not trek experience.</em></h2></div>
+      <div class="check-heading reveal"><p class="kicker">Before you apply</p><h2 id="eligibility-title">Who can apply<br><em>and what you need.</em></h2></div>
       <div class="check-panels">
         <article class="check-panel reveal"><span class="check-icon">✓</span><p>Good starting fit</p><ul><li>Adult living with Type 2 diabetes</li><li>Ready for medical screening and guidance</li><li>Able to commit about one hour each morning</li><li>Available around 14 November 2026</li><li>Open to group accountability and learning</li></ul></article>
-        <article class="check-panel review reveal"><span class="check-icon">i</span><p>Needs individual review</p><ul><li>Insulin use or recent medication changes</li><li>Uncontrolled blood pressure</li><li>Heart, kidney, vision or nerve complications</li><li>Recent surgery or significant mobility limits</li><li>Any concern affecting altitude or exertion safety</li></ul></article>
+        <article class="check-panel requirements reveal"><span class="check-icon">→</span><p>Have these details ready</p><ul><li>Personal and contact details</li><li>Type 2 diabetes history and current medication</li><li>Recent fasting and post-meal glucose readings</li><li>Latest HbA1c and relevant medical reports</li><li>Treating doctor details, health history and availability</li></ul></article>
+      </div>
+      <div class="health-boundary reveal">
+        <span>Important health criteria</span>
+        <p>Applicants should not have another major or uncontrolled diagnosis that could make sustained exertion or altitude unsafe, including active cancer, serious heart disease, advanced kidney disease, severe vision or nerve complications, or a recent major surgery. Every application remains subject to individual medical screening and final physician clearance.</p>
       </div>
       <p class="medical-note reveal">Application does not guarantee selection. NirogBhumi does not replace your treating doctor. Never stop or change medication without medical supervision.</p>
+      <a class="inline-apply inline-apply-centered reveal" href="apply.html" target="_top"><span>Ready for the first step?</span><strong>Apply Now ↗</strong></a>
       <img class="section-seam seam-bottom canopy-seam seam-flip-y seam-flip-x" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy">
     </section>
 
-    <section class="evidence-world immersive-panel" id="evidence" aria-labelledby="evidence-title" data-depth-section hidden aria-hidden="true">
+    <section class="evidence-world journal-world immersive-panel" id="journal" aria-labelledby="evidence-title" data-depth-section>
       <img class="section-seam seam-top terrain-seam seam-flip-y" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy">
       <img class="world-bg" src="assets/sections/webp/12-research-archive.webp" alt="Field research notes, photography equipment and anonymised charts" loading="lazy" decoding="async">
       <div class="world-grade evidence-grade"></div>
-      <div class="evidence-intro reveal"><p class="kicker">Chapter 03 · After we return</p><h2 id="evidence-title">The evidence trail<br><em>stays open.</em></h2><p>This page becomes NirogBhumi's permanent expedition archive. Personal health information is never published without explicit consent.</p></div>
-      <div class="archive-console reveal">
-        <header><div><span class="live-dot"></span><small>Archive status</small><strong>Pre-expedition · Framework live</strong></div><div class="archive-filters" role="group" aria-label="Filter archive"><button class="active" type="button" data-filter="all">All</button><button type="button" data-filter="research">Research</button><button type="button" data-filter="reports">Reports</button><button type="button" data-filter="stories">Stories</button><button type="button" data-filter="media">Media</button></div></header>
-        <div class="archive-grid" aria-live="polite">
-          <article data-category="research"><span>Research · Planned</span><h3>Study protocol & methodology</h3><p>What is observed, when measurements happen and how limitations are reported.</p><small>Publishes before fieldwork ↗</small></article>
-          <article data-category="research"><span>Research · After</span><h3>Aggregate medical findings</h3><p>Anonymised group-level patterns, context and responsible interpretation.</p><small>No individual medical records ↗</small></article>
-          <article data-category="reports"><span>Report · After</span><h3>Expedition outcomes report</h3><p>Preparation adherence, field observations, operational learning and next steps.</p><small>Downloadable report ↗</small></article>
-          <article data-category="stories"><span>Stories · With consent</span><h3>Participant field diaries</h3><p>First-person reflections on preparation, fear, capability and community.</p><small>Written and audio stories ↗</small></article>
-          <article data-category="media"><span>Gallery · After</span><h3>Photographs & field notes</h3><p>A day-by-day visual record of the people, landscape and work.</p><small>Documentary gallery ↗</small></article>
-          <article data-category="media"><span>Film · After</span><h3>The expedition documentary</h3><p>Short films, interviews and an honest account of what the journey required.</p><small>Video archive ↗</small></article>
+      <div class="evidence-intro reveal"><p class="kicker">Updates and learning</p><h2 id="evidence-title">Follow the expedition<br><em>journey.</em></h2><p>Preparation updates, participant voices and responsible group-level observations will appear here as the journey progresses.</p></div>
+      <details class="preparation-dashboard reveal" aria-labelledby="dashboard-title">
+        <summary><div><p class="kicker">Live preparation dashboard</p><h3 id="dashboard-title">Group progress, never private health data.</h3></div><span>View group metrics <i aria-hidden="true">+</i></span></summary>
+        <div class="dashboard-grid">
+          <div><strong>Pending</strong><small>Participants selected</small></div>
+          <div><strong>0 / 60</strong><small>Preparation days</small></div>
+          <div><strong>Not started</strong><small>Collective walking</small></div>
+          <div><strong>Not started</strong><small>Yoga sessions</small></div>
+          <div><strong>Not started</strong><small>Weekly reviews</small></div>
+          <div><strong>Under review</strong><small>Route status</small></div>
+          <div><strong><b data-countdown-days>—</b> days</strong><small>To World Diabetes Day</small></div>
+          <div><strong>Opening soon</strong><small>Application status</small></div>
+        </div>
+      </details>
+
+      <div class="participant-preview reveal" id="participants" aria-labelledby="participant-preview-title">
+        <div class="participant-preview-head"><p class="kicker">Participant voices · Before selection</p><h3 id="participant-preview-title">Why people want to begin.</h3></div>
+        <div class="participant-quotes">
+          <blockquote>“I want to stop seeing diabetes as a limitation.”</blockquote>
+          <blockquote>“I have never imagined myself in the Himalayas.”</blockquote>
+          <blockquote>“I want my family to see what consistent effort can make possible.”</blockquote>
         </div>
       </div>
+      <details class="participant-future journal-details reveal">
+        <summary>After selection: meet the team <span>+</span></summary>
+        <div>
+          <p>Photograph and city</p><p>Brief diabetes journey</p><p>Why they applied</p><p>What they fear</p><p>What they hope to achieve</p><p>Preparation updates</p>
+        </div>
+      </details>
+      <details class="journal-details reveal">
+        <summary>What will be documented <span>+</span></summary>
+        <div>
+          <p>Preparation methodology and adherence</p><p>Aggregate, anonymised health observations</p><p>Time in Range and glucose variability, where appropriate</p><p>Fitness and walking progression</p><p>Participant reflections and daily journal</p><p>Photography and short films</p><p>Safety and operational learning</p><p>Final report and future recommendations</p>
+        </div>
+      </details>
+      <article class="journal-update reveal" aria-label="Latest expedition update">
+        <div><small>First journal entry</small><time>Date to be announced</time></div>
+        <strong>Applications opening soon</strong>
+        <p>Dated preparation, selection, partner and trail updates will appear here as each milestone is reached.</p>
+      </article>
       <img class="section-seam seam-bottom terrain-seam seam-flip-x" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy">
     </section>
+
+    <section class="onboard-section" id="partners" aria-labelledby="onboard-title">
+      <div class="onboard-inner">
+        <header class="onboard-heading reveal">
+          <p class="kicker">Ways to come on board</p>
+          <h2 id="onboard-title">Choose how you want<br><em>to join.</em></h2>
+          <p>Participate, nominate, support the work or follow the journey.</p>
+        </header>
+        <div class="onboard-paths">
+          <a class="onboard-path reveal" href="apply.html" target="_top"><span>01</span><h3>Join as a participant</h3><p>Apply for one of 21 expedition places.</p><i>Apply Now ↗</i></a>
+          <a class="onboard-path reveal" href="mailto:nirogbhumi@gmail.com?subject=Nomination%20for%20World%20Diabetes%20Day%20Expedition"><span>02</span><h3>Nominate someone</h3><p>Recommend a person living with Type 2 diabetes.</p><i>Nominate ↗</i></a>
+          <a class="onboard-path reveal" href="mailto:nirogbhumi@gmail.com?subject=Expedition%20Partnership"><span>03</span><h3>Become a partner</h3><p>Medical knowledge, equipment, travel, logistics or responsible storytelling.</p><small>Health · Support · Media</small><i>Partner ↗</i></a>
+          <a class="onboard-path reveal" href="https://wa.me/917357542882?text=I%20would%20like%20to%20follow%20the%20World%20Diabetes%20Day%20Expedition%202026" target="_blank" rel="noopener"><span>04</span><h3>Follow the expedition</h3><p>Receive preparation stories and key updates.</p><i>Follow ↗</i></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="leafy-join leafy-join-canopy" aria-hidden="true"><img src="assets/botanicals/webp/41-fern-corner-left.webp" alt=""><span></span><img src="assets/botanicals/webp/42-fern-corner-right.webp" alt=""></div>
 
     <section class="registration-world immersive-panel" id="register" aria-labelledby="register-title">
       <img class="section-seam seam-top canopy-seam seam-flip-x" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy">
       <img class="world-bg" src="assets/experience/webp/15-evening-camp.webp" alt="A quiet forest expedition camp at blue hour" loading="lazy" decoding="async"><div class="world-grade registration-grade"></div><div class="camp-glow"></div>
       <div class="botanical-field registration-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/41-fern-corner-left.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/48-hanging-tendril.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/59-dew-leaves.webp" alt=""></div>
-      <div class="registration-intro reveal"><p class="kicker">Edition 01 · Applications nationwide</p><h2 id="register-title">Meet us<br><em>at basecamp.</em></h2><p>This first screen is not a medical clearance or a guarantee of participation. Clinical documents are requested later through an approved secure process.</p><div class="registration-meta"><div><span>Time</span><strong>8–10 min</strong></div><div><span>Selection</span><strong>Multi-stage</strong></div><div><span>Group</span><strong>≈15 people</strong></div></div></div>
-
-      <div class="form-shell reveal">
-        <div class="form-progress" aria-label="Application progress"><span class="active" data-step-indicator="1"><i>1</i>About you</span><span data-step-indicator="2"><i>2</i>Health screen</span><span data-step-indicator="3"><i>3</i>Readiness</span></div>
-        <form id="registration-form" novalidate>
-          <fieldset class="form-step active" data-form-step="1"><legend><span>Step 1 of 3</span>Tell us who you are</legend><div class="field-grid">
-            <label class="field field-wide"><span>Full name *</span><input name="fullName" autocomplete="name" required></label><label class="field"><span>Email *</span><input type="email" name="email" autocomplete="email" required></label><label class="field"><span>Phone / WhatsApp *</span><input type="tel" name="phone" autocomplete="tel" required></label><label class="field"><span>Age *</span><input type="number" name="age" min="18" max="80" inputmode="numeric" required></label><label class="field"><span>City *</span><input name="city" autocomplete="address-level2" required></label><label class="field"><span>State / region *</span><input name="state" autocomplete="address-level1" required></label><label class="field"><span>Country *</span><input name="country" autocomplete="country-name" required></label>
-          </div></fieldset>
-          <fieldset class="form-step" data-form-step="2" hidden><legend><span>Step 2 of 3</span>High-level health screen</legend><p class="fieldset-note">Do not upload prescriptions or medical reports here. Detailed clinical information is collected securely only if you advance.</p><div class="field-grid">
-            <label class="field"><span>Year diagnosed with Type 2 diabetes *</span><input type="number" name="diagnosisYear" min="1970" max="2026" inputmode="numeric" required></label><label class="field"><span>Current treatment *</span><select name="treatment" required><option value="">Select</option><option>Lifestyle guidance only</option><option>Oral medication</option><option>Insulin</option><option>Insulin and oral medication</option><option>Other / unsure</option></select></label><label class="field"><span>Latest HbA1c, if known</span><input type="number" name="hba1c" min="3" max="20" step="0.1" inputmode="decimal" placeholder="e.g. 7.2"></label><label class="field"><span>Current weekly activity *</span><select name="activity" required><option value="">Select</option><option>Mostly sedentary</option><option>1–2 active days</option><option>3–4 active days</option><option>5+ active days</option></select></label>
-          </div><div class="check-group"><p>Has a doctor diagnosed any of the following?</p><label><input type="checkbox" name="conditions" value="kidney"><span>Kidney disease</span></label><label><input type="checkbox" name="conditions" value="vision"><span>Diabetes-related vision disease</span></label><label><input type="checkbox" name="conditions" value="heart"><span>Heart disease</span></label><label><input type="checkbox" name="conditions" value="bp"><span>Uncontrolled blood pressure</span></label><label><input type="checkbox" name="conditions" value="nerve"><span>Significant nerve or foot complications</span></label><label><input type="checkbox" name="conditions" value="none"><span>None of these</span></label></div></fieldset>
-          <fieldset class="form-step" data-form-step="3" hidden><legend><span>Step 3 of 3</span>Readiness and consent</legend><div class="field-grid">
-            <label class="field"><span>Can you commit about one hour each morning? *</span><select name="timeCommitment" required><option value="">Select</option><option>Yes</option><option>I need to discuss my schedule</option><option>No</option></select></label><label class="field"><span>Available for 5–7 days around 14 Nov 2026? *</span><select name="availability" required><option value="">Select</option><option>Yes</option><option>Likely, pending confirmation</option><option>No</option></select></label><label class="field field-wide"><span>Why does this expedition matter to you? *</span><textarea name="motivation" rows="5" minlength="80" maxlength="1200" required placeholder="Tell us about your motivation, expectations and what you hope to contribute."></textarea><small><span data-count>0</span>/1200</small></label><label class="field"><span>Emergency contact name *</span><input name="emergencyName" autocomplete="off" required></label><label class="field"><span>Emergency contact phone *</span><input type="tel" name="emergencyPhone" autocomplete="off" required></label><label class="field field-wide"><span>Relationship to you *</span><input name="emergencyRelationship" required></label>
-          </div><div class="consent-group"><label><input type="checkbox" name="accuracy" required><span>I confirm the information is accurate to the best of my knowledge. *</span></label><label><input type="checkbox" name="selection" required><span>I understand that applying does not guarantee selection. *</span></label><label><input type="checkbox" name="medicine" required><span>I will not change medication without my treating doctor's guidance. *</span></label><label><input type="checkbox" name="privacy" required><span>I consent to this information being used only to assess and contact me about this expedition, subject to the privacy policy. *</span></label></div></fieldset>
-          <div class="form-errors" role="alert" aria-live="assertive"></div><div class="form-actions"><button class="form-back" type="button" hidden>← Back</button><button class="form-next" type="button">Continue <span>→</span></button><button class="form-submit" type="submit" hidden>Review application <span>↗</span></button></div>
-        </form>
-        <div class="form-confirmation" hidden tabindex="-1"><span>Application review</span><h3>Your form is complete.</h3><p>This prototype validates the application but does not transmit or store health information. Connect it to NirogBhumi's approved secure intake system before launch.</p><button type="button" data-edit-application>Edit application</button></div>
-      </div>
+      <div class="registration-intro registration-cta-card reveal"><p class="kicker">Applications nationwide</p><h2 id="register-title">Ready to<br><em>apply?</em></h2><p>The application takes about 8–10 minutes. Applying does not guarantee selection, and clinical documents will only be requested later through an approved secure process.</p><div class="registration-meta"><div><span>Time</span><strong>8–10 min</strong></div><div><span>Selection</span><strong>Multi-stage</strong></div><div><span>Group</span><strong>21 people</strong></div><div class="fee-placeholder"><span>Programme amount</span><strong>₹ XX,XXX</strong><small>Placeholder</small></div></div><a class="primary-apply-button" href="apply.html" target="_top">Apply Now <span>↗</span></a></div>
       <img class="section-seam seam-bottom terrain-seam" src="assets/experience/webp/23-terrain-seam.webp" alt="" loading="lazy">
     </section>
 
@@ -266,16 +358,28 @@
       <img class="section-seam seam-top canopy-seam" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy">
       <img class="faq-foliage" src="assets/experience/webp/16-fern-frame.webp" alt="" loading="lazy">
       <div class="botanical-field faq-flora" aria-hidden="true"><img class="flora flora-a" src="assets/botanicals/webp/47-moss-edge-horizontal.webp" alt=""><img class="flora flora-b" src="assets/botanicals/webp/63-groundcover-strip.webp" alt=""><img class="flora flora-c" src="assets/botanicals/webp/60-flowering-weed.webp" alt=""></div>
-      <div class="faq-heading reveal"><p class="kicker">Before you apply</p><h2 id="faq-title">Clear answers.<br><em>No summit promises.</em></h2></div>
+      <div class="faq-heading reveal"><p class="kicker">Before you apply</p><h2 id="faq-title">Questions before<br><em>you apply.</em></h2></div>
       <div class="faq-list">
         <details class="reveal"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No. The planned route is simple to moderate, and the 60-day phase builds readiness. Final participation still depends on medical and fitness clearance.</p></details>
-        <details class="reveal"><summary>Does applying guarantee a place?<span>+</span></summary><p>No. Approximately 15 people will be selected through multiple stages based on medical safety, readiness, commitment and group fit.</p></details>
+        <details class="reveal"><summary>Does applying guarantee a place?<span>+</span></summary><p>No. Up to 21 people will be selected through multiple stages based on medical safety, readiness, commitment and group fit.</p></details>
         <details class="reveal"><summary>Can I stop my diabetes medicine?<span>+</span></summary><p>No. Never stop or change diabetes medication or insulin without your treating doctor's direction. NirogBhumi does not replace your doctor.</p></details>
         <details class="reveal"><summary>What happens during the 60 days?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine supported by health review, movement, nutrition and habits, recovery, stress regulation and weekly accountability.</p></details>
+        <details class="reveal"><summary>What is the programme amount?<span>+</span></summary><p>The final programme amount is still being confirmed. The current placeholder is ₹ XX,XXX and will be replaced before applications formally open.</p></details>
         <details class="reveal"><summary>Will my health information be published?<span>+</span></summary><p>Not as individual medical data. Public findings will be anonymised and aggregated. Personal stories or identifiable media require separate explicit consent.</p></details>
       </div>
     </section>
   </main>
+
+  <nav class="floating-nav" aria-label="Expedition sections">
+    <a href="#briefing" aria-label="Mission"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-2.8 8.2-7 10-4.2-1.8-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-5"/></svg><span>Mission</span></a>
+    <a href="#trail" aria-label="Journey"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c2.5-5 4-8 7-8s3.5-4 7-6"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/></svg><span>Journey</span></a>
+    <a href="#preparation" aria-label="Preparation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V10"/><path d="M12 14c-5 0-7-3-7-7 5 0 7 3 7 7zM12 10c0-4 2-7 7-7 0 4-2 7-7 7z"/></svg><span>Preparation</span></a>
+    <a href="#safety" aria-label="Safety"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-2.8 8.2-7 10-4.2-1.8-7-5.5-7-10V6l7-3z"/><path d="M12 8v7M8.5 11.5h7"/></svg><span>Safety</span></a>
+    <a href="#participants" aria-label="Participants"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3.5 20c.5-4 2.4-6 5.5-6s5 2 5.5 6M14 15c3 0 4.5 1.5 5 4"/></svg><span>Participants</span></a>
+    <a href="#partners" aria-label="Partners"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12l3 3 5-5"/><path d="M4 7h5l2 2 2-2h7v11H4z"/></svg><span>Partners</span></a>
+    <a href="#journal" aria-label="Journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3V4z"/><path d="M8 16h11M9 8h6M9 11h5"/></svg><span>Journal</span></a>
+    <a class="floating-apply" href="apply.html" target="_top" aria-label="Apply now"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg><span>Apply Now</span></a>
+  </nav>
 
   <footer class="site-footer">
     <div class="footer-mark"><img class="footer-logo" src="assets/branding/webp/nirogbhumi-wordmark.webp" alt="NirogBhumi" width="900" height="206" loading="lazy" decoding="async"><span>World Diabetes Day Expedition 2026</span></div>
