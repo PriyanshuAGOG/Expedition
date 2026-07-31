@@ -7,8 +7,6 @@
   const mapStops = [...document.querySelectorAll('.map-stop')];
   const trailStory = document.querySelector('.trail-story');
   const routeMoments = [...document.querySelectorAll('.route-moment')];
-  const thresholdTrail = document.querySelector('.xp-trail');
-  const thresholdSteps = [...document.querySelectorAll('.xp-step')];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -58,13 +56,6 @@
       trailStory.style.setProperty('--trail-fill', `${(trailTrack * 100).toFixed(2)}%`);
       trailStory.style.setProperty('--trail-dot', `${(8 + trailTrack * 84).toFixed(3)}vw`);
       if (innerWidth > 680) routeMoments.forEach((moment, index) => moment.classList.toggle('route-active', trailTrack >= Math.max(0, index / 4 - .035)));
-    }
-    if (thresholdTrail && thresholdSteps.length) {
-      const rect = thresholdTrail.getBoundingClientRect();
-      const thresholdProgress = innerWidth <= 680 ? 0 : clamp(-rect.top / Math.max(1, rect.height - innerHeight));
-      thresholdTrail.style.setProperty('--threshold-progress', thresholdProgress.toFixed(4));
-      const activeThreshold = Math.min(thresholdSteps.length - 1, Math.round(thresholdProgress * (thresholdSteps.length - 1)));
-      thresholdSteps.forEach((step, index) => step.classList.toggle('threshold-active', innerWidth <= 680 || index === activeThreshold));
     }
     updateFloatingNav();
   };
@@ -282,6 +273,61 @@
   if (location.hash === '#register' && applicationDrawer) applicationDrawer.open = true;
 
   const floatingLinks = [...document.querySelectorAll('.floating-nav a[href^="#"]')];
+  const floatingNav = document.querySelector('.floating-nav');
+  let floatingNavIdleTimer = 0;
+  const floatingNavIdleDelay = 3000;
+
+  const setFloatingNavExpanded = expanded => {
+    if (!floatingNav) return;
+    floatingNav.classList.toggle('is-idle', !expanded);
+    floatingNav.classList.toggle('is-expanded', expanded);
+    floatingNav.setAttribute('data-nav-state', expanded ? 'expanded' : 'idle');
+  };
+
+  const scheduleFloatingNavIdle = () => {
+    if (!floatingNav) return;
+    clearTimeout(floatingNavIdleTimer);
+    floatingNavIdleTimer = window.setTimeout(() => {
+      const pointerIsInside = finePointer && floatingNav.matches(':hover');
+      const keyboardIsInside = floatingNav.contains(document.activeElement);
+      if (pointerIsInside || keyboardIsInside) {
+        scheduleFloatingNavIdle();
+        return;
+      }
+      setFloatingNavExpanded(false);
+    }, floatingNavIdleDelay);
+  };
+
+  const wakeFloatingNav = () => {
+    setFloatingNavExpanded(true);
+    scheduleFloatingNavIdle();
+  };
+
+  if (floatingNav) {
+    floatingNav.classList.add('is-expanded');
+    floatingNav.setAttribute('data-nav-state', 'expanded');
+
+    if (finePointer) {
+      floatingNav.addEventListener('pointerenter', wakeFloatingNav);
+      floatingNav.addEventListener('pointerleave', scheduleFloatingNavIdle);
+    } else {
+      floatingNav.addEventListener('pointerdown', event => {
+        if (!floatingNav.classList.contains('is-idle')) {
+          scheduleFloatingNavIdle();
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        wakeFloatingNav();
+      }, { passive: false });
+    }
+
+    floatingNav.addEventListener('focusin', wakeFloatingNav);
+    floatingNav.addEventListener('focusout', () => requestAnimationFrame(scheduleFloatingNavIdle));
+    floatingNav.addEventListener('click', scheduleFloatingNavIdle);
+    scheduleFloatingNavIdle();
+  }
+
   const navTargets = floatingLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
   floatingLinks.forEach(link => link.addEventListener('click', event => {
     const href = link.getAttribute('href');
