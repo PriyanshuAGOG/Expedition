@@ -2205,3 +2205,232 @@ body{padding-bottom:82px}
   .application-page .form-actions button{padding:0 15px}
   .application-page .application-footer-note{margin-top:24px}
 }
+
+/* Breathing navigation
+   The section bar introduces itself, then tucks below the viewport after three
+   quiet seconds. Hover, keyboard focus or a tap on its visible handle restores it. */
+.campaign-v14 .floating-nav{
+  overflow:visible;
+  transition:
+    transform .48s cubic-bezier(.22,.78,.2,1),
+    opacity .32s ease,
+    border-color .32s ease,
+    box-shadow .32s ease;
+  will-change:transform;
+}
+.campaign-v14 .floating-nav::before{
+  content:"";
+  position:absolute;
+  z-index:3;
+  left:50%;
+  top:6px;
+  width:38px;
+  height:3px;
+  border-radius:999px;
+  background:rgba(215,246,168,.76);
+  box-shadow:0 0 14px rgba(215,246,168,.2);
+  opacity:0;
+  transform:translateX(-50%) scaleX(.6);
+  transition:opacity .25s ease,transform .35s ease;
+  pointer-events:none;
+}
+.campaign-v14 .floating-nav a{
+  transition:
+    color .2s ease,
+    background .2s ease,
+    opacity .25s ease,
+    transform .35s ease;
+}
+.campaign-v14 .floating-nav.is-idle{
+  opacity:.58;
+  border-color:rgba(215,246,168,.14);
+  box-shadow:0 8px 24px rgba(0,0,0,.24);
+  transform:translateX(-50%) translateY(calc(100% - 20px));
+  cursor:pointer;
+}
+.campaign-v14 .floating-nav.is-idle::before{
+  opacity:1;
+  transform:translateX(-50%) scaleX(1);
+}
+.campaign-v14 .floating-nav.is-idle a{
+  opacity:.12;
+  transform:translateY(5px) scale(.96);
+  pointer-events:none;
+}
+.campaign-v14 .floating-nav.is-expanded{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:680px){
+  .campaign-v14 .floating-nav.is-idle{
+    opacity:.64;
+    transform:translateX(-50%) translateY(calc(100% - 18px));
+  }
+  .campaign-v14 .floating-nav::before{top:5px;width:34px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .campaign-v14 .floating-nav,
+  .campaign-v14 .floating-nav a,
+  .campaign-v14 .floating-nav::before{transition:none}
+}
+
+/* Hero lockup clearance
+   Keep the presenter plaque and the three-line expedition title in separate
+   visual zones, including shorter laptop screens. */
+@media(min-width:681px){
+  .campaign-v14 .hero-presents{
+    top:clamp(22px,4.2svh,46px);
+  }
+  .campaign-v14 .title-back{
+    top:clamp(190px,25.5svh,240px);
+  }
+  .campaign-v14 .title-middle{
+    top:clamp(298px,39.5svh,380px);
+  }
+  .campaign-v14 .title-front{
+    top:clamp(404px,53svh,500px);
+  }
+  .campaign-v14 .title-back .title-line{
+    font-size:clamp(2.85rem,5.25vw,6.2rem);
+  }
+  .campaign-v14 .title-middle .title-line{
+    font-size:clamp(2.45rem,4.55vw,5.35rem);
+  }
+}
+
+@media(min-width:681px) and (max-height:720px){
+  .campaign-v14 .hero-presents{
+    top:18px;
+    padding:11px 19px 10px;
+  }
+  .campaign-v14 .hero-presents-logo{
+    width:clamp(180px,17vw,232px);
+  }
+  .campaign-v14 .title-back{top:174px}
+  .campaign-v14 .title-middle{top:272px}
+  .campaign-v14 .title-front{top:365px}
+  .campaign-v14 .title-back .title-line{font-size:clamp(2.65rem,5vw,5.5rem)}
+  .campaign-v14 .title-middle .title-line{font-size:clamp(2.3rem,4.3vw,4.8rem)}
+  .campaign-v14 .year{font-size:clamp(5.7rem,11.4vw,10.5rem)}
+}
+
+/* Stable participant journey
+   The desktop trail is intentionally non-pinned. Six clear milestones render
+   as one calm field, with no scroll-linked translation or blur workload. */
+@media(min-width:681px){
+  .campaign-v14 .xp-trail{
+    min-height:auto;
+    padding:clamp(112px,15svh,170px) clamp(24px,5vw,82px);
+    overflow:hidden;
+  }
+  .campaign-v14 .xp-inner{
+    position:relative;
+    top:auto;
+    width:min(1180px,100%);
+    height:auto;
+    margin:0 auto;
+    overflow:visible;
+  }
+  .campaign-v14 .xp-trail-head{
+    position:relative;
+    inset:auto;
+    width:min(860px,92%);
+    margin:0 auto clamp(46px,7svh,76px);
+  }
+  .campaign-v14 .xp-trail-head h2{
+    font-size:clamp(3rem,5.6vw,5.4rem);
+  }
+  .campaign-v14 .xp-timeline{
+    position:relative;
+    inset:auto;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    width:100%;
+    max-width:none;
+    height:auto;
+    gap:18px;
+    margin:0;
+    padding:0;
+    transform:none;
+    transition:none;
+    will-change:auto;
+  }
+  .campaign-v14 .xp-inner::before,
+  .campaign-v14 .xp-inner::after{display:none}
+  .campaign-v14 .xp-step,
+  .campaign-v14 .xp-step:nth-of-type(even){
+    display:grid;
+    grid-template-columns:104px minmax(0,1fr);
+    align-items:center;
+    gap:8px;
+    width:auto;
+    height:auto;
+    min-height:238px;
+    padding:20px;
+    border:1px solid rgba(215,246,168,.15);
+    border-radius:26px 7px 26px 7px;
+    background:linear-gradient(145deg,rgba(11,31,20,.88),rgba(5,15,10,.72));
+    box-shadow:0 24px 58px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.035);
+    backdrop-filter:none;
+  }
+  .campaign-v14 .xp-step:nth-of-type(even){
+    border-radius:7px 26px 7px 26px;
+  }
+  .campaign-v14 .xp-step-marker,
+  .campaign-v14 .xp-step:nth-of-type(even) .xp-step-marker{
+    grid-column:1;
+    grid-row:1;
+    min-height:0;
+  }
+  .campaign-v14 .xp-marker-frame{width:98px}
+  .campaign-v14 .xp-step-marker img,
+  .campaign-v14 .xp-step.threshold-active .xp-step-marker img{
+    opacity:1;
+    transform:none;
+    filter:drop-shadow(0 24px 30px rgba(0,0,0,.58));
+    transition:none;
+  }
+  .campaign-v14 .xp-step-copy,
+  .campaign-v14 .xp-step:nth-of-type(even) .xp-step-copy{
+    grid-column:2;
+    grid-row:1;
+    max-width:none;
+    padding:5px 3px 5px 10px;
+    border:0;
+    border-radius:0;
+    background:none;
+    box-shadow:none;
+    backdrop-filter:none;
+    text-align:left;
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+  .campaign-v14 .xp-step-copy h3{font-size:clamp(1.28rem,1.8vw,1.68rem)}
+  .campaign-v14 .xp-step-copy>p{font-size:.78rem;line-height:1.52}
+  .campaign-v14 .xp-step-copy small{margin-top:.85em;padding-top:.72em;font-size:.46rem}
+  .campaign-v14 .xp-step-tag{font-size:.49rem}
+}
+
+@media(min-width:681px) and (max-width:1040px){
+  .campaign-v14 .xp-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* Clean reveal timing
+   Blur during scrolling is expensive and leaves text soft while the page is
+   moving. A short opacity-and-rise transition keeps hierarchy without lag. */
+.campaign-v14 .reveal{
+  filter:none;
+  transform:translate3d(0,16px,0);
+  transition:opacity .5s ease-out,transform .62s cubic-bezier(.2,.72,.2,1);
+}
+.campaign-v14 .reveal.visible{
+  filter:none;
+  transform:none;
+}
+
+/* Navigation jumps should feel immediate even when the target is several
+   chapters away. Section-level motion handles the visual continuity. */
+html{scroll-behavior:auto}
