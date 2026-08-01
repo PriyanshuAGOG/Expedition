@@ -6,9 +6,13 @@ on:
       - main
     paths:
       - .github/expedition-update.trigger
+  issues:
+    types:
+      - opened
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: expedition-pricing-dpdp-update
@@ -16,6 +20,7 @@ concurrency:
 
 jobs:
   update-site:
+    if: github.event_name == 'push' || github.event.issue.title == '[automation] Apply expedition pricing and DPDP feedback'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
