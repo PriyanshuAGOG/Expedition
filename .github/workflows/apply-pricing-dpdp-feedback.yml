@@ -1,0 +1,85 @@
+name: Apply pricing and DPDP feedback
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/expedition-update.trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: expedition-pricing-dpdp-update
+  cancel-in-progress: false
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply requested updates
+        run: python .github/scripts/apply-pricing-dpdp-feedback.py
+
+      - name: Validate JavaScript
+        run: node --check script.js
+
+      - name: Rebuild generated site artifacts
+        shell: bash
+        run: |
+          if [[ -f tools/build-vercel-bundle.mjs ]]; then
+            node tools/build-vercel-bundle.mjs || echo "::warning::Vercel bundle rebuild did not complete"
+          fi
+          if [[ -f build-standalone.mjs ]]; then
+            node build-standalone.mjs || echo "::warning::Standalone rebuild did not complete"
+          fi
+
+      - name: Harmonise generated naming and verify
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          extensions = {'.html', '.md', '.txt', '.js', '.mjs', '.py', '.json'}
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or path.suffix.lower() not in extensions:
+                  continue
+              if any(part in {'.git', 'node_modules'} for part in path.parts):
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              updated = text.replace('World Diabetes Day Expedition 2026', 'World Diabetes Day Himalayan Expedition 2026')
+              updated = updated.replace('World Diabetes Day Expedition', 'World Diabetes Day Himalayan Expedition')
+              updated = updated.replace('World%20Diabetes%20Day%20Expedition', 'World%20Diabetes%20Day%20Himalayan%20Expedition')
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+          PY
+          grep -Fq '6 day Himalayan expedition' index.html
+          grep -Fq 'Why we are doing <em>this?</em>' index.html
+          grep -Fq 'id="pricing"' index.html
+          grep -Fq 'id="dpdp-consent-dialog"' apply.html
+          grep -Fq 'name="futureContact"' apply.html
+          ! grep -Fq 'Current weekly activity' apply.html
+          ! grep -Fq 'name="medicine"' apply.html
+          ! grep -Fq 'Programme Fee' apply.html
+
+      - name: Commit site updates
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/scripts/apply-pricing-dpdp-feedback.py .github/expedition-update.trigger
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add dynamic pricing and DPDP consent flow"
+          git push origin HEAD:main
