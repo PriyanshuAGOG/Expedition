@@ -4,8 +4,8 @@
   const currentScript = document.currentScript;
   const baseUrl = currentScript?.src ? new URL('.', currentScript.src) : new URL('./', location.href);
 
-  const loadStylesheet = (filename, datasetKey) => {
-    if (document.querySelector(`link[data-${datasetKey}]`)) return;
+  const loadStylesheet = (filename, dataAttribute, datasetKey) => {
+    if (document.querySelector(`link[${dataAttribute}]`)) return;
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
     stylesheet.href = new URL(filename, baseUrl).href;
@@ -13,8 +13,8 @@
     document.head.appendChild(stylesheet);
   };
 
-  loadStylesheet('feedback-overrides.css', 'feedbackOverrides');
-  loadStylesheet('feedback-content-v2.css', 'feedbackContentV2');
+  loadStylesheet('feedback-overrides.css', 'data-feedback-overrides', 'feedbackOverrides');
+  loadStylesheet('feedback-content-v2.css', 'data-feedback-content-v2', 'feedbackContentV2');
 
   const loadContentV2 = () => {
     if (document.querySelector('script[data-feedback-content-v2]')) return;
