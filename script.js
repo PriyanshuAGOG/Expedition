@@ -21,13 +21,28 @@
   loadStylesheet('feedback-content-v7.css', 'data-feedback-content-v7', 'feedbackContentV7');
   loadStylesheet('feedback-content-v8.css', 'data-feedback-content-v8', 'feedbackContentV8');
   loadStylesheet('feedback-content-v9.css', 'data-feedback-content-v9', 'feedbackContentV9');
+  loadStylesheet('feedback-content-v10.css', 'data-feedback-content-v10', 'feedbackContentV10');
+
+  const loadContentV10 = () => {
+    if (document.querySelector('script[data-feedback-content-v10]')) return;
+    const finalQa = document.createElement('script');
+    finalQa.src = new URL('feedback-content-v10.js', baseUrl).href;
+    finalQa.async = false;
+    finalQa.dataset.feedbackContentV10 = 'true';
+    document.body.appendChild(finalQa);
+  };
 
   const loadContentV9 = () => {
-    if (document.querySelector('script[data-feedback-content-v9]')) return;
+    if (document.querySelector('script[data-feedback-content-v9]')) {
+      loadContentV10();
+      return;
+    }
     const polish = document.createElement('script');
     polish.src = new URL('feedback-content-v9.js', baseUrl).href;
     polish.async = false;
     polish.dataset.feedbackContentV9 = 'true';
+    polish.addEventListener('load', loadContentV10, { once: true });
+    polish.addEventListener('error', loadContentV10, { once: true });
     document.body.appendChild(polish);
   };
 
