@@ -4,20 +4,38 @@
   const currentScript = document.currentScript;
   const baseUrl = currentScript?.src ? new URL('.', currentScript.src) : new URL('./', location.href);
 
-  if (!document.querySelector('link[data-feedback-overrides]')) {
+  const loadStylesheet = (filename, datasetKey) => {
+    if (document.querySelector(`link[data-${datasetKey}]`)) return;
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = new URL('feedback-overrides.css', baseUrl).href;
-    stylesheet.dataset.feedbackOverrides = 'true';
+    stylesheet.href = new URL(filename, baseUrl).href;
+    stylesheet.dataset[datasetKey] = 'true';
     document.head.appendChild(stylesheet);
-  }
+  };
+
+  loadStylesheet('feedback-overrides.css', 'feedbackOverrides');
+  loadStylesheet('feedback-content-v2.css', 'feedbackContentV2');
+
+  const loadContentV2 = () => {
+    if (document.querySelector('script[data-feedback-content-v2]')) return;
+    const refinements = document.createElement('script');
+    refinements.src = new URL('feedback-content-v2.js', baseUrl).href;
+    refinements.async = false;
+    refinements.dataset.feedbackContentV2 = 'true';
+    document.body.appendChild(refinements);
+  };
 
   const loadEnhancements = () => {
-    if (document.querySelector('script[data-feedback-overrides]')) return;
+    if (document.querySelector('script[data-feedback-overrides]')) {
+      loadContentV2();
+      return;
+    }
     const enhancements = document.createElement('script');
     enhancements.src = new URL('feedback-overrides.js', baseUrl).href;
     enhancements.async = false;
     enhancements.dataset.feedbackOverrides = 'true';
+    enhancements.addEventListener('load', loadContentV2, { once: true });
+    enhancements.addEventListener('error', loadContentV2, { once: true });
     document.body.appendChild(enhancements);
   };
 
