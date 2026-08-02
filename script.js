@@ -17,12 +17,26 @@
   loadStylesheet('feedback-content-v2.css', 'data-feedback-content-v2', 'feedbackContentV2');
   loadStylesheet('feedback-content-v3.css', 'data-feedback-content-v3', 'feedbackContentV3');
 
+  const loadContentV4 = () => {
+    if (document.querySelector('script[data-feedback-content-v4]')) return;
+    const polish = document.createElement('script');
+    polish.src = new URL('feedback-content-v4.js', baseUrl).href;
+    polish.async = false;
+    polish.dataset.feedbackContentV4 = 'true';
+    document.body.appendChild(polish);
+  };
+
   const loadContentV3 = () => {
-    if (document.querySelector('script[data-feedback-content-v3]')) return;
+    if (document.querySelector('script[data-feedback-content-v3]')) {
+      loadContentV4();
+      return;
+    }
     const refinements = document.createElement('script');
     refinements.src = new URL('feedback-content-v3.js', baseUrl).href;
     refinements.async = false;
     refinements.dataset.feedbackContentV3 = 'true';
+    refinements.addEventListener('load', loadContentV4, { once: true });
+    refinements.addEventListener('error', loadContentV4, { once: true });
     document.body.appendChild(refinements);
   };
 
