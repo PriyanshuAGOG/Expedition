@@ -1,12 +1,17 @@
 (() => {
   'use strict';
 
-  const replaceApplicationTime = () => {
+  const CONTACT_EMAIL = 'Priyanshu@nirogbhumi.com';
+  const CONTACT_PHONE = '+919588810249';
+  const CONTACT_PHONE_DIGITS = '919588810249';
+
+  const replaceGlobalDetails = () => {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         const parent = node.parentElement;
         if (!parent || parent.matches('script, style, textarea')) return NodeFilter.FILTER_REJECT;
-        return /8[–-]10\s*(minutes|min)/i.test(node.nodeValue || '')
+        const text = node.nodeValue || '';
+        return /8[–-]10\s*(minutes|min)|November\s+12\s*[–-]\s*19|12\s*[–-]\s*19\s+Nov|nirogbhumi@gmail\.com|\+91\s*73575\s*42882/i.test(text)
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_REJECT;
       }
@@ -17,12 +22,26 @@
     nodes.forEach(node => {
       node.nodeValue = node.nodeValue
         .replace(/8[–-]10\s*minutes/gi, '5 minutes')
-        .replace(/8[–-]10\s*min/gi, '5 min');
+        .replace(/8[–-]10\s*min/gi, '5 min')
+        .replace(/November\s+12\s*[–-]\s*19,?\s*2026/gi, 'November 13–18, 2026')
+        .replace(/November\s+12\s*[–-]\s*19/gi, 'November 13–18')
+        .replace(/12\s*[–-]\s*19\s+Nov(?:ember)?/gi, '13–18 Nov')
+        .replace(/nirogbhumi@gmail\.com/gi, CONTACT_EMAIL)
+        .replace(/\+91\s*73575\s*42882/g, CONTACT_PHONE);
+    });
+
+    document.querySelectorAll('[href]').forEach(link => {
+      const current = link.getAttribute('href') || '';
+      const updated = current
+        .replace(/nirogbhumi@gmail\.com/gi, CONTACT_EMAIL)
+        .replace(/917357542882/g, CONTACT_PHONE_DIGITS)
+        .replace(/\+917357542882/g, CONTACT_PHONE);
+      if (updated !== current) link.setAttribute('href', updated);
     });
   };
 
-  const bindPurposeAccordion = container => {
-    container.querySelectorAll('details').forEach(detail => {
+  const bindSingleOpen = container => {
+    container?.querySelectorAll('details').forEach(detail => {
       detail.open = false;
       detail.addEventListener('toggle', () => {
         if (!detail.open) return;
@@ -74,7 +93,7 @@
         </div>
       </details>`;
 
-    bindPurposeAccordion(purposeReading);
+    bindSingleOpen(purposeReading);
   };
 
   const setStep = (step, { heading, body, footer, removeFooter = false }) => {
@@ -144,8 +163,7 @@
 
     const panels = document.querySelector('#eligibility .check-panels');
     const eligibilityCard = panels?.querySelector('.check-panel:not(.requirements)');
-    const requirementsCard = panels?.querySelector('.check-panel.requirements');
-    requirementsCard?.remove();
+    panels?.querySelector('.check-panel.requirements')?.remove();
     panels?.classList.add('eligibility-only');
 
     const list = eligibilityCard?.querySelector('ul');
@@ -154,7 +172,7 @@
         <li>Adults living with type 2 diabetes</li>
         <li>Should not have any diabetes-related complications</li>
         <li>Able to commit about an hour each morning during September and October</li>
-        <li>Available from November 12–19, 2026 for the expedition</li>`;
+        <li>Available from November 13–18, 2026 for the expedition</li>`;
     }
   };
 
@@ -168,9 +186,168 @@
     if (dashboardTitle) dashboardTitle.textContent = 'Aggregated information, not private health data.';
   };
 
+  const updateParticipants = () => {
+    const quotes = [...document.querySelectorAll('.participant-quotes blockquote')];
+    const familyQuote = quotes.find(quote => /my family/i.test(quote.textContent));
+    if (familyQuote) familyQuote.textContent = '“I want my family to see what consistent effort can result.”';
+
+    const afterSelection = document.querySelector('.participant-future > summary');
+    if (afterSelection) afterSelection.innerHTML = 'After selection: meet the participants <span>+</span>';
+  };
+
+  const nominationMarkup = () => `
+    <form class="onboard-path nomination-form reveal" aria-label="Nominate someone for the expedition">
+      <span>02</span>
+      <h3>Nominate someone</h3>
+      <p>Recommend a person living with type 2 diabetes.</p>
+      <label><b>Name *</b><input name="nomineeName" autocomplete="name" required></label>
+      <label><b>Email <small>(optional)</small></b><input type="email" name="nomineeEmail" autocomplete="email"></label>
+      <label><b>Phone *</b><input type="tel" name="nomineePhone" autocomplete="tel" required></label>
+      <button type="submit">Submit nomination <i>↗</i></button>
+      <small class="nomination-note">Your email app will open with the nomination details. This page does not store the form.</small>
+      <output class="nomination-status" aria-live="polite"></output>
+    </form>`;
+
+  const bindNominationForm = form => {
+    if (!form || form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const name = String(data.get('nomineeName') || '').trim();
+      const email = String(data.get('nomineeEmail') || '').trim();
+      const phone = String(data.get('nomineePhone') || '').trim();
+      const subject = encodeURIComponent('Nomination for World Diabetes Day Himalayan Expedition 2026');
+      const body = encodeURIComponent(`Nominee name: ${name}\nNominee email: ${email || 'Not provided'}\nNominee phone: ${phone}\n\nI would like to nominate this person for the expedition.`);
+      const status = form.querySelector('.nomination-status');
+      if (status) status.textContent = 'Opening your email app…';
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    });
+  };
+
+  const updateOnboarding = () => {
+    document.querySelectorAll('.hero-cta').forEach(link => {
+      if (/become a partner/i.test(link.textContent)) link.remove();
+    });
+
+    const section = document.querySelector('#partners');
+    const heading = section?.querySelector('.onboard-heading');
+    if (heading) {
+      const kicker = heading.querySelector('.kicker');
+      const description = heading.querySelector('p:last-child');
+      if (kicker) kicker.textContent = 'Ways to join';
+      if (description) description.textContent = 'Participate, nominate someone or follow the journey.';
+    }
+
+    const paths = section?.querySelector('.onboard-paths');
+    if (!paths) return;
+
+    [...paths.querySelectorAll('.onboard-path')].forEach(card => {
+      const title = card.querySelector('h3')?.textContent || '';
+      if (/become a partner/i.test(title)) card.remove();
+    });
+
+    const nominationCard = [...paths.querySelectorAll('.onboard-path')]
+      .find(card => /nominate someone/i.test(card.querySelector('h3')?.textContent || ''));
+    if (nominationCard) nominationCard.outerHTML = nominationMarkup();
+
+    const participantCard = [...paths.querySelectorAll('.onboard-path')]
+      .find(card => /join as a participant/i.test(card.querySelector('h3')?.textContent || ''));
+    participantCard?.querySelector(':scope > span')?.replaceChildren('01');
+
+    const followCard = [...paths.querySelectorAll('.onboard-path')]
+      .find(card => /follow the expedition/i.test(card.querySelector('h3')?.textContent || ''));
+    if (followCard) {
+      followCard.querySelector(':scope > span')?.replaceChildren('03');
+      const description = followCard.querySelector('p');
+      if (description) description.textContent = 'See how people with diabetes are taking it head on.';
+      followCard.href = `https://wa.me/${CONTACT_PHONE_DIGITS}?text=${encodeURIComponent('I would like to follow the World Diabetes Day Himalayan Expedition 2026')}`;
+    }
+
+    paths.classList.add('onboard-paths-three');
+    bindNominationForm(paths.querySelector('.nomination-form'));
+
+    const floatingPartners = document.querySelector('.floating-nav a[aria-label="Partners"]');
+    if (floatingPartners) {
+      floatingPartners.setAttribute('aria-label', 'Join');
+      const label = floatingPartners.querySelector('span');
+      if (label) label.textContent = 'Join';
+    }
+
+    const journalUpdate = document.querySelector('.journal-update p');
+    if (journalUpdate) journalUpdate.textContent = journalUpdate.textContent.replace(/selection,\s*partner\s*and\s*trail/i, 'selection and trail');
+  };
+
+  const updateRegistration = () => {
+    const card = document.querySelector('.registration-cta-card');
+    if (!card) return;
+    const kicker = card.querySelector('.kicker');
+    const description = card.querySelector(':scope > p:not(.kicker)');
+    if (kicker) kicker.textContent = 'Global expedition';
+    if (description) description.textContent = 'The application takes about 5 minutes. Applying does not guarantee selection, and clinical documents will only be requested later through an approved secure process.';
+
+    const meta = card.querySelector('.registration-meta');
+    meta?.querySelectorAll(':scope > div').forEach(item => {
+      const label = item.querySelector('span')?.textContent || '';
+      if (/programme fee|pricing|programme amount/i.test(label)) item.remove();
+      if (/^time$/i.test(label)) item.querySelector('strong').textContent = '5 min';
+      if (/^dates$/i.test(label)) item.querySelector('strong').textContent = '13–18 Nov';
+    });
+    meta?.classList.add('registration-meta-no-price');
+  };
+
+  const updateFaqs = () => {
+    const heading = document.querySelector('.faq-heading');
+    if (heading) {
+      const kicker = heading.querySelector('.kicker');
+      const title = heading.querySelector('h2');
+      if (kicker) kicker.textContent = 'FAQs';
+      if (title) title.innerHTML = 'Questions to help you<br><em>take the next step.</em>';
+    }
+
+    const list = document.querySelector('.faq-list');
+    if (!list) return;
+    list.innerHTML = `
+      <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No. Previous trekking experience is not required. The 60-day preparation is designed to help you build readiness step by step. Final participation depends on medical and fitness clearance.</p></details>
+      <details class="reveal visible"><summary>What happens during the 60 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation, and physical fitness.</p></details>`;
+    bindSingleOpen(list);
+  };
+
+  const updateApplicationPage = () => {
+    const quickFacts = document.querySelector('.application-quick-facts');
+    quickFacts?.querySelectorAll(':scope > div').forEach(item => {
+      const label = item.querySelector('span')?.textContent || '';
+      if (/programme fee|pricing|programme amount/i.test(label)) item.remove();
+      if (/^time$/i.test(label)) item.querySelector('strong').textContent = '5 minutes';
+    });
+
+    const commitment = document.querySelector('select[name="timeCommitment"]')?.closest('label')?.querySelector(':scope > span');
+    if (commitment) commitment.textContent = 'Can you commit about one hour each morning? *';
+
+    const availability = document.querySelector('select[name="availability"]')?.closest('label')?.querySelector(':scope > span');
+    if (availability) availability.textContent = 'Available from November 13–18, 2026? *';
+  };
+
+  const updateFooter = () => {
+    const footerEmail = document.querySelector('.footer-contact a[href^="mailto:"]');
+    const footerPhone = document.querySelector('.footer-contact a[href^="tel:"]');
+    if (footerEmail) {
+      footerEmail.href = `mailto:${CONTACT_EMAIL}`;
+      footerEmail.textContent = CONTACT_EMAIL;
+    }
+    if (footerPhone) {
+      footerPhone.href = `tel:${CONTACT_PHONE}`;
+      footerPhone.textContent = CONTACT_PHONE;
+    }
+  };
+
   const run = () => {
-    replaceApplicationTime();
+    replaceGlobalDetails();
+    updateApplicationPage();
+
     if (document.body.classList.contains('application-page')) {
+      replaceGlobalDetails();
       document.documentElement.classList.add('feedback-content-v3-ready');
       return;
     }
@@ -184,6 +361,12 @@
     updateEligibility();
     updateCountdown();
     updateDashboard();
+    updateParticipants();
+    updateOnboarding();
+    updateRegistration();
+    updateFaqs();
+    updateFooter();
+    replaceGlobalDetails();
     document.documentElement.classList.add('feedback-content-v3-ready');
   };
 
