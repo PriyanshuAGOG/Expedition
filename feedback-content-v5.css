@@ -1,0 +1,48 @@
+/* Compact hero summary with clear separation from the 2026 title */
+.campaign-v14 .hero-campaign .hero-campaign-summary.hero-campaign-summary-single {
+  display: block;
+  width: min(980px, 94vw);
+  max-width: none;
+  margin: 0 auto;
+  padding: 7px 14px;
+  border: 1px solid rgba(243, 240, 231, .16);
+  border-radius: 999px;
+  color: var(--cream);
+  background: rgba(5, 17, 12, .62);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(9px);
+  line-height: 1;
+}
+
+.campaign-v14 .hero-campaign .hero-campaign-summary.hero-campaign-summary-single strong,
+.campaign-v14 .hero-campaign .hero-campaign-summary.hero-campaign-summary-single strong:first-child {
+  display: block;
+  max-width: none;
+  color: var(--cream);
+  font-size: clamp(.58rem, .82vw, .8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: .005em;
+  white-space: nowrap;
+}
+
+@media (min-width: 681px) {
+  .campaign-v14 .hero-campaign {
+    bottom: clamp(30px, 5svh, 50px);
+    width: min(1040px, 94vw);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 680px) {
+  .campaign-v14 .hero-campaign .hero-campaign-summary.hero-campaign-summary-single {
+    width: 96vw;
+    padding: 6px 9px;
+  }
+
+  .campaign-v14 .hero-campaign .hero-campaign-summary.hero-campaign-summary-single strong,
+  .campaign-v14 .hero-campaign .hero-campaign-summary.hero-campaign-summary-single strong:first-child {
+    font-size: clamp(.48rem, 2.05vw, .62rem);
+    letter-spacing: -.012em;
+  }
+}
