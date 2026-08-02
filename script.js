@@ -22,13 +22,28 @@
   loadStylesheet('feedback-content-v8.css', 'data-feedback-content-v8', 'feedbackContentV8');
   loadStylesheet('feedback-content-v9.css', 'data-feedback-content-v9', 'feedbackContentV9');
   loadStylesheet('feedback-content-v10.css', 'data-feedback-content-v10', 'feedbackContentV10');
+  loadStylesheet('feedback-content-v11.css', 'data-feedback-content-v11', 'feedbackContentV11');
+
+  const loadContentV11 = () => {
+    if (document.querySelector('script[data-feedback-content-v11]')) return;
+    const production = document.createElement('script');
+    production.src = new URL('feedback-content-v11.js', baseUrl).href;
+    production.async = false;
+    production.dataset.feedbackContentV11 = 'true';
+    document.body.appendChild(production);
+  };
 
   const loadContentV10 = () => {
-    if (document.querySelector('script[data-feedback-content-v10]')) return;
+    if (document.querySelector('script[data-feedback-content-v10]')) {
+      loadContentV11();
+      return;
+    }
     const finalQa = document.createElement('script');
     finalQa.src = new URL('feedback-content-v10.js', baseUrl).href;
     finalQa.async = false;
     finalQa.dataset.feedbackContentV10 = 'true';
+    finalQa.addEventListener('load', loadContentV11, { once: true });
+    finalQa.addEventListener('error', loadContentV11, { once: true });
     document.body.appendChild(finalQa);
   };
 
