@@ -15,13 +15,28 @@
 
   loadStylesheet('feedback-overrides.css', 'data-feedback-overrides', 'feedbackOverrides');
   loadStylesheet('feedback-content-v2.css', 'data-feedback-content-v2', 'feedbackContentV2');
+  loadStylesheet('feedback-content-v3.css', 'data-feedback-content-v3', 'feedbackContentV3');
+
+  const loadContentV3 = () => {
+    if (document.querySelector('script[data-feedback-content-v3]')) return;
+    const refinements = document.createElement('script');
+    refinements.src = new URL('feedback-content-v3.js', baseUrl).href;
+    refinements.async = false;
+    refinements.dataset.feedbackContentV3 = 'true';
+    document.body.appendChild(refinements);
+  };
 
   const loadContentV2 = () => {
-    if (document.querySelector('script[data-feedback-content-v2]')) return;
+    if (document.querySelector('script[data-feedback-content-v2]')) {
+      loadContentV3();
+      return;
+    }
     const refinements = document.createElement('script');
     refinements.src = new URL('feedback-content-v2.js', baseUrl).href;
     refinements.async = false;
     refinements.dataset.feedbackContentV2 = 'true';
+    refinements.addEventListener('load', loadContentV3, { once: true });
+    refinements.addEventListener('error', loadContentV3, { once: true });
     document.body.appendChild(refinements);
   };
 
