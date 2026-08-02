@@ -1,0 +1,11 @@
+/* Final consistency polish for the participation choices. */
+@media (max-width: 980px) {
+  #partners .onboard-paths.onboard-paths-equal-v8 {
+    grid-template-columns: 1fr;
+  }
+  #partners .onboard-paths-equal-v8 > .onboard-path-v8,
+  #partners .onboard-paths-equal-v8 > .onboard-path-v8:last-child {
+    grid-column: auto;
+    min-height: 280px;
+  }
+}
