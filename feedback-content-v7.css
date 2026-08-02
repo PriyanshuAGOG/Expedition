@@ -1,0 +1,574 @@
+/* Expedition gains v7: scenic editorial storytelling, not stacked green boxes */
+.gain-world.gain-world-v7 {
+  min-height: auto;
+  padding: clamp(126px, 16svh, 190px) clamp(18px, 5vw, 82px) clamp(210px, 24svh, 300px);
+  overflow: clip;
+  background: #06110c;
+}
+
+.gain-world-v7 .gain-world-bg {
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  object-position: center 44%;
+  filter: saturate(.82) contrast(1.08) brightness(.78);
+  transform: scale(1.025);
+}
+
+.gain-world-v7 .gain-world-grade {
+  background:
+    linear-gradient(180deg, rgba(3, 11, 7, .98) 0%, rgba(4, 15, 9, .68) 16%, rgba(4, 15, 9, .52) 52%, rgba(3, 11, 7, .96) 90%, #06110c 100%),
+    radial-gradient(circle at 50% 26%, rgba(215, 246, 168, .13), transparent 34%),
+    linear-gradient(90deg, rgba(2, 9, 5, .84), transparent 24%, transparent 76%, rgba(2, 9, 5, .84));
+}
+
+.gain-world-v7 .gain-mist {
+  z-index: -2;
+  opacity: .46;
+}
+
+.gain-world-v7 .gain-flora,
+.gain-world-v7 .gain-seam {
+  z-index: 0;
+}
+
+.gain-world-v7 .gain-flora {
+  opacity: .78;
+}
+
+.gain-world-v7 .gain-flora-left {
+  left: -9vw;
+  bottom: 1.5%;
+  width: clamp(250px, 29vw, 500px);
+  opacity: .44;
+}
+
+.gain-world-v7 .gain-flora-right {
+  right: -8vw;
+  top: 4%;
+  width: clamp(240px, 27vw, 460px);
+  opacity: .38;
+}
+
+.gain-world-v7 .gain-vine {
+  top: 1.5%;
+  width: min(820px, 78vw);
+  opacity: .1;
+}
+
+.gain-world-v7 .gain-groundcover {
+  right: -7%;
+  bottom: 30px;
+  width: min(680px, 62vw);
+  opacity: .23;
+}
+
+.gain-world-v7 .gain-seam-top {
+  opacity: .72;
+}
+
+.gain-world-v7 .gain-seam-bottom {
+  z-index: 0;
+  bottom: -2px;
+  opacity: .74;
+}
+
+.gain-world-v7 .gain-inner {
+  z-index: 3;
+  width: min(1240px, 100%);
+}
+
+.gain-world-v7 .gain-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(270px, .58fr);
+  align-items: end;
+  gap: clamp(28px, 5vw, 76px);
+  width: 100%;
+  margin: 0 0 clamp(58px, 8vw, 100px);
+  text-align: left;
+}
+
+.gain-world-v7 .gain-heading .kicker {
+  grid-column: 1 / -1;
+  margin: 0 0 -10px;
+}
+
+.gain-world-v7 .gain-heading h2 {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, 7.3vw, 7.6rem);
+  line-height: .86;
+}
+
+.gain-world-v7 .gain-intro {
+  max-width: 30ch;
+  margin: 0 0 .4rem;
+  padding-left: 22px;
+  border-left: 1px solid rgba(215, 246, 168, .42);
+  color: rgba(243, 240, 231, .68);
+  font-size: clamp(.85rem, 1.12vw, 1.04rem);
+  line-height: 1.7;
+}
+
+.gain-world-v7 .gain-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(30px, 5vw, 66px);
+}
+
+.gain-world-v7 .gain-grid::before {
+  top: 3%;
+  bottom: 3%;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(215, 246, 168, .26) 8%, rgba(215, 246, 168, .12) 92%, transparent);
+}
+
+.gain-world-v7 .gain-card,
+.gain-world-v7 .gain-card-featured {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(320px, .88fr) minmax(0, 1.12fr);
+  grid-template-areas: "scene copy";
+  min-height: clamp(330px, 37vw, 450px);
+  width: min(1080px, 92%);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(215, 246, 168, .16);
+  border-radius: 44px 10px 44px 10px;
+  background: rgba(4, 16, 10, .72);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 255, 255, .035);
+  backdrop-filter: blur(9px);
+  opacity: 1;
+  transform: none;
+}
+
+.gain-world-v7 .gain-card:nth-child(even) {
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+  grid-template-areas: "copy scene";
+  justify-self: end;
+  border-radius: 10px 44px 10px 44px;
+}
+
+.gain-world-v7 .gain-card:nth-child(odd) {
+  justify-self: start;
+}
+
+.gain-world-v7 .gain-card::before {
+  z-index: 3;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(215, 246, 168, .055), transparent 24%, transparent 76%, rgba(215, 246, 168, .025));
+}
+
+.gain-world-v7 .gain-card::after {
+  z-index: 3;
+  right: 22px;
+  bottom: 20px;
+  width: 84px;
+  height: 42px;
+  border-color: rgba(215, 246, 168, .1);
+  opacity: .5;
+}
+
+.gain-world-v7 .gain-scene {
+  grid-area: scene;
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.gain-world-v7 .gain-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, transparent 55%, rgba(4, 15, 9, .88) 100%),
+    linear-gradient(180deg, rgba(2, 8, 5, .08), rgba(2, 8, 5, .34));
+  pointer-events: none;
+}
+
+.gain-world-v7 .gain-card:nth-child(even) .gain-scene::after {
+  background:
+    linear-gradient(270deg, transparent 55%, rgba(4, 15, 9, .88) 100%),
+    linear-gradient(180deg, rgba(2, 8, 5, .08), rgba(2, 8, 5, .34));
+}
+
+.gain-world-v7 .gain-scene img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(.9) contrast(1.05);
+  transform: scale(1.035);
+  transition: transform .9s cubic-bezier(.2, .72, .2, 1), filter .5s ease;
+}
+
+.gain-world-v7 .gain-card:hover .gain-scene img {
+  transform: scale(1.085);
+  filter: saturate(1.02) contrast(1.08);
+}
+
+.gain-world-v7 .gain-scene figcaption {
+  position: absolute;
+  z-index: 2;
+  left: 26px;
+  bottom: 24px;
+  padding: 8px 12px;
+  border: 1px solid rgba(243, 240, 231, .2);
+  border-radius: 999px;
+  color: rgba(243, 240, 231, .84);
+  background: rgba(4, 14, 9, .44);
+  backdrop-filter: blur(10px);
+  font-size: .52rem;
+  font-weight: 780;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.gain-world-v7 .gain-scene-line {
+  position: absolute;
+  z-index: 2;
+  top: 24px;
+  left: 26px;
+  width: 74px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--leaf), transparent);
+}
+
+.gain-world-v7 .gain-number,
+.gain-world-v7 .gain-card-featured .gain-number {
+  position: absolute;
+  z-index: 5;
+  top: 26px;
+  left: 26px;
+  width: 58px;
+  height: 58px;
+  border-color: rgba(243, 240, 231, .3);
+  color: var(--cream);
+  background: rgba(4, 14, 9, .5);
+  box-shadow: 0 0 0 7px rgba(4, 14, 9, .2);
+  backdrop-filter: blur(12px);
+}
+
+.gain-world-v7 .gain-card:nth-child(even) .gain-number {
+  right: 26px;
+  left: auto;
+}
+
+.gain-world-v7 .gain-card-copy {
+  grid-area: copy;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(34px, 5vw, 68px);
+  background:
+    radial-gradient(circle at 10% 12%, rgba(215, 246, 168, .08), transparent 34%),
+    linear-gradient(145deg, rgba(9, 31, 19, .82), rgba(3, 14, 8, .86));
+}
+
+.gain-world-v7 .gain-card:nth-child(even) .gain-card-copy {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(215, 246, 168, .08), transparent 34%),
+    linear-gradient(215deg, rgba(9, 31, 19, .82), rgba(3, 14, 8, .86));
+}
+
+.gain-world-v7 .gain-card h3,
+.gain-world-v7 .gain-card-featured h3 {
+  max-width: 15ch;
+  margin: 0 0 18px;
+  color: var(--cream);
+  font-size: clamp(2rem, 3.4vw, 3.65rem);
+  line-height: .96;
+}
+
+.gain-world-v7 .gain-card p,
+.gain-world-v7 .gain-card-featured p {
+  max-width: 49ch;
+  color: rgba(243, 240, 231, .7);
+  font-size: clamp(.82rem, 1.08vw, 1rem);
+  line-height: 1.76;
+}
+
+.gain-world-v7 .gain-card-arrow {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-top: 26px;
+  border: 1px solid rgba(215, 246, 168, .24);
+  border-radius: 50%;
+  color: var(--leaf);
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  transition: transform .3s ease, background .3s ease, color .3s ease;
+}
+
+.gain-world-v7 .gain-card:hover .gain-card-arrow {
+  color: var(--ink);
+  background: var(--leaf);
+  transform: translate(3px, -3px);
+}
+
+/* The metabolic-health story becomes the cinematic centrepiece. */
+.gain-world-v7 .gain-card-featured {
+  grid-template-columns: 1fr;
+  grid-template-areas: "scene";
+  width: min(1160px, 98%);
+  min-height: clamp(470px, 54vw, 650px);
+  justify-self: center;
+  border-color: rgba(215, 246, 168, .28);
+  border-radius: 54px 12px 54px 12px;
+  box-shadow: 0 46px 120px rgba(0, 0, 0, .42), 0 0 0 1px rgba(215, 246, 168, .025) inset;
+}
+
+.gain-world-v7 .gain-card-featured .gain-scene {
+  grid-area: 1 / 1;
+}
+
+.gain-world-v7 .gain-card-featured .gain-scene::after {
+  background:
+    linear-gradient(180deg, rgba(2, 8, 5, .04) 18%, rgba(2, 8, 5, .22) 48%, rgba(2, 8, 5, .86) 100%),
+    linear-gradient(90deg, rgba(2, 8, 5, .2), transparent 52%);
+}
+
+.gain-world-v7 .gain-card-featured .gain-card-copy {
+  grid-area: 1 / 1;
+  align-self: end;
+  width: min(760px, 82%);
+  margin: 0 0 clamp(30px, 5vw, 58px) clamp(30px, 5vw, 58px);
+  padding: clamp(26px, 3.5vw, 42px);
+  border: 1px solid rgba(243, 240, 231, .14);
+  border-radius: 28px 8px 28px 8px;
+  background: rgba(4, 16, 10, .68);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(17px) saturate(1.1);
+}
+
+.gain-world-v7 .gain-card-featured h3 {
+  max-width: none;
+  color: var(--leaf);
+  font-size: clamp(2.35rem, 4.8vw, 5.1rem);
+}
+
+.gain-world-v7 .gain-card-featured p {
+  max-width: 60ch;
+  color: rgba(243, 240, 231, .82);
+}
+
+.gain-world-v7 .gain-card-featured .gain-number {
+  top: 32px;
+  left: 32px;
+  width: 68px;
+  height: 68px;
+}
+
+.gain-world-v7 .gain-card-featured .gain-scene figcaption {
+  right: 32px;
+  left: auto;
+  bottom: 32px;
+}
+
+@media (max-width: 900px) {
+  .gain-world-v7 .gain-heading {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .gain-world-v7 .gain-heading .kicker {
+    margin-bottom: 0;
+  }
+
+  .gain-world-v7 .gain-heading h2 {
+    max-width: 12ch;
+  }
+
+  .gain-world-v7 .gain-intro {
+    max-width: 44ch;
+  }
+
+  .gain-world-v7 .gain-card,
+  .gain-world-v7 .gain-card:nth-child(even) {
+    width: 100%;
+    grid-template-columns: minmax(250px, .8fr) minmax(0, 1.2fr);
+    grid-template-areas: "scene copy";
+    justify-self: stretch;
+  }
+
+  .gain-world-v7 .gain-card:nth-child(even) .gain-number {
+    right: auto;
+    left: 26px;
+  }
+
+  .gain-world-v7 .gain-card:nth-child(even) .gain-scene::after {
+    background:
+      linear-gradient(90deg, transparent 55%, rgba(4, 15, 9, .88) 100%),
+      linear-gradient(180deg, rgba(2, 8, 5, .08), rgba(2, 8, 5, .34));
+  }
+}
+
+@media (max-width: 680px) {
+  .gain-world.gain-world-v7 {
+    padding: 110px 14px 210px;
+  }
+
+  .gain-world-v7 .gain-world-bg {
+    object-position: 60% center;
+  }
+
+  .gain-world-v7 .gain-heading {
+    margin-bottom: 42px;
+    padding-inline: 6px;
+  }
+
+  .gain-world-v7 .gain-heading h2 {
+    max-width: 11ch;
+    font-size: clamp(3rem, 13.5vw, 4.65rem);
+  }
+
+  .gain-world-v7 .gain-intro {
+    padding-left: 16px;
+    font-size: .79rem;
+    line-height: 1.65;
+  }
+
+  .gain-world-v7 .gain-grid {
+    gap: 22px;
+  }
+
+  .gain-world-v7 .gain-grid::before {
+    display: none;
+  }
+
+  .gain-world-v7 .gain-card,
+  .gain-world-v7 .gain-card:nth-child(even),
+  .gain-world-v7 .gain-card-featured {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "scene" "copy";
+    min-height: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 30px 8px 30px 8px;
+  }
+
+  .gain-world-v7 .gain-card:nth-child(even) {
+    border-radius: 8px 30px 8px 30px;
+  }
+
+  .gain-world-v7 .gain-scene,
+  .gain-world-v7 .gain-card-featured .gain-scene {
+    grid-area: scene;
+    min-height: 188px;
+    height: 188px;
+  }
+
+  .gain-world-v7 .gain-card-featured .gain-scene {
+    height: 232px;
+  }
+
+  .gain-world-v7 .gain-scene::after,
+  .gain-world-v7 .gain-card:nth-child(even) .gain-scene::after,
+  .gain-world-v7 .gain-card-featured .gain-scene::after {
+    background: linear-gradient(180deg, rgba(2, 8, 5, .02), rgba(2, 8, 5, .38));
+  }
+
+  .gain-world-v7 .gain-card-copy,
+  .gain-world-v7 .gain-card:nth-child(even) .gain-card-copy,
+  .gain-world-v7 .gain-card-featured .gain-card-copy {
+    grid-area: copy;
+    position: relative;
+    align-self: auto;
+    width: 100%;
+    margin: 0;
+    padding: 26px 22px 28px;
+    border: 0;
+    border-radius: 0;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(215, 246, 168, .08), transparent 36%),
+      linear-gradient(150deg, rgba(8, 29, 18, .94), rgba(3, 14, 8, .98));
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .gain-world-v7 .gain-card h3,
+  .gain-world-v7 .gain-card-featured h3 {
+    max-width: 15ch;
+    margin-bottom: 12px;
+    color: var(--cream);
+    font-size: clamp(1.82rem, 8.2vw, 2.45rem);
+  }
+
+  .gain-world-v7 .gain-card p,
+  .gain-world-v7 .gain-card-featured p {
+    font-size: .79rem;
+    line-height: 1.67;
+  }
+
+  .gain-world-v7 .gain-number,
+  .gain-world-v7 .gain-card:nth-child(even) .gain-number,
+  .gain-world-v7 .gain-card-featured .gain-number {
+    top: 18px;
+    right: auto;
+    left: 18px;
+    width: 48px;
+    height: 48px;
+    font-size: .55rem;
+  }
+
+  .gain-world-v7 .gain-scene figcaption,
+  .gain-world-v7 .gain-card-featured .gain-scene figcaption {
+    right: 16px;
+    bottom: 15px;
+    left: auto;
+    padding: 7px 10px;
+    font-size: .46rem;
+  }
+
+  .gain-world-v7 .gain-scene-line {
+    display: none;
+  }
+
+  .gain-world-v7 .gain-card-arrow {
+    width: 36px;
+    height: 36px;
+    margin-top: 18px;
+    font-size: .86rem;
+  }
+
+  .gain-world-v7 .gain-card:last-child {
+    margin-bottom: 54px;
+  }
+
+  .gain-world-v7 .gain-groundcover {
+    right: -38%;
+    bottom: 14px;
+    width: 500px;
+    opacity: .16;
+  }
+
+  .gain-world-v7 .gain-flora-left {
+    left: -34%;
+    bottom: 2%;
+    width: 320px;
+    opacity: .24;
+  }
+
+  .gain-world-v7 .gain-seam-bottom {
+    opacity: .46;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gain-world-v7 .gain-scene img,
+  .gain-world-v7 .gain-card-arrow {
+    transition: none;
+  }
+}
