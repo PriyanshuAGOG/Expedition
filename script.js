@@ -17,13 +17,28 @@
   loadStylesheet('feedback-content-v2.css', 'data-feedback-content-v2', 'feedbackContentV2');
   loadStylesheet('feedback-content-v3.css', 'data-feedback-content-v3', 'feedbackContentV3');
   loadStylesheet('feedback-content-v5.css', 'data-feedback-content-v5', 'feedbackContentV5');
+  loadStylesheet('feedback-content-v6.css', 'data-feedback-content-v6', 'feedbackContentV6');
+
+  const loadContentV6 = () => {
+    if (document.querySelector('script[data-feedback-content-v6]')) return;
+    const gains = document.createElement('script');
+    gains.src = new URL('feedback-content-v6.js', baseUrl).href;
+    gains.async = false;
+    gains.dataset.feedbackContentV6 = 'true';
+    document.body.appendChild(gains);
+  };
 
   const loadContentV5 = () => {
-    if (document.querySelector('script[data-feedback-content-v5]')) return;
+    if (document.querySelector('script[data-feedback-content-v5]')) {
+      loadContentV6();
+      return;
+    }
     const polish = document.createElement('script');
     polish.src = new URL('feedback-content-v5.js', baseUrl).href;
     polish.async = false;
     polish.dataset.feedbackContentV5 = 'true';
+    polish.addEventListener('load', loadContentV6, { once: true });
+    polish.addEventListener('error', loadContentV6, { once: true });
     document.body.appendChild(polish);
   };
 
