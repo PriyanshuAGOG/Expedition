@@ -20,13 +20,28 @@
   loadStylesheet('feedback-content-v6.css', 'data-feedback-content-v6', 'feedbackContentV6');
   loadStylesheet('feedback-content-v7.css', 'data-feedback-content-v7', 'feedbackContentV7');
   loadStylesheet('feedback-content-v8.css', 'data-feedback-content-v8', 'feedbackContentV8');
+  loadStylesheet('feedback-content-v9.css', 'data-feedback-content-v9', 'feedbackContentV9');
+
+  const loadContentV9 = () => {
+    if (document.querySelector('script[data-feedback-content-v9]')) return;
+    const polish = document.createElement('script');
+    polish.src = new URL('feedback-content-v9.js', baseUrl).href;
+    polish.async = false;
+    polish.dataset.feedbackContentV9 = 'true';
+    document.body.appendChild(polish);
+  };
 
   const loadContentV8 = () => {
-    if (document.querySelector('script[data-feedback-content-v8]')) return;
+    if (document.querySelector('script[data-feedback-content-v8]')) {
+      loadContentV9();
+      return;
+    }
     const experience = document.createElement('script');
     experience.src = new URL('feedback-content-v8.js', baseUrl).href;
     experience.async = false;
     experience.dataset.feedbackContentV8 = 'true';
+    experience.addEventListener('load', loadContentV9, { once: true });
+    experience.addEventListener('error', loadContentV9, { once: true });
     document.body.appendChild(experience);
   };
 
