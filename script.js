@@ -18,13 +18,28 @@
   loadStylesheet('feedback-content-v3.css', 'data-feedback-content-v3', 'feedbackContentV3');
   loadStylesheet('feedback-content-v5.css', 'data-feedback-content-v5', 'feedbackContentV5');
   loadStylesheet('feedback-content-v6.css', 'data-feedback-content-v6', 'feedbackContentV6');
+  loadStylesheet('feedback-content-v7.css', 'data-feedback-content-v7', 'feedbackContentV7');
+
+  const loadContentV7 = () => {
+    if (document.querySelector('script[data-feedback-content-v7]')) return;
+    const redesign = document.createElement('script');
+    redesign.src = new URL('feedback-content-v7.js', baseUrl).href;
+    redesign.async = false;
+    redesign.dataset.feedbackContentV7 = 'true';
+    document.body.appendChild(redesign);
+  };
 
   const loadContentV6 = () => {
-    if (document.querySelector('script[data-feedback-content-v6]')) return;
+    if (document.querySelector('script[data-feedback-content-v6]')) {
+      loadContentV7();
+      return;
+    }
     const gains = document.createElement('script');
     gains.src = new URL('feedback-content-v6.js', baseUrl).href;
     gains.async = false;
     gains.dataset.feedbackContentV6 = 'true';
+    gains.addEventListener('load', loadContentV7, { once: true });
+    gains.addEventListener('error', loadContentV7, { once: true });
     document.body.appendChild(gains);
   };
 
