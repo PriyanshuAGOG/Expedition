@@ -20,7 +20,8 @@
     'feedback-content-v13-patch.css',
     'feedback-content-v14.css',
     'feedback-content-v15.css',
-    'feedback-content-v15-patch.css'
+    'feedback-content-v15-patch.css',
+    'feedback-content-v16.css'
   ];
 
   const scripts = [
@@ -39,7 +40,8 @@
     'feedback-content-v12.js',
     'feedback-content-v13.js',
     'feedback-content-v14.js',
-    'feedback-content-v15.js'
+    'feedback-content-v15.js',
+    'feedback-content-v16.js'
   ];
 
   stylesheets.forEach(filename => {
@@ -74,4 +76,4 @@
   loadScript(0);
 })();
 
-/* v15 release marker */
+/* v16 symmetry release */
