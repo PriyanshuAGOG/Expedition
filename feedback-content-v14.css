@@ -1,0 +1,468 @@
+/* Final simplification v14: no floating navigation, compact glance, concise itinerary and tighter section transitions. */
+
+.navigation-removed-v14 body,
+.final-simplification-v14 body {
+  padding-bottom: 0 !important;
+}
+.navigation-removed-v14 .floating-nav,
+.navigation-removed-v14 [class*="floating-nav"] {
+  display: none !important;
+}
+
+.final-simplification-v14,
+.final-simplification-v14 body,
+.final-simplification-v14 main {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Expedition at a glance */
+.final-simplification-v14 #glance {
+  padding-top: clamp(82px, 11vw, 140px) !important;
+  padding-bottom: clamp(92px, 11vw, 150px) !important;
+}
+.final-simplification-v14 #glance .glance-content {
+  width: min(1080px, 100%) !important;
+}
+.final-simplification-v14 #glance .glance-heading-v13 {
+  margin-bottom: clamp(34px, 6vw, 64px) !important;
+}
+.final-simplification-v14 .glance-grid-v14 {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  border: 1px solid rgba(215, 246, 168, .24) !important;
+  border-radius: 26px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(215, 246, 168, .16) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 74%, rgba(215, 246, 168, .12) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 65% 22%, rgba(215, 246, 168, .1) 0 1px, transparent 2px),
+    rgba(4, 20, 12, .8) !important;
+  background-size: 120px 120px, 160px 160px, 90px 90px, auto;
+  box-shadow: 0 28px 76px rgba(0, 0, 0, .3);
+  backdrop-filter: blur(14px) saturate(1.08);
+}
+.final-simplification-v14 .glance-v14-card {
+  position: relative;
+  min-width: 0;
+  min-height: 170px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(24px, 3.5vw, 38px) !important;
+  color: var(--cream);
+  text-decoration: none;
+  border: 0 !important;
+  border-right: 1px solid rgba(215, 246, 168, .14) !important;
+  border-bottom: 1px solid rgba(215, 246, 168, .14) !important;
+  background: linear-gradient(145deg, rgba(9, 36, 22, .58), rgba(3, 17, 10, .72));
+  overflow: hidden;
+}
+.final-simplification-v14 .glance-v14-card::after {
+  content: '';
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  right: -48px;
+  top: -48px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 246, 168, .09);
+  box-shadow: 0 0 0 20px rgba(215, 246, 168, .025), 0 0 0 40px rgba(215, 246, 168, .018);
+  pointer-events: none;
+}
+.final-simplification-v14 .glance-v14-card small,
+.final-simplification-v14 .glance-v14-card strong,
+.final-simplification-v14 .glance-v14-card span {
+  position: relative;
+  z-index: 1;
+}
+.final-simplification-v14 .glance-v14-card small {
+  margin-bottom: auto;
+  color: var(--lime);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.final-simplification-v14 .glance-v14-card strong {
+  display: block;
+  margin-top: 24px;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: .98;
+  font-weight: 500;
+}
+.final-simplification-v14 .glance-v14-card span {
+  display: block;
+  margin-top: 10px;
+  color: rgba(246, 241, 226, .64);
+  font-size: .94rem;
+  line-height: 1.45;
+}
+.final-simplification-v14 .glance-v14-route,
+.final-simplification-v14 .glance-v14-experience {
+  grid-column: 1 / -1;
+}
+.final-simplification-v14 .glance-v14-route {
+  min-height: 185px;
+  background:
+    linear-gradient(90deg, rgba(7, 31, 19, .9), rgba(4, 19, 12, .48)),
+    url('assets/experience/webp/13-waterfall-ravine.webp') center 58% / cover no-repeat;
+}
+.final-simplification-v14 .glance-v14-route::before {
+  content: '↗';
+  position: absolute;
+  right: clamp(24px, 4vw, 42px);
+  bottom: clamp(24px, 4vw, 38px);
+  color: rgba(215, 246, 168, .72);
+  font-size: 2.2rem;
+}
+
+/* Pricing intro */
+.final-simplification-v14 .fee-journey-v14 {
+  padding-top: clamp(90px, 10vw, 140px) !important;
+}
+.final-simplification-v14 .fee-journey-v14 .fee-v11-bg {
+  object-position: center 56% !important;
+  opacity: .48 !important;
+}
+.final-simplification-v14 .fee-journey-v14 .fee-v11-grade {
+  background: linear-gradient(180deg, #04110a 0%, rgba(4, 17, 10, .74) 20%, rgba(4, 17, 10, .88) 72%, #04110a 100%) !important;
+}
+.final-simplification-v14 .fee-journey-v14 .fee-v11-heading {
+  position: relative;
+  z-index: 5;
+  width: min(820px, 100%);
+  margin-bottom: clamp(34px, 5vw, 58px) !important;
+  padding: 0 !important;
+}
+.final-simplification-v14 .fee-journey-v14 .fee-v11-heading::before {
+  content: '';
+  position: absolute;
+  inset: -28px -24px -34px;
+  z-index: -1;
+  background: radial-gradient(ellipse at 30% 45%, rgba(4, 17, 10, .96), rgba(4, 17, 10, .68) 52%, transparent 78%);
+  pointer-events: none;
+}
+.final-simplification-v14 .fee-journey-v14 .fee-v11-heading h2 {
+  max-width: 760px;
+  margin: 12px 0 8px !important;
+  font-size: clamp(3rem, 7.4vw, 6.8rem) !important;
+  line-height: .92 !important;
+  letter-spacing: -.05em !important;
+}
+.final-simplification-v14 .fee-v14-stage-line {
+  margin: 0 0 24px !important;
+  color: var(--lime) !important;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 3.6rem) !important;
+  font-style: italic;
+  line-height: 1;
+}
+.final-simplification-v14 .fee-journey-v14 .fee-v11-heading > p:last-child {
+  width: min(680px, 100%);
+  margin: 0 !important;
+}
+
+/* Remove the floating gap between preparation and benefits. */
+.final-simplification-v14 #preparation.transition-tight-v14 {
+  padding-bottom: clamp(62px, 8vw, 96px) !important;
+}
+.final-simplification-v14 #expedition-gains.transition-tight-v14 {
+  margin-top: 0 !important;
+  padding-top: clamp(78px, 9vw, 116px) !important;
+  min-height: 0 !important;
+}
+.final-simplification-v14 #expedition-gains.transition-tight-v14 .gain-v11-seam-top,
+.final-simplification-v14 #expedition-gains.transition-tight-v14 [class*="seam-top"] {
+  top: -2px !important;
+  opacity: .62 !important;
+}
+.final-simplification-v14 #expedition-gains.transition-tight-v14 .gain-v11-inner {
+  padding-top: 0 !important;
+}
+.final-simplification-v14 #expedition-gains.transition-tight-v14 .gain-v11-heading {
+  margin-top: 0 !important;
+}
+.final-simplification-v14 .leafy-join-v14 {
+  height: clamp(18px, 2.5vw, 36px) !important;
+  min-height: 0 !important;
+  margin: -2px 0 !important;
+}
+
+/* Concise, asset-led itinerary. */
+.final-simplification-v14 .itinerary-world-v14 {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding: clamp(92px, 10vw, 144px) clamp(18px, 5vw, 72px) clamp(96px, 11vw, 152px);
+  color: var(--cream);
+  background: #04110a;
+}
+.final-simplification-v14 .itinerary-v14-bg,
+.final-simplification-v14 .itinerary-v14-grade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.final-simplification-v14 .itinerary-v14-bg {
+  z-index: -6;
+  object-fit: cover;
+  object-position: center;
+  opacity: .42;
+}
+.final-simplification-v14 .itinerary-v14-grade {
+  z-index: -5;
+  background:
+    linear-gradient(180deg, #04110a 0%, rgba(4, 17, 10, .64) 18%, rgba(4, 17, 10, .83) 78%, #04110a 100%),
+    radial-gradient(circle at 50% 38%, rgba(91, 145, 78, .22), transparent 42%);
+}
+.final-simplification-v14 .itinerary-v14-ridge {
+  position: absolute;
+  z-index: -3;
+  width: min(64vw, 900px);
+  opacity: .24;
+  pointer-events: none;
+}
+.final-simplification-v14 .itinerary-v14-ridge-left { left: -24%; bottom: 0; }
+.final-simplification-v14 .itinerary-v14-ridge-right { right: -24%; top: 4%; transform: scaleX(-1); }
+.final-simplification-v14 .itinerary-v14-flora {
+  position: absolute;
+  z-index: 1;
+  width: min(28vw, 380px);
+  opacity: .34;
+  pointer-events: none;
+}
+.final-simplification-v14 .itinerary-v14-flora-left { left: -5%; bottom: -2%; }
+.final-simplification-v14 .itinerary-v14-flora-right { right: -5%; top: -1%; }
+.final-simplification-v14 .itinerary-v14-inner {
+  position: relative;
+  z-index: 3;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+.final-simplification-v14 .itinerary-v14-heading {
+  width: min(820px, 100%);
+  margin: 0 auto clamp(46px, 7vw, 78px);
+  text-align: center;
+}
+.final-simplification-v14 .itinerary-v14-heading h2 {
+  margin: 12px 0 22px;
+  font-size: clamp(3.1rem, 7vw, 7rem);
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+.final-simplification-v14 .itinerary-v14-heading > p:last-child {
+  width: min(690px, 100%);
+  margin: 0 auto;
+  color: rgba(246, 241, 226, .68);
+  line-height: 1.7;
+}
+.final-simplification-v14 .itinerary-v14-path {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.final-simplification-v14 .itinerary-v14-path::before {
+  content: '';
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(215, 246, 168, .38), transparent);
+  pointer-events: none;
+}
+.final-simplification-v14 .itinerary-v14-path article {
+  position: relative;
+  min-height: 220px;
+  padding: 28px;
+  border: 1px solid rgba(215, 246, 168, .2);
+  border-radius: 22px 6px 22px 6px;
+  background: linear-gradient(145deg, rgba(13, 43, 27, .78), rgba(4, 20, 12, .86));
+  box-shadow: 0 22px 56px rgba(0, 0, 0, .24);
+  backdrop-filter: blur(10px);
+}
+.final-simplification-v14 .itinerary-v14-path article::after {
+  content: '';
+  position: absolute;
+  inset: auto 18px 14px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(215, 246, 168, .28), transparent);
+}
+.final-simplification-v14 .itinerary-v14-path article > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 28px;
+  border: 1px solid rgba(215, 246, 168, .36);
+  border-radius: 50%;
+  color: var(--lime);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.final-simplification-v14 .itinerary-v14-path article small {
+  color: var(--lime);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.final-simplification-v14 .itinerary-v14-path article h3 {
+  margin: 10px 0 12px;
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 2.6vw, 2.35rem);
+  line-height: 1;
+}
+.final-simplification-v14 .itinerary-v14-path article p {
+  margin: 0;
+  color: rgba(246, 241, 226, .66);
+  line-height: 1.55;
+}
+.final-simplification-v14 .itinerary-v14-path .itinerary-v14-featured {
+  background:
+    linear-gradient(145deg, rgba(29, 72, 43, .86), rgba(6, 27, 16, .9)),
+    radial-gradient(circle at 85% 12%, rgba(215, 246, 168, .16), transparent 42%);
+  border-color: rgba(215, 246, 168, .36);
+}
+.final-simplification-v14 .itinerary-v14-note {
+  width: min(840px, 100%);
+  margin: clamp(34px, 5vw, 54px) auto 0;
+  padding: 20px 24px;
+  border: 1px solid rgba(215, 246, 168, .2);
+  border-radius: 16px;
+  color: rgba(246, 241, 226, .7);
+  background: rgba(4, 18, 11, .74);
+  text-align: center;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .final-simplification-v14 #glance {
+    padding-inline: 16px !important;
+  }
+  .final-simplification-v14 #glance .glance-heading-v13 {
+    text-align: left !important;
+  }
+  .final-simplification-v14 #glance .glance-heading-v13 h2 {
+    font-size: clamp(3.5rem, 17vw, 5.5rem) !important;
+    line-height: .86 !important;
+  }
+  .final-simplification-v14 .glance-grid-v14 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    border-radius: 22px;
+  }
+  .final-simplification-v14 .glance-v14-card {
+    min-height: 160px;
+    padding: 22px !important;
+  }
+  .final-simplification-v14 .glance-v14-card strong {
+    font-size: clamp(1.8rem, 8vw, 2.7rem);
+  }
+  .final-simplification-v14 .glance-v14-card span {
+    font-size: .86rem;
+  }
+  .final-simplification-v14 .glance-v14-route,
+  .final-simplification-v14 .glance-v14-experience {
+    grid-column: 1 / -1;
+  }
+
+  .final-simplification-v14 .fee-journey-v14 .fee-v11-heading {
+    margin-bottom: 34px !important;
+  }
+  .final-simplification-v14 .fee-journey-v14 .fee-v11-heading h2 {
+    font-size: clamp(3.2rem, 14vw, 5.2rem) !important;
+    line-height: .9 !important;
+  }
+  .final-simplification-v14 .fee-v14-stage-line {
+    font-size: clamp(2rem, 9vw, 3.1rem) !important;
+  }
+
+  .final-simplification-v14 #preparation.transition-tight-v14 {
+    padding-bottom: 46px !important;
+  }
+  .final-simplification-v14 #expedition-gains.transition-tight-v14 {
+    padding-top: 66px !important;
+  }
+
+  .final-simplification-v14 .itinerary-world-v14 {
+    padding: 82px 16px 92px;
+  }
+  .final-simplification-v14 .itinerary-v14-heading {
+    text-align: left;
+    margin-bottom: 38px;
+  }
+  .final-simplification-v14 .itinerary-v14-heading h2 {
+    font-size: clamp(3.2rem, 14vw, 5.2rem);
+  }
+  .final-simplification-v14 .itinerary-v14-heading > p:last-child {
+    margin-left: 0;
+  }
+  .final-simplification-v14 .itinerary-v14-path {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .final-simplification-v14 .itinerary-v14-path::before {
+    left: 22px;
+    right: auto;
+    top: 20px;
+    bottom: 20px;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, transparent, rgba(215, 246, 168, .34), transparent);
+  }
+  .final-simplification-v14 .itinerary-v14-path article {
+    min-height: 0;
+    padding: 22px 22px 24px 72px;
+  }
+  .final-simplification-v14 .itinerary-v14-path article > span {
+    position: absolute;
+    left: 12px;
+    top: 22px;
+    width: 38px;
+    height: 38px;
+    margin: 0;
+    background: #07180f;
+  }
+  .final-simplification-v14 .itinerary-v14-flora {
+    width: 180px;
+    opacity: .24;
+  }
+  .final-simplification-v14 .itinerary-v14-note {
+    text-align: left;
+    padding: 18px;
+  }
+}
+
+@media (max-width: 390px) {
+  .final-simplification-v14 .glance-v14-card {
+    min-height: 150px;
+    padding: 18px !important;
+  }
+  .final-simplification-v14 .glance-v14-card small {
+    font-size: .66rem;
+  }
+  .final-simplification-v14 .glance-v14-card strong {
+    font-size: 1.75rem;
+  }
+  .final-simplification-v14 .glance-v14-card span {
+    font-size: .8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .final-simplification-v14 *,
+  .final-simplification-v14 *::before,
+  .final-simplification-v14 *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
