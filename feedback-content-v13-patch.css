@@ -1,0 +1,6 @@
+/* Final v13 release refinements. */
+.final-polish-v13 .floating-nav-v13.nav-v13-dormant{width:52px!important;height:52px!important}
+.final-polish-v13 .floating-nav-v13.nav-v13-dormant .nav-v13-panel{position:absolute!important}
+.final-polish-v13 .glance-v13-experience{grid-column:1/-1!important}
+.final-polish-v13 .glance-v13-route{padding-right:78px!important}
+@media(max-width:640px){.final-polish-v13 .glance-v13-route{padding-right:68px!important}}
