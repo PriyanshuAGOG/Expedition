@@ -15,7 +15,8 @@
     'feedback-content-v9.css',
     'feedback-content-v10.css',
     'feedback-content-v11.css',
-    'feedback-content-v12.css'
+    'feedback-content-v12.css',
+    'feedback-content-v13.css'
   ];
 
   const scripts = [
@@ -31,7 +32,8 @@
     'feedback-content-v9.js',
     'feedback-content-v10.js',
     'feedback-content-v11.js',
-    'feedback-content-v12.js'
+    'feedback-content-v12.js',
+    'feedback-content-v13.js'
   ];
 
   stylesheets.forEach(filename => {
