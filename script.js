@@ -19,7 +19,8 @@
     'feedback-content-v13.css',
     'feedback-content-v13-patch.css',
     'feedback-content-v14.css',
-    'feedback-content-v15.css'
+    'feedback-content-v15.css',
+    'feedback-content-v15-patch.css'
   ];
 
   const scripts = [
