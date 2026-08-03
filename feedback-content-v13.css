@@ -1,0 +1,161 @@
+/* Final expedition polish v13: stable navigation, reordered glance, pathway itinerary and cross-section asset QA. */
+
+.v13-reveal{opacity:0;transform:translateY(22px);transition:opacity .62s ease var(--v13-delay,0ms),transform .72s cubic-bezier(.2,.72,.2,1) var(--v13-delay,0ms)}
+.v13-reveal.v13-visible{opacity:1;transform:none}
+.final-polish-v13,.final-polish-v13 body{width:100%;max-width:100%;overflow-x:clip}
+.final-polish-v13 main{overflow:clip}
+.final-polish-v13 .section-v13-audited{position:relative;isolation:isolate;min-width:0;overflow:clip!important}
+.final-polish-v13 .background-v13-fixed>.world-bg,.final-polish-v13 #glance>.world-bg,.final-polish-v13 #journal>.world-bg,.final-polish-v13 #register>.world-bg{position:absolute!important;inset:0!important;width:100%!important;max-width:none!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.final-polish-v13 .section-seam,.final-polish-v13 [class*="-seam-top"],.final-polish-v13 [class*="-seam-bottom"]{width:calc(100% + 8px)!important;max-width:none!important;left:-4px!important;pointer-events:none!important}
+.final-polish-v13 .section-seam.seam-top,.final-polish-v13 [class*="-seam-top"]{top:-3px!important}
+.final-polish-v13 .section-seam.seam-bottom,.final-polish-v13 [class*="-seam-bottom"]{bottom:-3px!important}
+.final-polish-v13 .leafy-join{height:clamp(24px,3.5vw,52px)!important;min-height:0!important;margin:-2px 0!important;overflow:hidden!important}
+.final-polish-v13 .leafy-join img{opacity:.38!important}
+
+.final-polish-v13 .floating-nav-v13{position:fixed!important;z-index:400!important;display:flex!important;align-items:center!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;overflow:visible!important;transition:none!important}
+.final-polish-v13 .nav-v13-toggle{width:52px;height:52px;flex:0 0 52px;display:grid;place-items:center;padding:0;border:1px solid rgba(215,246,168,.3);border-radius:50%;color:var(--cream);background:rgba(4,17,10,.9);box-shadow:0 14px 38px rgba(0,0,0,.34);backdrop-filter:blur(15px) saturate(1.1);cursor:pointer;transition:transform .25s ease,background .25s ease,border-color .25s ease}
+.final-polish-v13 .nav-v13-toggle:active{transform:scale(.95)}
+.final-polish-v13 .nav-v13-toggle>span{width:19px;height:15px;display:grid;align-content:space-between}
+.final-polish-v13 .nav-v13-toggle i{display:block;height:1.7px;border-radius:99px;background:currentColor;transform-origin:center;transition:transform .25s ease,opacity .2s ease,width .2s ease}
+.final-polish-v13 .nav-v13-toggle i:nth-child(2){width:12px;justify-self:end}
+.final-polish-v13 .nav-v13-expanded .nav-v13-toggle i:first-child{transform:translateY(6.65px) rotate(45deg)}
+.final-polish-v13 .nav-v13-expanded .nav-v13-toggle i:nth-child(2){opacity:0}
+.final-polish-v13 .nav-v13-expanded .nav-v13-toggle i:last-child{transform:translateY(-6.65px) rotate(-45deg)}
+.final-polish-v13 .nav-v13-panel{display:flex;align-items:center;overflow:hidden;border:1px solid rgba(215,246,168,.22);background:rgba(4,17,10,.91);box-shadow:0 18px 50px rgba(0,0,0,.38);backdrop-filter:blur(18px) saturate(1.1);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.72,.2,1),visibility .25s ease}
+.final-polish-v13 .nav-v13-panel a{display:grid;place-items:center;gap:4px;min-width:58px;color:rgba(246,241,226,.7);text-decoration:none;font-size:.63rem;font-weight:750;letter-spacing:.04em;text-transform:uppercase;transition:color .2s ease,background .2s ease}
+.final-polish-v13 .nav-v13-panel a:hover,.final-polish-v13 .nav-v13-panel a:focus-visible{color:var(--lime);background:rgba(215,246,168,.08)}
+.final-polish-v13 .nav-v13-panel svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+.final-polish-v13 .nav-v13-panel .nav-v13-apply{color:#06110c;background:var(--lime)}
+
+@media(max-width:980px){
+.final-polish-v13 .floating-nav-v13{right:max(14px,env(safe-area-inset-right))!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;flex-direction:column-reverse;align-items:flex-end!important;gap:9px}
+.final-polish-v13 .nav-v13-panel{width:min(calc(100vw - 28px),390px);height:68px;border-radius:22px;transform:translateY(10px) scale(.97);transform-origin:bottom right}
+.final-polish-v13 .nav-v13-expanded .nav-v13-panel{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.final-polish-v13 .nav-v13-panel a{flex:1 1 20%;height:100%}
+.final-polish-v13 .nav-v13-panel a span{display:none}
+.final-polish-v13 .nav-v13-panel svg{width:22px;height:22px}
+.final-polish-v13 .nav-v13-dormant{width:52px!important;height:52px!important}}
+@media(min-width:981px){
+.final-polish-v13 .floating-nav-v13{top:50%!important;right:18px!important;bottom:auto!important;flex-direction:row-reverse;gap:9px;transform:translateY(-50%)}
+.final-polish-v13 .nav-v13-panel{width:88px;flex-direction:column;border-radius:24px;transform:translateX(12px) scale(.97);transform-origin:right center}
+.final-polish-v13 .nav-v13-expanded .nav-v13-panel{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.final-polish-v13 .nav-v13-panel a{width:100%;min-height:66px}}
+
+.final-polish-v13 #glance{min-height:0!important;padding:clamp(94px,11vw,150px) clamp(18px,5vw,72px) clamp(112px,12vw,170px)!important;background:#06130d!important}
+.final-polish-v13 #glance .world-bg{object-position:center 42%!important;opacity:.82}
+.final-polish-v13 #glance .world-grade{z-index:1!important;background:linear-gradient(180deg,rgba(3,14,8,.3),rgba(3,14,8,.72) 52%,rgba(3,14,8,.94))!important}
+.final-polish-v13 #glance .foliage-frame,.final-polish-v13 #glance .gateway-flora{z-index:2!important;opacity:.3!important}
+.final-polish-v13 #glance .glance-content{position:relative!important;z-index:5!important;width:min(1180px,100%)!important;max-width:none!important;margin:0 auto!important;padding:0!important}
+.final-polish-v13 #glance .glance-heading-v13{width:min(860px,100%);margin:0 auto clamp(42px,7vw,80px)!important;text-align:center}
+.final-polish-v13 #glance .glance-heading-v13 h2{margin:0;font-size:clamp(3.5rem,8.3vw,8.5rem)!important;line-height:.82!important;letter-spacing:-.055em}
+.final-polish-v13 .glance-grid-v13{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;border:1px solid rgba(215,246,168,.26)!important;border-radius:30px;overflow:hidden;background:rgba(3,17,10,.72)!important;box-shadow:0 30px 80px rgba(0,0,0,.32);backdrop-filter:blur(13px) saturate(1.1)}
+.final-polish-v13 .glance-v13-card{position:relative;min-width:0;min-height:190px;display:flex!important;flex-direction:column;justify-content:flex-end;padding:clamp(24px,3vw,38px)!important;color:var(--cream);text-decoration:none;border:0!important;border-right:1px solid rgba(215,246,168,.15)!important;border-bottom:1px solid rgba(215,246,168,.15)!important;background:linear-gradient(145deg,rgba(8,33,20,.76),rgba(3,19,11,.82));overflow:hidden}
+.final-polish-v13 .glance-v13-card:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 85% 12%,rgba(215,246,168,.12),transparent 38%);pointer-events:none}
+.final-polish-v13 .glance-v13-card small,.final-polish-v13 .glance-v13-card strong,.final-polish-v13 .glance-v13-card span{position:relative;z-index:1}
+.final-polish-v13 .glance-v13-card small{margin-bottom:auto;color:var(--lime);font-size:.76rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.final-polish-v13 .glance-v13-card strong{display:block;margin-top:28px;font-family:var(--serif);font-size:clamp(2rem,3vw,3.25rem);line-height:.96;font-weight:500}
+.final-polish-v13 .glance-v13-card span{display:block;margin-top:10px;color:rgba(246,241,226,.62);font-size:.95rem;line-height:1.45}
+.final-polish-v13 .glance-v13-route{grid-column:span 2}
+.final-polish-v13 .glance-v13-route:after{content:'↗';position:absolute;right:28px;bottom:28px;color:rgba(215,246,168,.62);font-size:2.2rem;transition:transform .25s ease}
+.final-polish-v13 .glance-v13-route:hover:after{transform:translate(4px,-4px)}
+.final-polish-v13 .glance-v13-partner{grid-column:span 2}
+.final-polish-v13 .glance-v13-experience{grid-column:span 2}
+
+.final-polish-v13 .itinerary-world-v13{position:relative;min-height:100vh;padding:clamp(112px,12vw,180px) clamp(18px,5vw,72px) clamp(122px,13vw,190px);color:var(--cream);background:#04110a;overflow:clip;isolation:isolate}
+.final-polish-v13 .itinerary-v13-bg,.final-polish-v13 .itinerary-v13-grade,.final-polish-v13 .itinerary-v13-contours{position:absolute;inset:0;width:100%;height:100%}
+.final-polish-v13 .itinerary-v13-bg{z-index:-6;object-fit:cover;object-position:center;opacity:.45}
+.final-polish-v13 .itinerary-v13-grade{z-index:-5;background:linear-gradient(180deg,#04110a 0%,rgba(4,17,10,.65) 12%,rgba(4,17,10,.76) 60%,#04110a 100%),radial-gradient(circle at 50% 35%,rgba(109,158,91,.2),transparent 42%)}
+.final-polish-v13 .itinerary-v13-contours{z-index:-4;opacity:.18;background-image:repeating-radial-gradient(ellipse at 50% 40%,transparent 0 72px,rgba(215,246,168,.18) 74px 75px,transparent 77px 112px);transform:scale(1.15)}
+.final-polish-v13 .itinerary-v13-ridge{position:absolute;z-index:-3;width:min(66vw,980px);opacity:.22;pointer-events:none}
+.final-polish-v13 .itinerary-v13-ridge-left{left:-22%;bottom:4%}
+.final-polish-v13 .itinerary-v13-ridge-right{right:-22%;top:12%;transform:scaleX(-1)}
+.final-polish-v13 .itinerary-v13-flora{position:absolute;z-index:1;width:min(30vw,410px);opacity:.38;pointer-events:none}
+.final-polish-v13 .itinerary-v13-flora-left{left:-6%;bottom:-2%}
+.final-polish-v13 .itinerary-v13-flora-right{right:-6%;top:0}
+.final-polish-v13 .itinerary-v13-inner{position:relative;z-index:3;width:min(1180px,100%);margin:0 auto}
+.final-polish-v13 .itinerary-v13-heading{width:min(900px,100%);margin:0 auto clamp(72px,9vw,120px);text-align:center}
+.final-polish-v13 .itinerary-v13-heading h2{margin:12px 0 26px;font-size:clamp(3.4rem,7.4vw,7.8rem);line-height:.9;letter-spacing:-.055em}
+.final-polish-v13 .itinerary-v13-heading>p:last-child{width:min(760px,100%);margin:0 auto;color:rgba(246,241,226,.68);font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.75}
+.final-polish-v13 .itinerary-v13-map{position:relative;display:grid;gap:44px}
+.final-polish-v13 .itinerary-v13-line{position:absolute;top:22px;bottom:22px;left:50%;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(215,246,168,.64) 6%,rgba(215,246,168,.2) 93%,transparent);box-shadow:0 0 26px rgba(215,246,168,.2)}
+.final-polish-v13 .itinerary-v13-day{position:relative;display:grid;grid-template-columns:1fr 74px 1fr;align-items:center;min-height:260px}
+.final-polish-v13 .itinerary-v13-marker{grid-column:2;position:relative;z-index:3;width:58px;height:58px;justify-self:center;display:grid;place-items:center;border:1px solid rgba(215,246,168,.5);border-radius:50%;color:var(--lime);background:#07180f;box-shadow:0 0 0 10px rgba(7,24,15,.7),0 0 30px rgba(215,246,168,.12);font-weight:800;letter-spacing:.1em}
+.final-polish-v13 .itinerary-v13-marker i{position:absolute;width:28px;height:1px;top:50%;background:rgba(215,246,168,.34)}
+.final-polish-v13 .itinerary-v13-day-left .itinerary-v13-marker i{right:100%}
+.final-polish-v13 .itinerary-v13-day-right .itinerary-v13-marker i{left:100%}
+.final-polish-v13 .itinerary-v13-card{position:relative;width:min(100%,500px);padding:clamp(28px,4vw,46px);border:1px solid rgba(215,246,168,.22);border-radius:28px 6px 28px 6px;background:linear-gradient(145deg,rgba(13,45,27,.78),rgba(4,21,12,.86)),radial-gradient(circle at 100% 0,rgba(215,246,168,.12),transparent 38%);box-shadow:0 26px 68px rgba(0,0,0,.28);backdrop-filter:blur(12px)}
+.final-polish-v13 .itinerary-v13-day-left .itinerary-v13-card{grid-column:1;justify-self:end;text-align:right}
+.final-polish-v13 .itinerary-v13-day-right .itinerary-v13-card{grid-column:3;justify-self:start}
+.final-polish-v13 .itinerary-v13-card small{color:var(--lime);font-size:.75rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.final-polish-v13 .itinerary-v13-card h3{margin:12px 0 18px;font-family:var(--serif);font-size:clamp(2rem,3.1vw,3.2rem);line-height:.98;font-weight:500}
+.final-polish-v13 .itinerary-v13-card p{margin:18px 0 0;color:rgba(246,241,226,.68);font-size:1rem;line-height:1.65}
+.final-polish-v13 .itinerary-v13-metrics{display:flex;flex-wrap:wrap;gap:8px}
+.final-polish-v13 .itinerary-v13-day-left .itinerary-v13-metrics{justify-content:flex-end}
+.final-polish-v13 .itinerary-v13-metrics span{padding:7px 10px;border:1px solid rgba(215,246,168,.2);border-radius:999px;color:rgba(246,241,226,.72);background:rgba(3,17,10,.45);font-size:.76rem;letter-spacing:.04em}
+.final-polish-v13 .itinerary-v13-day-featured .itinerary-v13-card{border-color:rgba(215,246,168,.44);background:linear-gradient(145deg,rgba(25,66,39,.9),rgba(5,26,15,.9));box-shadow:0 28px 80px rgba(0,0,0,.34),0 0 0 1px rgba(215,246,168,.06) inset}
+.final-polish-v13 .itinerary-v13-note{width:min(900px,100%);margin:clamp(72px,9vw,118px) auto 0;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;padding:clamp(24px,3vw,34px);border:1px solid rgba(215,246,168,.25);border-radius:20px;background:rgba(5,24,14,.78)}
+.final-polish-v13 .itinerary-v13-note>span{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;color:#06110c;background:var(--lime);font-family:var(--serif);font-weight:700}
+.final-polish-v13 .itinerary-v13-note p{margin:0;color:rgba(246,241,226,.7);line-height:1.65}
+.final-polish-v13 .itinerary-v13-note strong{color:var(--cream)}
+
+.final-polish-v13 .faq-list-v13{width:min(920px,calc(100% - 36px));margin-inline:auto}
+.final-polish-v13 .faq-list-v13 details{background:rgba(5,24,14,.56);backdrop-filter:blur(8px)}
+.final-polish-v13 .faq-list-v13 summary{gap:20px}
+.final-polish-v13 .faq-list-v13 p{max-width:760px}
+.final-polish-v13 #journal{padding-bottom:clamp(92px,10vw,150px)!important;background:#06130d!important}
+.final-polish-v13 #journal .world-bg{object-position:center!important;opacity:.68}
+.final-polish-v13 #journal .evidence-grade{background:linear-gradient(90deg,rgba(4,17,10,.86),rgba(4,17,10,.52),rgba(4,17,10,.86))!important}
+.final-polish-v13 #journal .journal-update{display:none!important}
+.final-polish-v13 #expedition-gains,.final-polish-v13 #pricing{min-height:0!important;padding-top:clamp(100px,11vw,150px)!important;padding-bottom:clamp(110px,12vw,170px)!important}
+.final-polish-v13 #expedition-gains [class*="-bg"],.final-polish-v13 #pricing [class*="-bg"]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important}
+.final-polish-v13 .gain-v11-heading h2,.final-polish-v13 .fee-v11-heading h2{font-size:clamp(3.4rem,7.2vw,7.4rem)!important;line-height:.9!important}
+.final-polish-v13 .gain-v11-heading,.final-polish-v13 .fee-v11-heading{margin-bottom:clamp(52px,7vw,84px)!important}
+.final-polish-v13 .gain-v11-map{margin-top:0!important}
+.final-polish-v13 .gain-v11-closing{margin-top:clamp(46px,6vw,78px)!important}
+.final-polish-v13 .fee-v11-overview{margin-top:0!important}
+
+@media(max-width:900px){
+.final-polish-v13 .glance-grid-v13{grid-template-columns:repeat(2,minmax(0,1fr))!important;border-radius:22px}
+.final-polish-v13 .glance-v13-route,.final-polish-v13 .glance-v13-partner,.final-polish-v13 .glance-v13-experience{grid-column:span 1}
+.final-polish-v13 .glance-v13-experience{grid-column:1/-1}
+.final-polish-v13 .glance-v13-card{min-height:176px}
+.final-polish-v13 .itinerary-v13-line{left:28px;transform:none}
+.final-polish-v13 .itinerary-v13-day{grid-template-columns:58px minmax(0,1fr);min-height:0;align-items:start}
+.final-polish-v13 .itinerary-v13-marker{grid-column:1;width:50px;height:50px;justify-self:start;margin-top:22px;box-shadow:0 0 0 7px rgba(7,24,15,.72)}
+.final-polish-v13 .itinerary-v13-marker i{left:100%!important;right:auto!important;width:16px}
+.final-polish-v13 .itinerary-v13-card,.final-polish-v13 .itinerary-v13-day-left .itinerary-v13-card,.final-polish-v13 .itinerary-v13-day-right .itinerary-v13-card{grid-column:2;width:100%;justify-self:stretch;text-align:left}
+.final-polish-v13 .itinerary-v13-day-left .itinerary-v13-metrics{justify-content:flex-start}}
+@media(max-width:640px){
+.final-polish-v13 #glance{padding:82px 16px 106px!important}
+.final-polish-v13 #glance .glance-heading-v13{margin-bottom:34px!important;text-align:left}
+.final-polish-v13 #glance .glance-heading-v13 h2{font-size:clamp(3.5rem,16vw,5rem)!important;line-height:.84!important}
+.final-polish-v13 .glance-grid-v13{border-radius:18px}
+.final-polish-v13 .glance-v13-card{min-height:154px;padding:20px!important}
+.final-polish-v13 .glance-v13-card strong{margin-top:22px;font-size:clamp(1.75rem,8vw,2.45rem)}
+.final-polish-v13 .glance-v13-card span{font-size:.82rem}
+.final-polish-v13 .glance-v13-route,.final-polish-v13 .glance-v13-partner,.final-polish-v13 .glance-v13-experience{grid-column:1/-1}
+.final-polish-v13 .glance-v13-route:after{right:20px;bottom:20px}
+.final-polish-v13 .itinerary-world-v13{padding:94px 16px 112px}
+.final-polish-v13 .itinerary-v13-heading{text-align:left;margin-bottom:62px}
+.final-polish-v13 .itinerary-v13-heading h2{font-size:clamp(3.4rem,15vw,5.3rem);line-height:.88}
+.final-polish-v13 .itinerary-v13-heading>p:last-child{font-size:.98rem;line-height:1.65}
+.final-polish-v13 .itinerary-v13-map{gap:26px}
+.final-polish-v13 .itinerary-v13-line{left:24px}
+.final-polish-v13 .itinerary-v13-day{grid-template-columns:48px minmax(0,1fr)}
+.final-polish-v13 .itinerary-v13-marker{width:44px;height:44px;font-size:.72rem}
+.final-polish-v13 .itinerary-v13-card{padding:24px 20px;border-radius:22px 5px 22px 5px}
+.final-polish-v13 .itinerary-v13-card h3{font-size:clamp(1.9rem,8.5vw,2.7rem)}
+.final-polish-v13 .itinerary-v13-card p{font-size:.93rem;line-height:1.58}
+.final-polish-v13 .itinerary-v13-metrics span{font-size:.67rem}
+.final-polish-v13 .itinerary-v13-note{grid-template-columns:1fr}
+.final-polish-v13 .gain-v11-heading h2,.final-polish-v13 .fee-v11-heading h2{font-size:clamp(3.35rem,15vw,5rem)!important}
+.final-polish-v13 #expedition-gains,.final-polish-v13 #pricing{padding-inline:16px!important}}
+@media(max-width:390px){
+.final-polish-v13 .nav-v13-panel{width:calc(100vw - 20px)}
+.final-polish-v13 .glance-v13-card{min-height:146px;padding:18px!important}
+.final-polish-v13 .glance-v13-card small{font-size:.67rem}
+.final-polish-v13 .glance-v13-card strong{font-size:1.72rem}
+.final-polish-v13 .itinerary-v13-card{padding:21px 17px}}
+@media(prefers-reduced-motion:reduce){
+.v13-reveal{opacity:1!important;transform:none!important;transition:none!important}
+.final-polish-v13 .nav-v13-panel,.final-polish-v13 .nav-v13-toggle i{transition:none!important}}
