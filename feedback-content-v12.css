@@ -1,0 +1,101 @@
+/* v12: 45-day programme, participant-paid cost note and Dayara-specific FAQs. */
+.fee-v12-participant-note {
+  width: min(980px, 100%);
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 22px);
+  align-items: start;
+  margin: clamp(18px, 3vw, 30px) auto 0;
+  padding: clamp(18px, 2.5vw, 26px);
+  border: 1px solid rgba(215, 246, 168, .24);
+  border-radius: 22px 7px 22px 7px;
+  color: var(--cream);
+  background:
+    radial-gradient(circle at 8% 14%, rgba(215, 246, 168, .08), transparent 32%),
+    linear-gradient(145deg, rgba(8, 28, 17, .9), rgba(3, 14, 8, .92));
+  box-shadow: 0 20px 58px rgba(0, 0, 0, .24);
+  backdrop-filter: blur(12px);
+}
+.fee-v12-participant-note > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(215, 246, 168, .28);
+  border-radius: 50%;
+  color: var(--leaf);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+}
+.fee-v12-participant-note small {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--leaf);
+  font-size: .55rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.fee-v12-participant-note ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.fee-v12-participant-note li {
+  color: rgba(244, 241, 232, .76);
+  font-size: clamp(.76rem, .95vw, .9rem);
+  line-height: 1.6;
+}
+
+.faq-list-v12 details {
+  overflow: hidden;
+}
+.faq-list-v12 details > p {
+  max-width: 78ch;
+}
+.faq-v12-source {
+  width: min(980px, 100%);
+  margin: clamp(24px, 4vw, 42px) auto 0;
+  padding: 16px 18px;
+  border-left: 2px solid var(--leaf);
+  color: rgba(244, 241, 232, .58);
+  background: rgba(4, 16, 10, .48);
+  font-size: .68rem;
+  line-height: 1.6;
+}
+.faq-v12-source a {
+  color: var(--leaf);
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+@media (max-width: 680px) {
+  .fee-v12-participant-note {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    padding: 17px 15px;
+    border-radius: 18px 6px 18px 6px;
+  }
+  .fee-v12-participant-note > span {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  .fee-v12-participant-note li {
+    font-size: .72rem;
+  }
+  .faq-list-v12 details > p {
+    font-size: .76rem;
+    line-height: 1.65;
+  }
+  .faq-v12-source {
+    padding: 14px 15px;
+    font-size: .61rem;
+  }
+  .faq-v12-source a {
+    display: inline-block;
+    margin-top: 5px;
+    white-space: normal;
+  }
+}
