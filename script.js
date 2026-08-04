@@ -21,7 +21,8 @@
     'feedback-content-v14.css',
     'feedback-content-v15.css',
     'feedback-content-v15-patch.css',
-    'feedback-content-v16.css'
+    'feedback-content-v16.css',
+    'feedback-content-v17.css'
   ];
 
   const scripts = [
@@ -76,4 +77,4 @@
   loadScript(0);
 })();
 
-/* v16 symmetry release */
+/* v17 compact responsive polish */
