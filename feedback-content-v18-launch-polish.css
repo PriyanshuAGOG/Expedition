@@ -305,34 +305,51 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
 }
 
 .partner-plaque {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   align-items: center;
   gap: 26px;
   width: 100%;
   max-width: 460px;
   padding: clamp(24px, 3vw, 32px) clamp(26px, 3.6vw, 38px);
-  border: 1px solid rgba(7, 18, 13, .1);
+  border: 1px solid rgba(53, 79, 41, .3);
   border-radius: 22px 6px 22px 6px;
-  background: linear-gradient(150deg, #f6f3e9, #ece7d8);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .32);
-  color: #101b12;
+  background: linear-gradient(155deg, #e9f1d6 0%, #d3e4b3 62%, #c1d99a 100%);
+  box-shadow: 0 24px 60px rgba(4, 14, 7, .4);
+  color: #16240f;
   text-align: left;
 }
+.partner-plaque::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -14px;
+  bottom: -18px;
+  width: clamp(90px, 11vw, 140px);
+  height: clamp(90px, 11vw, 140px);
+  background: url("assets/botanicals/webp/64-moss-leaf-divider.webp") center/contain no-repeat;
+  opacity: .3;
+  pointer-events: none;
+}
+.partner-plaque-logo, .partner-plaque-copy { position: relative; z-index: 1; }
 .partner-plaque-logo {
   flex: none;
   width: clamp(120px, 32%, 150px);
   height: auto;
+  filter: drop-shadow(0 6px 14px rgba(11, 24, 12, .18));
 }
 .partner-plaque-copy { display: grid; gap: 6px; min-width: 0; }
 .partner-plaque-copy small {
-  color: #5c6f52;
+  color: #3c5330;
   font-size: .58rem;
   font-weight: 800;
   letter-spacing: .14em;
   text-transform: uppercase;
 }
 .partner-plaque-copy span {
-  color: rgba(16, 27, 18, .68);
+  color: rgba(22, 36, 15, .74);
   font-size: .78rem;
   line-height: 1.55;
 }
