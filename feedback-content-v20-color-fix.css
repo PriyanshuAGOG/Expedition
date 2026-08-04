@@ -1,0 +1,12 @@
+/* Final pricing-heading colour correction.
+ * Earlier editorial heading rules set a white WebKit text fill after the
+ * standard color declaration. Use an explicit brand value and reset the fill.
+ */
+html.pricing-partner-grid-v20 body #pricing.fee-v20 .fee-heading-v20 h2 > em {
+  color: #d7f6a8 !important;
+  -webkit-text-fill-color: #d7f6a8 !important;
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+}
