@@ -154,6 +154,11 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   padding-bottom: clamp(56px, 6vw, 92px) !important;
   min-height: 0 !important;
 }
+/* Stage 01 has more list content than Stage 02, but grid stretch forced both
+   cards to match Stage 02's taller (nested-box) height, leaving Stage 01
+   with a dead empty band at its own bottom. Let each card size to its own
+   content instead. */
+.fee-v11-stage-grid { align-items: start !important; }
 
 #journal.campaign-v14.journal-world,
 .campaign-v14 .journal-world {
