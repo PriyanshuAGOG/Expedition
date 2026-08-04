@@ -1,0 +1,306 @@
+/* v18: compact pricing introduction and mountain-led partner presentation. */
+
+/* Pricing heading: retain only useful information and align it with the other chapters. */
+.pricing-partners-v18 .fee-journey-v18 {
+  padding-top: clamp(58px, 6.5vw, 88px) !important;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-inner {
+  position: relative;
+  z-index: 4;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 {
+  width: min(760px, 100%) !important;
+  margin: 0 auto clamp(28px, 4vw, 46px) !important;
+  padding: 0 clamp(16px, 2vw, 24px) !important;
+  text-align: center !important;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18::before {
+  inset: -20px -12px -24px !important;
+  background: radial-gradient(ellipse at 50% 50%, rgba(4, 17, 10, .94), rgba(4, 17, 10, .58) 58%, transparent 80%) !important;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 .kicker {
+  margin: 0 0 12px !important;
+  text-align: center !important;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 h2 {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  font-size: clamp(2.8rem, 5.8vw, 5.8rem) !important;
+  line-height: .94 !important;
+  letter-spacing: -.045em !important;
+  text-align: center !important;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 h2 em {
+  color: var(--lime) !important;
+  font-family: var(--serif) !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+}
+
+.pricing-partners-v18 .fee-journey-v18 .fee-v11-overview {
+  margin-top: 0 !important;
+}
+
+/* Partners: an extendable, responsive forest system rather than a generic white logo grid. */
+.pricing-partners-v18 .trust-partners-v18 {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding: clamp(76px, 8vw, 118px) clamp(18px, 5vw, 72px) clamp(88px, 9vw, 132px) !important;
+  background:
+    linear-gradient(180deg, #04110a 0%, rgba(4, 17, 10, .7) 28%, rgba(4, 17, 10, .9) 78%, #04110a 100%),
+    url('assets/experience/webp/15-evening-camp.webp') center 54% / cover no-repeat !important;
+}
+
+.pricing-partners-v18 .trust-partners-v18::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(155, 213, 104, .13), transparent 28%),
+    radial-gradient(circle at 82% 70%, rgba(90, 145, 78, .15), transparent 30%),
+    repeating-radial-gradient(circle at 50% 110%, transparent 0 38px, rgba(215, 246, 168, .035) 39px 40px);
+  pointer-events: none;
+}
+
+.pricing-partners-v18 .trust-partners-v18::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  z-index: -1;
+  height: clamp(72px, 9vw, 132px);
+  background: url('assets/botanicals/webp/63-groundcover-strip.webp') center bottom / cover no-repeat;
+  opacity: .28;
+  pointer-events: none;
+}
+
+.pricing-partners-v18 .trust-partners-v18 .trust-partners-greenery {
+  z-index: 1 !important;
+  pointer-events: none;
+}
+
+.pricing-partners-v18 .trust-partners-v18 .tp-fern,
+.pricing-partners-v18 .trust-partners-v18 .tp-vine {
+  opacity: .2 !important;
+}
+
+.pricing-partners-v18 .trust-partners-v18 .tp-ground {
+  display: none !important;
+}
+
+.pricing-partners-v18 .trust-partners-v18 .trust-partners-inner {
+  position: relative;
+  z-index: 3;
+  width: min(1120px, 100%) !important;
+  margin: 0 auto !important;
+}
+
+.pricing-partners-v18 .trust-partners-heading-v18 {
+  width: min(700px, 100%) !important;
+  margin: 0 auto clamp(38px, 5vw, 60px) !important;
+  text-align: center !important;
+}
+
+.pricing-partners-v18 .trust-partners-heading-v18 .kicker {
+  text-align: center !important;
+}
+
+.pricing-partners-v18 .trust-partners-heading-v18 h2 {
+  margin: 12px 0 0 !important;
+  font-size: clamp(3rem, 6.5vw, 6.4rem) !important;
+  line-height: .9 !important;
+  letter-spacing: -.05em !important;
+  text-align: center !important;
+}
+
+.pricing-partners-v18 .trust-partners-heading-v18 h2 em {
+  color: var(--lime) !important;
+  font-family: var(--serif) !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+}
+
+.pricing-partners-v18 .trust-partners-grid-v18 {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)) !important;
+  gap: clamp(18px, 2.5vw, 28px) !important;
+  width: min(1040px, 100%) !important;
+  margin: 0 auto !important;
+}
+
+.pricing-partners-v18 .partner-plaque-v18 {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 246px;
+  display: grid !important;
+  grid-template-columns: minmax(190px, .82fr) minmax(0, 1.18fr) !important;
+  align-items: stretch !important;
+  overflow: hidden;
+  border: 1px solid rgba(215, 246, 168, .24) !important;
+  border-radius: 28px 8px 28px 8px !important;
+  background: linear-gradient(135deg, rgba(12, 48, 29, .94), rgba(3, 18, 10, .9)) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 255, 255, .04) !important;
+  backdrop-filter: blur(14px) saturate(1.08);
+}
+
+.pricing-partners-v18 .partner-plaque-v18::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(4, 20, 12, .24), rgba(4, 20, 12, .86)),
+    url('assets/experience/webp/13-waterfall-ravine.webp') center 58% / cover no-repeat;
+  opacity: .54;
+}
+
+.pricing-partners-v18 .partner-plaque-v18::after {
+  content: '';
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  right: -96px;
+  top: -116px;
+  z-index: 0;
+  border: 1px solid rgba(215, 246, 168, .12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(215, 246, 168, .025), 0 0 0 56px rgba(215, 246, 168, .018);
+  pointer-events: none;
+}
+
+.pricing-partners-v18 .partner-plaque-landscape-v18 {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  height: 62px;
+  background: url('assets/botanicals/webp/47-moss-edge-horizontal.webp') center bottom / cover no-repeat;
+  opacity: .22;
+  pointer-events: none;
+}
+
+.pricing-partners-v18 .partner-plaque-v18 .partner-plaque-logo {
+  position: relative;
+  z-index: 2;
+  width: calc(100% - 38px) !important;
+  height: calc(100% - 38px) !important;
+  max-height: 210px !important;
+  align-self: center;
+  justify-self: center;
+  object-fit: contain !important;
+  padding: clamp(20px, 3vw, 34px) !important;
+  border: 1px solid rgba(215, 246, 168, .18);
+  border-radius: 22px 6px 22px 6px;
+  background: rgba(243, 240, 231, .94) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .22);
+}
+
+.pricing-partners-v18 .partner-plaque-v18 .partner-plaque-copy {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 4vw, 46px) clamp(24px, 4vw, 48px) !important;
+  text-align: left !important;
+}
+
+.pricing-partners-v18 .partner-plaque-v18 .partner-plaque-copy small {
+  margin-bottom: 14px !important;
+  color: var(--lime) !important;
+  font-size: .73rem !important;
+  font-weight: 800 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+}
+
+.pricing-partners-v18 .partner-plaque-v18 .partner-plaque-copy span {
+  max-width: 34ch;
+  color: rgba(246, 241, 226, .78) !important;
+  font-size: clamp(1rem, 1.45vw, 1.2rem) !important;
+  line-height: 1.6 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pricing-partners-v18 .partner-plaque-v18 {
+    transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+  }
+
+  .pricing-partners-v18 .partner-plaque-v18:hover {
+    transform: translateY(-5px);
+    border-color: rgba(215, 246, 168, .42) !important;
+    box-shadow: 0 38px 92px rgba(0, 0, 0, .42), 0 0 0 1px rgba(215, 246, 168, .06) inset !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .pricing-partners-v18 .fee-journey-v18 {
+    padding-top: 54px !important;
+  }
+
+  .pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 {
+    margin-bottom: 26px !important;
+  }
+
+  .pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 h2 {
+    font-size: clamp(2.55rem, 12vw, 4.1rem) !important;
+  }
+
+  .pricing-partners-v18 .trust-partners-v18 {
+    padding: 70px 18px 94px !important;
+  }
+
+  .pricing-partners-v18 .trust-partners-heading-v18 {
+    margin-bottom: 32px !important;
+  }
+
+  .pricing-partners-v18 .trust-partners-heading-v18 h2 {
+    font-size: clamp(2.8rem, 13vw, 4.6rem) !important;
+  }
+
+  .pricing-partners-v18 .partner-plaque-v18 {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) !important;
+    border-radius: 24px 7px 24px 7px !important;
+  }
+
+  .pricing-partners-v18 .partner-plaque-v18 .partner-plaque-logo {
+    width: calc(100% - 34px) !important;
+    height: 150px !important;
+    margin-top: 17px;
+    padding: 24px !important;
+  }
+
+  .pricing-partners-v18 .partner-plaque-v18 .partner-plaque-copy {
+    align-items: center;
+    padding: 26px 24px 40px !important;
+    text-align: center !important;
+  }
+
+  .pricing-partners-v18 .partner-plaque-v18 .partner-plaque-copy span {
+    max-width: 31ch;
+  }
+}
+
+@media (max-width: 390px) {
+  .pricing-partners-v18 .fee-journey-v18 .fee-v11-heading-v18 h2 {
+    font-size: 2.55rem !important;
+  }
+
+  .pricing-partners-v18 .trust-partners-v18 {
+    padding-inline: 14px !important;
+  }
+
+  .pricing-partners-v18 .partner-plaque-v18 .partner-plaque-logo {
+    height: 132px !important;
+  }
+}
