@@ -1,8 +1,9 @@
-/* Final pricing-heading colour correction.
- * Earlier editorial heading rules set a white WebKit text fill after the
- * standard color declaration. Use an explicit brand value and reset the fill.
+/* Final editorial-heading colour correction.
+ * Earlier heading rules can leave a white WebKit text fill after the standard
+ * color declaration. Use the exact brand green and reset the inherited fill.
  */
-html.pricing-partner-grid-v20 body #pricing.fee-v20 .fee-heading-v20 h2 > em {
+html.pricing-partner-grid-v20 body #pricing.fee-v20 .fee-heading-v20 h2 > em,
+html.pricing-partner-grid-v20 body #trust-partners.trust-partners-v20 .trust-partners-heading-v20 h2 > em {
   color: #d7f6a8 !important;
   -webkit-text-fill-color: #d7f6a8 !important;
   background: none !important;
