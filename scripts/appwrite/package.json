@@ -1,0 +1,12 @@
+{
+  "name": "expedition-appwrite-provisioning",
+  "private": true,
+  "type": "module",
+  "description": "Provisioning script for the Expedition site's Appwrite backend. Not part of the site build — only used by .github/workflows/appwrite-provision.yml.",
+  "scripts": {
+    "provision": "node provision.mjs"
+  },
+  "dependencies": {
+    "node-appwrite": "^27.1.0"
+  }
+}

@@ -99,6 +99,7 @@
             </div>
           </fieldset>
 
+          <label class="hp-field" aria-hidden="true" tabindex="-1"><span>Leave this field blank</span><input type="text" name="companyWebsite" tabindex="-1" autocomplete="off"></label>
           <div class="form-errors" role="alert" aria-live="assertive"></div>
           <div class="form-actions">
             <button class="form-back" type="button" hidden>← Back</button>
@@ -108,9 +109,9 @@
         </form>
 
         <div class="form-confirmation" hidden tabindex="-1">
-          <span>Application review</span>
-          <h3>Your form is complete.</h3>
-          <p>This prototype validates the application but does not transmit or store health information. It will be connected to NirogBhumi's approved secure intake system before applications formally open.</p>
+          <span>Application received</span>
+          <h3>Thank you — your application has been submitted.</h3>
+          <p>Our team will review your application and follow up by email. This step does not request or store medical documents; those are only collected later through an approved secure process.</p>
           <button type="button" data-edit-application>Edit application</button>
         </div>
       </div>
@@ -119,6 +120,7 @@
     <p class="application-footer-note">NirogBhumi does not replace medical advice, diagnosis or treatment. Never stop or change medication without your treating doctor's guidance.</p>
   </main>
 
+  <script defer src="assets/vendor/appwrite/sdk.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -244,7 +244,38 @@
     form.addEventListener('input', event => { event.target.closest('.field')?.classList.remove('invalid'); if (event.target === motivation && counter) counter.textContent = motivation.value.length; });
     const none = form.querySelector('input[name="conditions"][value="none"]'), conditions = [...form.querySelectorAll('input[name="conditions"]')];
     conditions.forEach(input => input.addEventListener('change', () => { if (input === none && input.checked) conditions.filter(item => item !== none).forEach(item => item.checked = false); else if (input.checked && none) none.checked = false; }));
-    form.addEventListener('submit', event => { event.preventDefault(); if (!validateCurrentStep()) return; form.hidden = true; confirmation.hidden = false; confirmation.focus(); });
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!validateCurrentStep()) return;
+      if (submitButton.disabled) return;
+      submitButton.disabled = true;
+      const originalLabel = submitButton.innerHTML;
+      submitButton.innerHTML = 'Submitting…';
+      errors.textContent = '';
+      import('./assets/js/appwrite-client.js').then(({ submitForm }) => {
+        const data = new FormData(form);
+        const numberOrUndefined = name => { const value = data.get(name); return value === null || value === '' ? undefined : Number(value); };
+        return submitForm('applications', {
+          fullName: data.get('fullName'), email: data.get('email'), phone: data.get('phone'),
+          age: numberOrUndefined('age'), city: data.get('city'), state: data.get('state'), country: data.get('country'),
+          diagnosisYear: numberOrUndefined('diagnosisYear'), treatment: data.get('treatment'), hba1c: numberOrUndefined('hba1c'),
+          conditions: data.getAll('conditions'),
+          timeCommitment: data.get('timeCommitment'), availability: data.get('availability'), motivation: data.get('motivation'),
+          emergencyName: data.get('emergencyName'), emergencyPhone: data.get('emergencyPhone'), emergencyRelationship: data.get('emergencyRelationship'),
+          consentAccuracy: data.get('accuracy') === 'on', consentSelection: data.get('selection') === 'on',
+          consentExpeditionContact: data.get('expeditionContact') === 'on', consentDpdp: data.get('dpdpConsent') === 'on',
+          consentFutureContact: data.get('futureContact') === 'on',
+        }, { honeypot: data.get('companyWebsite') });
+      }).then(() => {
+        form.hidden = true; confirmation.hidden = false; confirmation.focus();
+      }).catch(err => {
+        errors.textContent = err?.message || 'Something went wrong submitting this form. Please try again in a moment.';
+        errors.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+      }).finally(() => {
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalLabel;
+      });
+    });
     confirmation?.querySelector('[data-edit-application]')?.addEventListener('click', () => { confirmation.hidden = true; form.hidden = false; showStep(3); });
     showStep(1, false);
   }

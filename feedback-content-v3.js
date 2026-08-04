@@ -237,16 +237,11 @@
       const kicker = heading.querySelector('.kicker');
       const description = heading.querySelector('p:last-child');
       if (kicker) kicker.textContent = 'Ways to join';
-      if (description) description.textContent = 'Participate, nominate someone or follow the journey.';
+      if (description) description.textContent = 'Participate, nominate someone, partner with us, or follow the journey.';
     }
 
     const paths = section?.querySelector('.onboard-paths');
     if (!paths) return;
-
-    [...paths.querySelectorAll('.onboard-path')].forEach(card => {
-      const title = card.querySelector('h3')?.textContent || '';
-      if (/become a partner/i.test(title)) card.remove();
-    });
 
     const nominationCard = [...paths.querySelectorAll('.onboard-path')]
       .find(card => /nominate someone/i.test(card.querySelector('h3')?.textContent || ''));
