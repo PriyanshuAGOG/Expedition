@@ -16,6 +16,11 @@ on:
 jobs:
   provision:
     runs-on: ubuntu-latest
+    # Reads secrets from the "production" GitHub Environment (Settings →
+    # Environments → production), not plain repo secrets. If you add
+    # required reviewers to that environment, this run will pause for
+    # approval before it touches the live Appwrite project.
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
