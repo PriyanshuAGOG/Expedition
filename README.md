@@ -43,9 +43,16 @@ Form submissions (the application form, "Nominate someone", and "Become a
 partner") are stored in Appwrite. Every table only grants the public
 permission to *create* a row — reading, updating, or deleting requires
 membership in the Admins team, so a submission can't be read back by the
-person who submitted it. See `admin/` for the lead-management panel
+person who submitted it. See `entries/` for the lead-management panel
 (search, status triage, CSV export) and `scripts/appwrite/schema.mjs` for
 the full schema.
+
+**A note on the panel's URL:** `entries/` is named that way instead of
+`admin/` to avoid casual discovery on the live site, but this repository
+is public — anyone can see this folder in the GitHub file tree regardless
+of what it's named. The real access control is Appwrite's own permission
+system (see above), not the URL. If you want the path itself to stay
+private too, make this repository private in GitHub Settings.
 
 First-time setup:
 
@@ -62,7 +69,7 @@ First-time setup:
 4. Create an admin user in the Appwrite console (Auth → Create user) and
    add them to the `admins` team, or set the `APPWRITE_ADMIN_EMAILS` repo
    secret and re-run the provisioning Action to add them automatically.
-5. Sign in at `/admin/`.
+5. Sign in at `/entries/`.
 
 Medical documents are still never collected through this form — the
 application form is an initial screen only; clinical intake happens

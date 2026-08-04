@@ -19,7 +19,7 @@
 //      scripts/appwrite/schema.mjs.
 //   3. Create at least one admin user (Appwrite console → Auth → Create
 //      user) and add them to the "admins" team so they can sign in at
-//      /admin/.
+//      /entries/.
 
 export const APPWRITE_ENDPOINT = 'https://fra.cloud.appwrite.io/v1';
 export const APPWRITE_PROJECT_ID = '6a71c2e9003a0fbf8940';

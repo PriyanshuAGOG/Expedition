@@ -438,8 +438,15 @@ function exportCurrentViewToCsv() {
   URL.revokeObjectURL(url);
 }
 
+// CSV formula-injection guard: every field here can contain arbitrary
+// public input (form submissions aren't authenticated), so a value like
+// `=HYPERLINK("http://evil","click")` or `=cmd|'/c calc'!A1` would run as
+// a live formula the moment an admin opens the export in Excel/Sheets.
+// Prefixing a leading apostrophe forces spreadsheet apps to treat the
+// cell as literal text.
 function csvCell(value) {
-  const str = String(value ?? '');
+  let str = String(value ?? '');
+  if (/^[=+\-@\t\r]/.test(str)) str = `'${str}`;
   return /[",\r\n]/.test(str) ? `"${str.replace(/"/g, '""')}"` : str;
 }
 
