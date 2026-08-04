@@ -28,7 +28,8 @@
     'feedback-content-v17.css',
     'feedback-content-v18-launch-polish.css',
     'feedback-content-v18.css',
-    'feedback-content-v19.css'
+    'feedback-content-v19.css',
+    'feedback-content-v20.css'
   ];
 
   const scripts = [
@@ -50,7 +51,8 @@
     'feedback-content-v15.js',
     'feedback-content-v16.js',
     'feedback-content-v18.js',
-    'feedback-content-v19.js'
+    'feedback-content-v19.js',
+    'feedback-content-v20.js'
   ];
 
   root.classList.add('expedition-booting');
@@ -137,7 +139,7 @@
       await waitForFonts();
 
       const buildMeta = document.querySelector('meta[name="build-version"]');
-      buildMeta?.setAttribute('content', '2026.08.04-application-vitals-pricing-v19');
+      buildMeta?.setAttribute('content', '2026.08.04-pricing-partner-grid-v20');
     } catch (error) {
       console.error('[Expedition] Final production boot failed safely.', error);
     } finally {
