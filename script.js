@@ -25,7 +25,8 @@
     'feedback-content-v15.css',
     'feedback-content-v15-patch.css',
     'feedback-content-v16.css',
-    'feedback-content-v17.css'
+    'feedback-content-v17.css',
+    'feedback-content-v18-launch-polish.css'
   ];
 
   const scripts = [
