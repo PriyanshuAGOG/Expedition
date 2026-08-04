@@ -47,20 +47,30 @@ const FIELD_LABELS = {
   consentExpeditionContact: 'Consented to contact about expedition', consentDpdp: 'Consented to DPDP notice', consentFutureContact: 'Opted into future updates',
   nomineeName: 'Nominee name', nomineeEmail: 'Nominee email', nomineePhone: 'Nominee phone',
   contactName: 'Contact name', organisation: 'Organisation', partnershipType: 'Partnership type', message: 'Message',
-  status: 'Status', source: 'Source', $id: 'Record ID', $createdAt: 'Submitted', $updatedAt: 'Last updated',
+  status: 'Status', source: 'Source', internalNotes: 'Internal notes', $id: 'Record ID', $createdAt: 'Submitted', $updatedAt: 'Last updated',
 };
+
+// Fields excluded from the auto-generated detail view because they're
+// rendered separately (status pill, submitted date, notes editor, record id).
+const DETAIL_HIDDEN_FIELDS = new Set(['status', 'internalNotes']);
+const SORTABLE_KEYS = new Set(['$createdAt', 'status']);
 
 const state = {
   activeTab: 'applications',
   rowsByTable: {},
+  lastLoadedAt: {},
   search: '',
   statusFilter: '',
+  sortKey: '$createdAt',
+  sortDir: 'desc',
+  selected: new Set(),
 };
 
 const els = {};
 ['screen-loading', 'screen-login', 'screen-unauthorized', 'screen-dashboard',
   'login-form', 'unauthorized-signout', 'signout-button', 'current-user-email',
-  'search-input', 'status-filter', 'result-count', 'refresh-button', 'export-button',
+  'status-summary', 'search-input', 'status-filter', 'result-count', 'last-refreshed', 'refresh-button', 'export-button',
+  'bulk-bar', 'bulk-count', 'bulk-status-select', 'bulk-apply-button', 'bulk-clear-button',
   'loading-state', 'error-state', 'empty-state', 'admin-table',
   'detail-dialog', 'detail-content', 'detail-close'].forEach((id) => { els[id] = document.getElementById(id); });
 
@@ -125,10 +135,14 @@ function initDashboard() {
 
   document.querySelectorAll('.admin-tab').forEach((tab) => {
     tab.addEventListener('click', () => {
+      if (tab.dataset.tab === state.activeTab) return;
       document.querySelectorAll('.admin-tab').forEach((t) => { t.classList.toggle('active', t === tab); t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
       state.activeTab = tab.dataset.tab;
       state.search = '';
       state.statusFilter = '';
+      state.sortKey = '$createdAt';
+      state.sortDir = 'desc';
+      state.selected.clear();
       els['search-input'].value = '';
       populateStatusFilter();
       renderTable();
@@ -143,6 +157,9 @@ function initDashboard() {
   els['detail-close'].addEventListener('click', () => els['detail-dialog'].close());
   els['detail-dialog'].addEventListener('click', (event) => { if (event.target === els['detail-dialog']) els['detail-dialog'].close(); });
 
+  els['bulk-clear-button'].addEventListener('click', () => { state.selected.clear(); renderTable(); });
+  els['bulk-apply-button'].addEventListener('click', applyBulkStatus);
+
   populateStatusFilter();
   loadTab(state.activeTab);
   // Load the other tabs' counts quietly in the background.
@@ -153,6 +170,7 @@ function populateStatusFilter() {
   const config = TABLE_CONFIG[state.activeTab];
   els['status-filter'].innerHTML = '<option value="">All statuses</option>'
     + config.statuses.map((s) => `<option value="${s}">${humanize(s)}</option>`).join('');
+  els['bulk-status-select'].innerHTML = config.statuses.map((s) => `<option value="${s}">${humanize(s)}</option>`).join('');
 }
 
 async function loadTab(tableKey, { force = false, silent = false } = {}) {
@@ -170,9 +188,10 @@ async function loadTab(tableKey, { force = false, silent = false } = {}) {
       queries: [Query.orderDesc('$createdAt'), Query.limit(500)],
     });
     state.rowsByTable[tableKey] = res.rows;
+    state.lastLoadedAt[tableKey] = new Date();
     updateTabCount(tableKey, res.total ?? res.rows.length);
   } catch (err) {
-    state.rowsByTable[tableKey] = [];
+    state.rowsByTable[tableKey] = state.rowsByTable[tableKey] || [];
     if (tableKey === state.activeTab) {
       els['error-state'].hidden = false;
       els['error-state'].textContent = err?.message || 'Could not load this list.';
@@ -180,6 +199,7 @@ async function loadTab(tableKey, { force = false, silent = false } = {}) {
   } finally {
     if (tableKey === state.activeTab) {
       els['loading-state'].hidden = true;
+      state.selected.clear();
       renderTable();
     }
   }
@@ -197,7 +217,30 @@ function getFilteredRows() {
   if (state.search) {
     rows = rows.filter((r) => config.searchKeys.some((k) => String(r[k] ?? '').toLowerCase().includes(state.search)));
   }
+  rows = [...rows].sort((a, b) => {
+    const av = a[state.sortKey] ?? '';
+    const bv = b[state.sortKey] ?? '';
+    const cmp = String(av).localeCompare(String(bv), undefined, { numeric: true });
+    return state.sortDir === 'asc' ? cmp : -cmp;
+  });
   return rows;
+}
+
+function renderStatusSummary() {
+  const config = TABLE_CONFIG[state.activeTab];
+  const rows = state.rowsByTable[state.activeTab];
+  if (!rows) { els['status-summary'].innerHTML = ''; return; }
+  const counts = {};
+  rows.forEach((r) => { const s = r.status || 'new'; counts[s] = (counts[s] || 0) + 1; });
+  els['status-summary'].innerHTML = `<button type="button" class="status-chip${!state.statusFilter ? ' active' : ''}" data-status="">All <b>${rows.length}</b></button>`
+    + config.statuses.filter((s) => counts[s]).map((s) => `<button type="button" class="status-chip${state.statusFilter === s ? ' active' : ''}" data-status="${s}">${humanize(s)} <b>${counts[s]}</b></button>`).join('');
+  els['status-summary'].querySelectorAll('.status-chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      state.statusFilter = chip.dataset.status;
+      els['status-filter'].value = state.statusFilter;
+      renderTable();
+    });
+  });
 }
 
 function renderTable() {
@@ -205,7 +248,12 @@ function renderTable() {
   const rows = getFilteredRows();
   const allLoaded = state.rowsByTable[state.activeTab];
 
+  renderStatusSummary();
   els['result-count'].textContent = allLoaded ? `${rows.length} of ${allLoaded.length}` : '';
+  const loadedAt = state.lastLoadedAt[state.activeTab];
+  els['last-refreshed'].textContent = loadedAt ? `Updated ${loadedAt.toLocaleTimeString()}` : '';
+
+  renderBulkBar();
 
   if (!allLoaded) { els['admin-table'].hidden = true; els['empty-state'].hidden = true; return; }
   if (!rows.length) { els['admin-table'].hidden = true; els['empty-state'].hidden = false; return; }
@@ -214,41 +262,119 @@ function renderTable() {
 
   const thead = els['admin-table'].querySelector('thead');
   const tbody = els['admin-table'].querySelector('tbody');
-  thead.innerHTML = `<tr>${config.columns.map((c) => `<th>${c.label}</th>`).join('')}<th>Status</th><th>Submitted</th></tr>`;
-  tbody.innerHTML = '';
 
+  const sortIndicator = (key) => (state.sortKey === key ? (state.sortDir === 'asc' ? ' ↑' : ' ↓') : '');
+  const sortableHeader = (key, label) => `<th class="${SORTABLE_KEYS.has(key) ? 'th-sortable' : ''}" data-sort-key="${key}">${label}${sortIndicator(key)}</th>`;
+
+  const allSelected = rows.length > 0 && rows.every((r) => state.selected.has(r.$id));
+  thead.innerHTML = `<tr><th class="th-check"><input type="checkbox" id="select-all-checkbox" aria-label="Select all"${allSelected ? ' checked' : ''}></th>`
+    + config.columns.map((c) => sortableHeader(c.key, c.label)).join('')
+    + `${sortableHeader('status', 'Status')}${sortableHeader('$createdAt', 'Submitted')}</tr>`;
+
+  thead.querySelectorAll('.th-sortable').forEach((th) => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sortKey;
+      state.sortDir = state.sortKey === key && state.sortDir === 'desc' ? 'asc' : 'desc';
+      state.sortKey = key;
+      renderTable();
+    });
+  });
+  thead.querySelector('#select-all-checkbox').addEventListener('change', (e) => {
+    if (e.target.checked) rows.forEach((r) => state.selected.add(r.$id));
+    else rows.forEach((r) => state.selected.delete(r.$id));
+    renderTable();
+  });
+
+  tbody.innerHTML = '';
   rows.forEach((row) => {
     const tr = document.createElement('tr');
-    tr.innerHTML = config.columns.map((c) => `<td class="cell-truncate">${escapeHtml(formatValue(row[c.key]))}</td>`).join('')
-      + `<td></td><td>${escapeHtml(formatDate(row.$createdAt))}</td>`;
 
-    const statusCell = tr.children[config.columns.length];
+    const checkCell = document.createElement('td');
+    checkCell.className = 'th-check';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.setAttribute('aria-label', 'Select row');
+    checkbox.checked = state.selected.has(row.$id);
+    checkbox.addEventListener('click', (e) => e.stopPropagation());
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) state.selected.add(row.$id); else state.selected.delete(row.$id);
+      renderBulkBar();
+      thead.querySelector('#select-all-checkbox').checked = rows.every((r) => state.selected.has(r.$id));
+    });
+    checkCell.appendChild(checkbox);
+    tr.appendChild(checkCell);
+
+    config.columns.forEach((c) => {
+      const td = document.createElement('td');
+      td.className = 'cell-truncate';
+      td.textContent = formatValue(row[c.key]);
+      tr.appendChild(td);
+    });
+
+    const statusCell = document.createElement('td');
     const select = document.createElement('select');
     select.className = 'status-select';
     select.setAttribute('aria-label', 'Status');
     select.innerHTML = config.statuses.map((s) => `<option value="${s}"${s === (row.status || 'new') ? ' selected' : ''}>${humanize(s)}</option>`).join('');
     select.addEventListener('click', (e) => e.stopPropagation());
-    select.addEventListener('change', async () => {
-      const previous = row.status;
-      row.status = select.value;
-      try {
-        await tablesDB.updateRow({ databaseId: DATABASE_ID, tableId: TABLES[state.activeTab], rowId: row.$id, data: { status: select.value } });
-      } catch (err) {
-        row.status = previous;
-        select.value = previous || 'new';
-        window.alert(`Could not update status: ${err?.message || err}`);
-      }
-    });
+    select.addEventListener('change', () => updateRowStatus(row, select.value, select));
     statusCell.appendChild(select);
+    tr.appendChild(statusCell);
+
+    const dateCell = document.createElement('td');
+    dateCell.textContent = formatDate(row.$createdAt);
+    tr.appendChild(dateCell);
 
     tr.addEventListener('click', () => openDetail(row));
     tbody.appendChild(tr);
   });
 }
 
+async function updateRowStatus(row, newStatus, selectEl) {
+  const previous = row.status;
+  row.status = newStatus;
+  try {
+    await tablesDB.updateRow({ databaseId: DATABASE_ID, tableId: TABLES[state.activeTab], rowId: row.$id, data: { status: newStatus } });
+    renderStatusSummary();
+  } catch (err) {
+    row.status = previous;
+    if (selectEl) selectEl.value = previous || 'new';
+    window.alert(`Could not update status: ${err?.message || err}`);
+  }
+}
+
+function renderBulkBar() {
+  const count = state.selected.size;
+  els['bulk-bar'].hidden = count === 0;
+  els['bulk-count'].textContent = `${count} selected`;
+}
+
+async function applyBulkStatus() {
+  const newStatus = els['bulk-status-select'].value;
+  const rows = (state.rowsByTable[state.activeTab] || []).filter((r) => state.selected.has(r.$id));
+  els['bulk-apply-button'].disabled = true;
+  const failures = [];
+  await Promise.all(rows.map(async (row) => {
+    const previous = row.status;
+    row.status = newStatus;
+    try {
+      await tablesDB.updateRow({ databaseId: DATABASE_ID, tableId: TABLES[state.activeTab], rowId: row.$id, data: { status: newStatus } });
+    } catch (err) {
+      row.status = previous;
+      failures.push(row.$id);
+    }
+  }));
+  els['bulk-apply-button'].disabled = false;
+  state.selected.clear();
+  renderTable();
+  if (failures.length) window.alert(`Could not update ${failures.length} of ${rows.length} record(s). Try again.`);
+}
+
+// ---------- detail dialog ----------
+
 function openDetail(row) {
   const title = row.fullName || row.nomineeName || row.contactName || 'Submission';
-  const fields = Object.keys(row).filter((k) => !k.startsWith('$') && k !== 'status');
+  const fields = Object.keys(row).filter((k) => !k.startsWith('$') && !DETAIL_HIDDEN_FIELDS.has(k));
   const rowsHtml = fields.map((key) => `
     <div class="detail-row">
       <span>${escapeHtml(FIELD_LABELS[key] || humanize(key))}</span>
@@ -261,7 +387,31 @@ function openDetail(row) {
       <div class="detail-row"><span>Submitted</span><strong>${escapeHtml(formatDate(row.$createdAt))}</strong></div>
       ${rowsHtml}
       <div class="detail-row"><span>Record ID</span><strong>${escapeHtml(row.$id)}</strong></div>
+    </div>
+    <div class="detail-notes">
+      <span>Internal notes <small>(only visible to admins)</small></span>
+      <textarea id="detail-notes-input" rows="4" maxlength="2000" placeholder="Add a note for the team…">${escapeHtml(row.internalNotes || '')}</textarea>
+      <div class="detail-notes-actions">
+        <output id="detail-notes-status" aria-live="polite"></output>
+        <button type="button" id="detail-notes-save" class="btn-primary">Save note</button>
+      </div>
     </div>`;
+
+  const notesInput = els['detail-content'].querySelector('#detail-notes-input');
+  const notesStatus = els['detail-content'].querySelector('#detail-notes-status');
+  els['detail-content'].querySelector('#detail-notes-save').addEventListener('click', async () => {
+    const value = notesInput.value;
+    notesStatus.textContent = 'Saving…';
+    try {
+      await tablesDB.updateRow({ databaseId: DATABASE_ID, tableId: TABLES[state.activeTab], rowId: row.$id, data: { internalNotes: value } });
+      row.internalNotes = value;
+      notesStatus.textContent = 'Saved.';
+      setTimeout(() => { notesStatus.textContent = ''; }, 1800);
+    } catch (err) {
+      notesStatus.textContent = `Could not save: ${err?.message || err}`;
+    }
+  });
+
   els['detail-dialog'].showModal();
 }
 
@@ -271,15 +421,17 @@ function exportCurrentViewToCsv() {
   const config = TABLE_CONFIG[state.activeTab];
   const rows = getFilteredRows();
   if (!rows.length) return;
-  const fields = Array.from(new Set(rows.flatMap((r) => Object.keys(r)))).filter((k) => k !== '$permissions' && k !== '$databaseId' && k !== '$tableId' && k !== '$sequence' && k !== '$collectionId');
-  const header = fields.map(csvCell).join(',');
+  const systemFields = new Set(['$permissions', '$databaseId', '$tableId', '$sequence', '$collectionId']);
+  const fields = Array.from(new Set(rows.flatMap((r) => Object.keys(r)))).filter((k) => !systemFields.has(k));
+  const header = fields.map((f) => csvCell(FIELD_LABELS[f] || humanize(f))).join(',');
   const body = rows.map((r) => fields.map((f) => csvCell(formatValue(r[f]))).join(',')).join('\r\n');
   const csv = `﻿${header}\r\n${body}`;
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${config.label.toLowerCase()}-${new Date().toISOString().slice(0, 10)}.csv`;
+  const suffix = state.statusFilter || state.search ? '-filtered' : '';
+  a.download = `${config.label.toLowerCase()}${suffix}-${new Date().toISOString().slice(0, 10)}.csv`;
   document.body.appendChild(a);
   a.click();
   a.remove();

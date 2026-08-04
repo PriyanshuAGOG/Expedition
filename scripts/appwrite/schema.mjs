@@ -84,6 +84,9 @@ export const collections = [
       // default is exactly what makes this safe to omit from public submits.
       enumAttr('status', APPLICATION_STATUSES, false, { default: 'new' }),
       str('source', 60, false, { default: 'web' }),
+      // Admin-only triage notes — never written by the public create call,
+      // only by the admin panel (which is the only role with update rights).
+      str('internalNotes', 2000, false),
     ],
     indexes: [
       { key: 'idx_status', type: 'key', attributes: ['status'] },
@@ -103,6 +106,7 @@ export const collections = [
       str('nomineePhone', 40, true),
       enumAttr('status', NOMINATION_STATUSES, false, { default: 'new' }),
       str('source', 60, false, { default: 'web' }),
+      str('internalNotes', 2000, false),
     ],
     indexes: [
       { key: 'idx_status', type: 'key', attributes: ['status'] },
@@ -123,6 +127,7 @@ export const collections = [
       str('message', 1200, true),
       enumAttr('status', PARTNERSHIP_STATUSES, false, { default: 'new' }),
       str('source', 60, false, { default: 'web' }),
+      str('internalNotes', 2000, false),
     ],
     indexes: [
       { key: 'idx_status', type: 'key', attributes: ['status'] },

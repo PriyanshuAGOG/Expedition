@@ -6,20 +6,23 @@
 // scripts/appwrite/schema.mjs (public "create" only, admin-team-only
 // "read"/"update"/"delete"), not from hiding these values.
 //
-// Setup:
-//   1. Create a project at https://cloud.appwrite.io and paste its
-//      Project ID below.
-//   2. Add this site's domain (and http://localhost during development) as
-//      a Web platform in the Appwrite console (Project Settings → Platforms).
-//   3. Add APPWRITE_ENDPOINT / APPWRITE_PROJECT_ID / APPWRITE_API_KEY as
-//      GitHub repo secrets and run the "Provision Appwrite schema" Action
-//      to create the database described in scripts/appwrite/schema.mjs.
-//   4. Create at least one admin user (Appwrite console → Auth → Create
+// Pointed at the "production" Appwrite project (Frankfurt region). Remaining
+// setup:
+//   1. Add this site's real domain (and http://localhost for local dev) as
+//      a Web platform in the Appwrite console (Project Settings → Platforms)
+//      — the SDK is rejected with a CORS-style error from any origin that
+//      isn't registered there, project ID alone isn't enough.
+//   2. Add APPWRITE_ENDPOINT / APPWRITE_PROJECT_ID / APPWRITE_API_KEY to the
+//      "production" GitHub Environment (Settings → Environments →
+//      production → Environment secrets) and run the "Provision Appwrite
+//      schema" Action to create the database described in
+//      scripts/appwrite/schema.mjs.
+//   3. Create at least one admin user (Appwrite console → Auth → Create
 //      user) and add them to the "admins" team so they can sign in at
 //      /admin/.
 
-export const APPWRITE_ENDPOINT = 'https://cloud.appwrite.io/v1';
-export const APPWRITE_PROJECT_ID = 'REPLACE_WITH_YOUR_APPWRITE_PROJECT_ID';
+export const APPWRITE_ENDPOINT = 'https://fra.cloud.appwrite.io/v1';
+export const APPWRITE_PROJECT_ID = '6a71c2e9003a0fbf8940';
 
 // Must match scripts/appwrite/schema.mjs.
 export const DATABASE_ID = 'expedition';

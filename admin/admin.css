@@ -136,11 +136,41 @@ button {
 }
 .admin-tab.active .tab-count { background: rgba(12, 26, 16, .18); }
 
+.status-summary { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.status-chip {
+  min-height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 700;
+}
+.status-chip b { margin-left: 5px; font-weight: 800; color: var(--cream); }
+.status-chip.active { border-color: rgba(215, 246, 168, .5); color: var(--leaf); background: rgba(215, 246, 168, .08); }
+.status-chip.active b { color: var(--leaf); }
+
 .admin-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
 .admin-toolbar-spacer { flex: 1; }
 #search-input { min-width: 220px; flex: 1 1 220px; min-height: 40px; padding: 0 14px; border: 1px solid var(--hairline); border-radius: 999px; background: rgba(3, 13, 8, .6); color: var(--cream); outline: none; }
 #status-filter { min-height: 40px; padding: 0 12px; border: 1px solid var(--hairline); border-radius: 999px; background: rgba(3, 13, 8, .6); color: var(--cream); outline: none; }
-#result-count { font-size: .72rem; }
+#result-count, #last-refreshed { font-size: .72rem; }
+
+.bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border: 1px solid rgba(215, 246, 168, .3);
+  border-radius: 12px;
+  background: rgba(215, 246, 168, .06);
+  font-size: .74rem;
+  flex-wrap: wrap;
+}
+.bulk-bar #bulk-status-select { min-height: 34px; padding: 0 10px; border: 1px solid var(--hairline); border-radius: 8px; background: rgba(3, 13, 8, .7); color: var(--cream); }
+.bulk-bar .btn-primary, .bulk-bar .btn-ghost { min-height: 34px; padding: 0 14px; }
 
 .admin-table-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: 14px; }
 #admin-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
@@ -163,6 +193,10 @@ button {
 #admin-table tbody tr:hover { background: rgba(215, 246, 168, .04); }
 #admin-table tbody tr { cursor: pointer; }
 .cell-truncate { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.th-check { width: 1%; white-space: nowrap; }
+.th-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--leaf); cursor: pointer; }
+.th-sortable { cursor: pointer; user-select: none; }
+.th-sortable:hover { color: var(--cream); }
 
 .status-pill {
   display: inline-flex;
@@ -226,6 +260,25 @@ dialog::backdrop { background: rgba(1, 7, 4, .82); backdrop-filter: blur(6px); }
 .detail-row span { display: block; margin-bottom: 3px; color: var(--muted); font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .detail-row strong { display: block; font-weight: 500; font-size: .88rem; word-break: break-word; white-space: pre-wrap; }
 .detail-title { margin: 0 0 18px; font-size: 1.3rem; font-weight: 500; padding-right: 34px; }
+
+.detail-notes { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline); }
+.detail-notes > span { display: block; margin-bottom: 8px; color: var(--muted); font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.detail-notes > span small { text-transform: none; letter-spacing: normal; font-weight: 500; }
+.detail-notes textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px 14px 6px 14px;
+  background: rgba(3, 13, 8, .6);
+  color: var(--cream);
+  font: inherit;
+  resize: vertical;
+  outline: none;
+}
+.detail-notes textarea:focus { border-color: rgba(215, 246, 168, .6); box-shadow: 0 0 0 3px rgba(215, 246, 168, .08); }
+.detail-notes-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 10px; }
+#detail-notes-status { font-size: .68rem; color: var(--leaf); }
+.detail-notes-actions .btn-primary { min-height: 36px; padding: 0 16px; }
 
 @media (max-width: 640px) {
   .admin-header { flex-direction: column; align-items: flex-start; }
