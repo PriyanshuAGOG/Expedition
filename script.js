@@ -27,7 +27,8 @@
     'feedback-content-v16.css',
     'feedback-content-v17.css',
     'feedback-content-v18-launch-polish.css',
-    'feedback-content-v18.css'
+    'feedback-content-v18.css',
+    'feedback-content-v19.css'
   ];
 
   const scripts = [
@@ -48,7 +49,8 @@
     'feedback-content-v14.js',
     'feedback-content-v15.js',
     'feedback-content-v16.js',
-    'feedback-content-v18.js'
+    'feedback-content-v18.js',
+    'feedback-content-v19.js'
   ];
 
   root.classList.add('expedition-booting');
@@ -126,10 +128,8 @@
 
   const boot = async () => {
     try {
-      /* Load every final stylesheet before any DOM-transforming enhancement runs. */
       await Promise.all(stylesheets.map(loadStylesheet));
 
-      /* Preserve the historical dependency order without exposing intermediate states. */
       for (const filename of scripts) {
         await loadScript(filename);
       }
@@ -137,7 +137,7 @@
       await waitForFonts();
 
       const buildMeta = document.querySelector('meta[name="build-version"]');
-      buildMeta?.setAttribute('content', '2026.08.04-pricing-partners-v18');
+      buildMeta?.setAttribute('content', '2026.08.04-application-vitals-pricing-v19');
     } catch (error) {
       console.error('[Expedition] Final production boot failed safely.', error);
     } finally {
@@ -145,7 +145,6 @@
     }
   };
 
-  /* Never leave the document permanently hidden if a third-party resource stalls. */
   failsafeTimer = window.setTimeout(() => {
     console.warn('[Expedition] Boot timeout reached; revealing the best available state.');
     revealFinalPage();
