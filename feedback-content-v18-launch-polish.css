@@ -267,3 +267,89 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   .footer-v11-brand > div { justify-items: center !important; text-align: center !important; }
   .footer-v11-bottom { flex-direction: column; align-items: center !important; text-align: center; }
 }
+
+/* ============ 7. Our Partners (trust band) ============ */
+.trust-partners {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(80px, 11svh, 130px) clamp(22px, 7vw, 110px);
+  background: radial-gradient(circle at 50% 0, rgba(66, 105, 58, .22), transparent 46%), #07120d;
+}
+.trust-partners-greenery { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.tp-fern { position: absolute; max-width: none; opacity: .34; filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .35)); }
+.tp-fern-left { left: -2%; top: 6%; width: min(16vw, 230px); }
+.tp-fern-right { right: -2%; bottom: 4%; width: min(15vw, 215px); transform: rotate(6deg); }
+.tp-vine { position: absolute; top: 0; max-width: none; width: min(7vw, 100px); opacity: .3; }
+.tp-vine-left { left: 4%; }
+.tp-vine-right { right: 4%; }
+.tp-ground { position: absolute; left: 18%; bottom: -4%; width: 64%; max-width: none; opacity: .22; }
+
+.trust-partners-inner { position: relative; z-index: 1; width: min(760px, 100%); margin: 0 auto; }
+.trust-partners-heading { max-width: 620px; margin: 0 auto; text-align: center; }
+.trust-partners-heading h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 520;
+  line-height: .92;
+  letter-spacing: -.05em;
+}
+
+.trust-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(18px, 2.5vw, 28px);
+  margin-top: clamp(42px, 6svh, 64px);
+  justify-content: center;
+}
+
+.partner-plaque {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: clamp(22px, 3vw, 30px) clamp(24px, 3.4vw, 34px);
+  border: 1px solid rgba(7, 18, 13, .1);
+  border-radius: 22px 6px 22px 6px;
+  background: linear-gradient(150deg, #f6f3e9, #ece7d8);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .32);
+  color: #101b12;
+  text-align: left;
+}
+.partner-plaque-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 27, 18, .16);
+  background: rgba(16, 27, 18, .05);
+  color: #35492f;
+}
+.partner-plaque-mark svg { width: 26px; height: 26px; }
+.partner-plaque-copy { display: grid; gap: 4px; min-width: 0; }
+.partner-plaque-copy small {
+  color: #5c6f52;
+  font-size: .58rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.partner-plaque-copy strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.partner-plaque-copy span {
+  color: rgba(16, 27, 18, .68);
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .trust-partners { padding: 64px 20px 76px; }
+  .trust-partners-heading h2 { font-size: clamp(2.1rem, 9vw, 3rem); }
+  .partner-plaque { flex-direction: column; align-items: flex-start; text-align: left; gap: 14px; }
+  .tp-fern-left, .tp-fern-right { opacity: .2; width: 34vw; }
+}
