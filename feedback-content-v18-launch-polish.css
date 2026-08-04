@@ -1,0 +1,214 @@
+/* v18: launch polish.
+   - Reconnects the hero's staggered plane-reveal (campaign-v14 had frozen it at opacity:1,
+     decoupled from --reveal) and gates it to the moment the boot gate actually shows the page.
+   - Thins the hero stat strip and closes the dead-air gap beneath the mobile hero CTAs.
+   - Brings oversized chapters (glance, eligibility, journey, gains, pricing, journal, founder note)
+     down closer to one viewport of intentional content instead of padding-driven overflow.
+   - Fixes the footer's dead second grid column (site-footer was still a 1.4fr/1fr grid; only
+     the first column had content) and centers it into one symmetric column.
+   All rules are scoped to the exact marker classes/ids the later feedback layers already use,
+   so they win the existing cascade without touching the base or per-feedback files directly. */
+
+/* ============ 0. Reveal safety net ============ */
+/* On browsers with native scroll-driven animations, .reveal's animation-timeline:view()
+   sometimes never resolves inside isolate/overflow:hidden section wrappers (seen on
+   #eligibility content on mobile Chromium: IntersectionObserver correctly adds
+   .visible, but the view-timeline animation keeps opacity pinned at 0 forever). Force the
+   JS-driven fallback to win once .visible is applied, so content can never get stuck invisible. */
+.reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ============ 1. Hero cinematic intro ============ */
+@media (prefers-reduced-motion: no-preference) {
+  .parallax-hero { animation: none; }
+  html.expedition-ready .parallax-hero {
+    animation: heroReveal 3.4s .12s cubic-bezier(.16,.8,.24,1) both;
+  }
+
+  html.expedition-ready .campaign-v14 .hero-presents {
+    opacity: calc(var(--chrome-o,1) * var(--reveal,1));
+    transform: translateX(-50%) translateY(calc((1 - var(--reveal,1)) * -22px));
+    filter: blur(calc((1 - var(--reveal,1)) * 5px));
+  }
+  html.expedition-ready .campaign-v14 .title-back {
+    opacity: calc(var(--back-o,1) * clamp(0, (var(--reveal,1) - .05) / .3, 1));
+    transform: translate3d(calc(-50% + var(--title-back-x,0px)), calc(var(--title-back-y,0px) + (1 - var(--reveal,1)) * 34px), 0);
+  }
+  html.expedition-ready .campaign-v14 .title-middle {
+    opacity: calc(var(--middle-o,1) * clamp(0, (var(--reveal,1) - .24) / .32, 1));
+    transform: translate3d(calc(-50% + var(--title-middle-x,0px)), calc(var(--title-middle-y,0px) + (1 - var(--reveal,1)) * 34px), 0);
+  }
+  html.expedition-ready .campaign-v14 .title-front {
+    opacity: calc(var(--front-o,1) * clamp(0, (var(--reveal,1) - .42) / .36, 1));
+    transform: translate3d(calc(-50% + var(--title-front-x,0px)), calc(var(--title-front-y,0px) + (1 - var(--reveal,1)) * 34px), 0);
+  }
+  html.expedition-ready .campaign-v14 .hero-campaign {
+    opacity: calc(var(--chrome-o,1) * var(--reveal,1));
+    transform: translateX(-50%) translateY(calc((1 - var(--reveal,1)) * 26px));
+  }
+  html.expedition-ready .campaign-v14 .hero-vine { opacity: calc(.58 * var(--reveal,1)); }
+  html.expedition-ready .campaign-v14 .hero-brand,
+  html.expedition-ready .hero-chrome { opacity: calc(var(--chrome-o,1) * var(--reveal,1)); }
+}
+html:not(.expedition-ready) .parallax-hero .title-band,
+html:not(.expedition-ready) .parallax-hero .hero-presents,
+html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
+
+/* ============ 2. Hero stat strip: thinner, less top-heavy ============ */
+.final-symmetry-v16 .hero-campaign-v16 {
+  gap: 7px !important;
+  bottom: clamp(20px, 4.4svh, 46px) !important;
+}
+.final-symmetry-v16 .hero-summary-v16 { padding: 3px !important; }
+.final-symmetry-v16 .hero-summary-v16 > span {
+  min-height: 42px !important;
+  gap: 2px !important;
+  padding: 6px 8px !important;
+}
+.final-symmetry-v16 .hero-ctas-v16 { gap: 8px !important; }
+.final-symmetry-v16 .hero-ctas-v16 .hero-cta { min-height: 42px !important; }
+/* The mobile floating nav bar this variable reserved space for was removed site-wide
+   (navigation-removed-v14 / .floating-nav{display:none}), but several v10 rules still
+   pad and offset around a phantom 62px bar. Zeroing it here fixes the hero CTA gap
+   and any other leftover reservations in one place, since floating-nav truly does not exist. */
+.final-responsive-qa-v10 body {
+  --v10-mobile-nav-height: 0px;
+}
+@media (max-width: 680px) {
+  .final-symmetry-v16 .hero-campaign-v16 {
+    bottom: max(16px, calc(env(safe-area-inset-bottom) + 10px)) !important;
+  }
+  .final-symmetry-v16 .hero-ctas-v16 .hero-cta { min-height: 40px !important; }
+  .final-symmetry-v16 .hero-ctas-v16 .hero-cta-primary { min-height: 44px !important; }
+}
+
+/* ============ 3. "Expedition at a glance" — concise, single-screen rhythm ============ */
+.final-simplification-v14 #glance {
+  padding-top: clamp(52px, 6vw, 84px) !important;
+  padding-bottom: clamp(60px, 7vw, 96px) !important;
+}
+.final-simplification-v14 #glance .glance-heading-v13 {
+  margin-bottom: clamp(20px, 3.4vw, 38px) !important;
+}
+.final-polish-v13 #glance .glance-heading-v13 h2 {
+  font-size: clamp(3rem, 6.4vw, 6.4rem) !important;
+}
+.final-simplification-v14 .glance-v14-card {
+  min-height: 118px !important;
+  padding: clamp(16px, 1.8vw, 22px) !important;
+}
+.final-simplification-v14 .glance-v14-card small { font-size: .66rem !important; }
+.final-simplification-v14 .glance-v14-card strong {
+  margin-top: 10px !important;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem) !important;
+}
+.final-simplification-v14 .glance-v14-card span {
+  margin-top: 5px !important;
+  font-size: .78rem !important;
+  line-height: 1.4 !important;
+}
+.final-simplification-v14 .glance-v14-route { min-height: 128px !important; }
+@media (max-width: 760px) {
+  .final-simplification-v14 .glance-v14-card { min-height: 122px !important; padding: 16px !important; }
+  .final-simplification-v14 .glance-v14-card strong { font-size: clamp(1.4rem, 5.6vw, 1.9rem) !important; }
+  .final-simplification-v14 .glance-v14-card span { font-size: .74rem !important; }
+}
+@media (max-width: 390px) {
+  .final-simplification-v14 .glance-v14-card { min-height: 112px !important; padding: 14px !important; }
+}
+
+/* ============ 4. Eligibility + countdown — tighter frame, same content ============ */
+#eligibility.campaign-v14.basecamp-check,
+.campaign-v14 .basecamp-check {
+  padding: clamp(64px, 7svh, 96px) clamp(22px, 8vw, 130px) !important;
+}
+.campaign-v14 .check-panels { margin-top: clamp(28px, 3.6svh, 44px) !important; }
+.check-panel { padding: clamp(22px, 2.6vw, 34px) !important; }
+.eligibility-countdown {
+  margin: clamp(26px, 3.6svh, 44px) auto clamp(30px, 4svh, 48px) !important;
+  padding: clamp(20px, 3vw, 34px) !important;
+}
+.eligibility-countdown-copy h3 { font-size: clamp(2rem, 4vw, 3.8rem) !important; }
+.eligibility-countdown-grid > div { min-height: 118px !important; }
+.eligibility-countdown-grid strong { font-size: clamp(2rem, 4.4vw, 4rem) !important; }
+
+/* ============ 5. Journey trail, gains, pricing, journal, founder note — reclaim blank air ============ */
+#trail.campaign-v14.xp-trail,
+.campaign-v14 .xp-trail {
+  padding: clamp(68px, 8.5svh, 104px) clamp(20px, 5vw, 80px) !important;
+}
+.campaign-v14 .xp-trail-head { margin-bottom: clamp(32px, 4.5svh, 52px) !important; }
+
+.final-refinement-v15 .gain-world-v15,
+.final-polish-v13 #expedition-gains {
+  padding: clamp(64px, 7vw, 104px) clamp(18px, 5vw, 72px) clamp(70px, 7.5vw, 112px) !important;
+  min-height: 0 !important;
+}
+
+.final-production-v11 .fee-journey-v11,
+.final-simplification-v14 .fee-journey-v14,
+.final-polish-v13 #pricing {
+  padding-top: clamp(60px, 6.5vw, 100px) !important;
+  padding-bottom: clamp(56px, 6vw, 92px) !important;
+  min-height: 0 !important;
+}
+
+#journal.campaign-v14.journal-world,
+.campaign-v14 .journal-world {
+  padding-top: clamp(64px, 8svh, 104px) !important;
+  padding-bottom: clamp(58px, 7svh, 92px) !important;
+}
+.campaign-v14 .preparation-dashboard { margin-top: clamp(30px, 4svh, 46px) !important; }
+.campaign-v14 .participant-preview { margin-top: clamp(34px, 4.6svh, 52px) !important; }
+
+.campaign-v14 .founder-note {
+  padding: clamp(60px, 8svh, 96px) clamp(22px, 7vw, 110px) clamp(66px, 8.6svh, 104px) !important;
+}
+
+.campaign-v14 .expedition-world,
+.final-simplification-v14 .itinerary-world-v14 {
+  min-height: auto !important;
+  padding: clamp(72px, 9svh, 112px) clamp(22px, 7vw, 110px) !important;
+}
+
+/* ============ 6. Footer — symmetric and centered ============ */
+.site-footer.footer-v11 {
+  display: block !important;
+  text-align: center;
+}
+.footer-v11-inner {
+  width: min(880px, 100%) !important;
+}
+.footer-v11-brand {
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 14px !important;
+  text-align: center !important;
+}
+.footer-v11-brand > div {
+  justify-items: center !important;
+  text-align: center !important;
+}
+.footer-v11-links > * {
+  justify-items: center !important;
+  text-align: center !important;
+}
+.footer-v11-actions {
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 18px !important;
+}
+.footer-v11-actions nav { justify-content: center !important; }
+.footer-v11-disclaimer {
+  margin: 22px auto 0 !important;
+  text-align: center !important;
+}
+.footer-v11-bottom { text-align: center; }
+@media (max-width: 680px) {
+  .footer-v11-brand { align-items: center !important; text-align: center !important; }
+  .footer-v11-brand > div { justify-items: center !important; text-align: center !important; }
+  .footer-v11-bottom { flex-direction: column; align-items: center !important; text-align: center; }
+}
