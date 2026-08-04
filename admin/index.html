@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Admin · World Diabetes Day Expedition</title>
+  <link rel="icon" type="image/webp" href="../assets/branding/webp/nirogbhumi-icon.webp">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div id="screen-loading" class="screen screen-center">
+    <p class="muted">Checking your session…</p>
+  </div>
+
+  <div id="screen-login" class="screen screen-center" hidden>
+    <form id="login-form" class="login-card">
+      <p class="kicker">World Diabetes Day Expedition</p>
+      <h1>Admin sign in</h1>
+      <p class="muted">Access is limited to members of the Admins team in Appwrite.</p>
+      <label class="field"><span>Email</span><input type="email" name="email" autocomplete="username" required></label>
+      <label class="field"><span>Password</span><input type="password" name="password" autocomplete="current-password" required></label>
+      <p class="form-error" role="alert" aria-live="assertive"></p>
+      <button type="submit">Sign in</button>
+    </form>
+  </div>
+
+  <div id="screen-unauthorized" class="screen screen-center" hidden>
+    <div class="login-card">
+      <p class="kicker">Access denied</p>
+      <h1>Not an admin account</h1>
+      <p class="muted">You're signed in, but this account isn't a member of the Admins team. Ask an existing admin to add you, or sign in with a different account.</p>
+      <button id="unauthorized-signout">Sign out</button>
+    </div>
+  </div>
+
+  <div id="screen-dashboard" class="screen" hidden>
+    <header class="admin-header">
+      <div>
+        <p class="kicker">World Diabetes Day Expedition</p>
+        <h1>Leads</h1>
+      </div>
+      <div class="admin-header-actions">
+        <span id="current-user-email" class="muted"></span>
+        <button id="signout-button" class="btn-ghost">Sign out</button>
+      </div>
+    </header>
+
+    <nav class="admin-tabs" role="tablist" aria-label="Lead source">
+      <button type="button" class="admin-tab active" data-tab="applications" role="tab" aria-selected="true">Applications <span class="tab-count" data-count-for="applications">0</span></button>
+      <button type="button" class="admin-tab" data-tab="nominations" role="tab" aria-selected="false">Nominations <span class="tab-count" data-count-for="nominations">0</span></button>
+      <button type="button" class="admin-tab" data-tab="partnerships" role="tab" aria-selected="false">Partnerships <span class="tab-count" data-count-for="partnerships">0</span></button>
+    </nav>
+
+    <div class="admin-toolbar">
+      <input type="search" id="search-input" placeholder="Search this list…" aria-label="Search">
+      <select id="status-filter" aria-label="Filter by status"><option value="">All statuses</option></select>
+      <span class="admin-toolbar-spacer"></span>
+      <span id="result-count" class="muted"></span>
+      <button type="button" id="refresh-button" class="btn-ghost">Refresh</button>
+      <button type="button" id="export-button" class="btn-primary">Export CSV</button>
+    </div>
+
+    <p id="loading-state" class="muted" hidden>Loading…</p>
+    <p id="error-state" class="form-error" role="alert" hidden></p>
+    <p id="empty-state" class="muted" hidden>No submissions match this view yet.</p>
+
+    <div class="admin-table-wrap">
+      <table id="admin-table" hidden>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <dialog id="detail-dialog">
+    <button type="button" id="detail-close" aria-label="Close">×</button>
+    <div id="detail-content"></div>
+  </dialog>
+
+  <script defer src="../assets/vendor/appwrite/sdk.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

@@ -13,7 +13,10 @@ Production landing page for NirogBhumi’s World Diabetes Day Himalayan Expediti
 
 ## Production architecture
 
-The site is a dependency-free static HTML, CSS and JavaScript project.
+The site is a static HTML, CSS and JavaScript project with no build step or
+framework. The one runtime dependency is the Appwrite Web SDK, vendored
+locally at `assets/vendor/appwrite/` rather than build-installed (see
+"Backend" below).
 
 - `index.html` contains the landing-page structure and expedition assets.
 - `styles.css` is the render-blocking production bootstrap.
@@ -34,9 +37,36 @@ npx serve .
 
 The project has no package installation or runtime dependency requirement.
 
-## Privacy and registration safety
+## Backend (Appwrite) and admin panel
 
-The current browser prototype validates application details but does not transmit or store health information. Production intake requires a secure approved endpoint, authentication, access controls, final consent language, retention rules and privacy review. Medical documents should be collected through a separate secure clinical workflow.
+Form submissions (the application form, "Nominate someone", and "Become a
+partner") are stored in Appwrite. Every table only grants the public
+permission to *create* a row — reading, updating, or deleting requires
+membership in the Admins team, so a submission can't be read back by the
+person who submitted it. See `admin/` for the lead-management panel
+(search, status triage, CSV export) and `scripts/appwrite/schema.mjs` for
+the full schema.
+
+First-time setup:
+
+1. Create a project at [Appwrite Cloud](https://cloud.appwrite.io) and add
+   this site's domain (plus `http://localhost` for local dev) as a Web
+   platform under Project Settings → Platforms.
+2. Add `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, and `APPWRITE_API_KEY`
+   (a server key with `databases`/`teams`/`buckets` write scopes) as
+   GitHub repo secrets, then run the **Provision Appwrite schema** Action
+   from the Actions tab. It's idempotent — safe to re-run after schema
+   changes.
+3. Paste the Project ID into `assets/config/appwrite-config.js` (this
+   value is public/safe to commit — see the comment in that file for why).
+4. Create an admin user in the Appwrite console (Auth → Create user) and
+   add them to the `admins` team, or set the `APPWRITE_ADMIN_EMAILS` repo
+   secret and re-run the provisioning Action to add them automatically.
+5. Sign in at `/admin/`.
+
+Medical documents are still never collected through this form — the
+application form is an initial screen only; clinical intake happens
+through a separate secure process.
 
 ## Brand system
 
