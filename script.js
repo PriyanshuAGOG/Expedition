@@ -29,7 +29,8 @@
     'feedback-content-v18-launch-polish.css',
     'feedback-content-v18.css',
     'feedback-content-v19.css',
-    'feedback-content-v20.css'
+    'feedback-content-v20.css',
+    'feedback-content-v20-color-fix.css'
   ];
 
   const scripts = [
@@ -139,7 +140,7 @@
       await waitForFonts();
 
       const buildMeta = document.querySelector('meta[name="build-version"]');
-      buildMeta?.setAttribute('content', '2026.08.04-pricing-partner-grid-v20');
+      buildMeta?.setAttribute('content', '2026.08.04-pricing-heading-color-fix');
     } catch (error) {
       console.error('[Expedition] Final production boot failed safely.', error);
     } finally {
