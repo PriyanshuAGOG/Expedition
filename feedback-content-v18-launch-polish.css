@@ -301,13 +301,16 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   gap: clamp(18px, 2.5vw, 28px);
   margin-top: clamp(42px, 6svh, 64px);
   justify-content: center;
+  justify-items: center;
 }
 
 .partner-plaque {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: clamp(22px, 3vw, 30px) clamp(24px, 3.4vw, 34px);
+  gap: 26px;
+  width: 100%;
+  max-width: 460px;
+  padding: clamp(24px, 3vw, 32px) clamp(26px, 3.6vw, 38px);
   border: 1px solid rgba(7, 18, 13, .1);
   border-radius: 22px 6px 22px 6px;
   background: linear-gradient(150deg, #f6f3e9, #ece7d8);
@@ -315,31 +318,18 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   color: #101b12;
   text-align: left;
 }
-.partner-plaque-mark {
+.partner-plaque-logo {
   flex: none;
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  border: 1px solid rgba(16, 27, 18, .16);
-  background: rgba(16, 27, 18, .05);
-  color: #35492f;
+  width: clamp(120px, 32%, 150px);
+  height: auto;
 }
-.partner-plaque-mark svg { width: 26px; height: 26px; }
-.partner-plaque-copy { display: grid; gap: 4px; min-width: 0; }
+.partner-plaque-copy { display: grid; gap: 6px; min-width: 0; }
 .partner-plaque-copy small {
   color: #5c6f52;
   font-size: .58rem;
   font-weight: 800;
   letter-spacing: .14em;
   text-transform: uppercase;
-}
-.partner-plaque-copy strong {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.15;
 }
 .partner-plaque-copy span {
   color: rgba(16, 27, 18, .68);
@@ -350,6 +340,7 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
 @media (max-width: 640px) {
   .trust-partners { padding: 64px 20px 76px; }
   .trust-partners-heading h2 { font-size: clamp(2.1rem, 9vw, 3rem); }
-  .partner-plaque { flex-direction: column; align-items: flex-start; text-align: left; gap: 14px; }
+  .partner-plaque { flex-direction: column; align-items: flex-start; text-align: left; gap: 16px; max-width: 360px; }
+  .partner-plaque-logo { width: min(180px, 60%); }
   .tp-fern-left, .tp-fern-right { opacity: .2; width: 34vw; }
 }
