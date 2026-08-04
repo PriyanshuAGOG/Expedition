@@ -1,0 +1,37 @@
+name: Provision Appwrite schema
+
+# Manual only — this writes to the live Appwrite project, so it never runs
+# automatically on push. Trigger it from the Actions tab after updating
+# scripts/appwrite/schema.mjs.
+on:
+  workflow_dispatch:
+    inputs:
+      admin_emails:
+        description: >
+          Optional: comma-separated emails to add to the Admins team this run,
+          in addition to the ADMIN_EMAILS repo secret (if set).
+        required: false
+        default: ''
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install provisioning script dependencies
+        working-directory: scripts/appwrite
+        run: npm install --no-audit --no-fund
+
+      - name: Provision Appwrite database, tables, team, and bucket
+        working-directory: scripts/appwrite
+        env:
+          APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
+          APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
+          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
+          APPWRITE_ADMIN_EMAILS: ${{ secrets.APPWRITE_ADMIN_EMAILS }}${{ inputs.admin_emails && format(',{0}', inputs.admin_emails) || '' }}
+        run: npm run provision

@@ -184,10 +184,11 @@
         <form class="nomination-dialog-form">
           <p class="kicker">Nominate someone</p>
           <h2 id="nomination-dialog-title">A small introduction<br><em>can open a new path.</em></h2>
-          <p>Share their basic contact details. Your email app will open with a prepared nomination message. This website does not store the submission.</p>
+          <p>Share their basic contact details and our team will follow up.</p>
           <label><span>Name *</span><input name="nomineeName" autocomplete="name" required></label>
           <label><span>Email <small>(optional)</small></span><input type="email" name="nomineeEmail" autocomplete="email"></label>
           <label><span>Phone *</span><input type="tel" name="nomineePhone" autocomplete="tel" required></label>
+          <label class="hp-field" aria-hidden="true" tabindex="-1"><span>Leave this field blank</span><input type="text" name="companyWebsite" tabindex="-1" autocomplete="off"></label>
           <output class="nomination-dialog-status" aria-live="polite"></output>
           <button class="nomination-dialog-submit" type="submit">Prepare nomination <i>↗</i></button>
         </form>
@@ -224,11 +225,28 @@
       const name = String(data.get('nomineeName') || '').trim();
       const email = String(data.get('nomineeEmail') || '').trim();
       const phone = String(data.get('nomineePhone') || '').trim();
-      const subject = encodeURIComponent('Nomination for World Diabetes Day Himalayan Expedition 2026');
-      const body = encodeURIComponent(`Nominee name: ${name}\nNominee email: ${email || 'Not provided'}\nNominee phone: ${phone}\n\nI would like to nominate this person for the expedition.`);
       const status = form.querySelector('.nomination-dialog-status');
-      if (status) status.textContent = 'Opening your email app…';
-      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      const submitButton = form.querySelector('.nomination-dialog-submit');
+      const mailtoFallback = () => {
+        const subject = encodeURIComponent('Nomination for World Diabetes Day Himalayan Expedition 2026');
+        const body = encodeURIComponent(`Nominee name: ${name}\nNominee email: ${email || 'Not provided'}\nNominee phone: ${phone}\n\nI would like to nominate this person for the expedition.`);
+        if (status) status.textContent = 'Opening your email app…';
+        window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      };
+      submitButton && (submitButton.disabled = true);
+      if (status) status.textContent = 'Submitting…';
+      import('./assets/js/appwrite-client.js').then(({ submitForm }) => submitForm('nominations', {
+        nomineeName: name, nomineeEmail: email || undefined, nomineePhone: phone,
+      }, { honeypot: data.get('companyWebsite') })).then(() => {
+        if (status) status.textContent = 'Thank you — we have received this nomination.';
+        setTimeout(() => { form.reset(); close(); if (status) status.textContent = ''; }, 1800);
+      }).catch(() => {
+        // Backend unavailable or not yet configured — fall back to the
+        // original mailto behaviour so the nomination still reaches someone.
+        mailtoFallback();
+      }).finally(() => {
+        submitButton && (submitButton.disabled = false);
+      });
     });
   };
 
