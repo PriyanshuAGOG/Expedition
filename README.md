@@ -1,44 +1,42 @@
-# NirogBhumi World Diabetes Day Expedition 2026
+# NirogBhumi World Diabetes Day Himalayan Expedition 2026
 
-A complete, responsive pre-expedition landing page for Edition 01, prepared to become a living evidence archive after the team returns.
+Production landing page for NirogBhumi’s World Diabetes Day Himalayan Expedition 2026.
 
-## What is included
+## Current programme
 
-- Eight-layer landscape scroll-parallax hero plus a dedicated five-layer 9:16 mobile composition
-- Three generated photographic cloud/fog plates moving on separate depth planes, plus a cinematic cloud-parting field-arrival intro
-- Mobile and desktop greenery coverage testing
-- Full-bleed waterfall, forest trail, preparation, expedition and basecamp environments
-- Alternating transparent canopy and terrain seams across every chapter boundary
-- Before / on expedition / after expedition story arc that stays visually continuous
-- An overhead documentary expedition atlas covering purpose, programme definition, eligibility and safety, with a fold-out field dossier and scroll-revealed coordinates
-- A physically distinct threshold passage: five full-screen generated Himalayan markers move horizontally on desktop and become a compact vertical switchback on phones
-- A 24-piece transparent “living UI” botanical system—fern corners, moss ledges, ivy borders, alpine flowers, herbs and groundcover—used as explicit foreground imagery across every story chapter, not hidden background decoration
-- 60-day preparation system
-- Expedition facts and responsible route language
-- Safety and medical-governance section
-- Eligibility guidance
-- Post-expedition evidence archive preserved in the source but intentionally hidden until real material is ready
-- Accessible three-step registration prototype
-- Lightweight looping nature ambience (gentle breeze and birdsong) that loads on demand, with an MP3 fallback
-- FAQs, medical disclaimers and NirogBhumi footer
+- 45-day structured preparation programme
+- Six-day Dayara Bugyal expedition window
+- Medical screening and final medical clearance
+- Five preparation pillars: Medical, Lifestyle, Fitness and Yog, Mind, and Community
+- Participant journey, safety framework, eligibility, programme fee, FAQs and application flow
+- Responsive layouts for mobile, tablet, laptop and desktop
+
+## Production architecture
+
+The site is a dependency-free static HTML, CSS and JavaScript project.
+
+- `index.html` contains the landing-page structure and expedition assets.
+- `styles.css` is the render-blocking production bootstrap.
+- `styles-base.css` preserves the complete base visual system.
+- `script.js` loads the final enhancement styles first, then runs enhancement scripts in deterministic order.
+- The document remains hidden until the final interface is ready, preventing older intermediate layouts from flashing during first load.
+- A 12-second failsafe reveals the best available state if a resource unexpectedly stalls.
+
+The historical enhancement files remain in the repository because the final interface currently depends on their ordered transformations. They must not be loaded independently.
 
 ## Run locally
 
-Serve this folder with any static server and open `index.html`.
+Serve the repository root with any static server and open `index.html`.
 
 ```bash
 npx serve .
 ```
 
-The project has no runtime dependencies. `World-Diabetes-Day-Expedition-2026-V6-Cloud-Arrival.html` is the uniquely versioned self-contained build with all images, CSS and JavaScript embedded; the versioned name also avoids stale `content://` caching on Android. The unversioned `World-Diabetes-Day-Expedition-2026-Full-Site.html` is retained for existing deployment workflows.
+The project has no package installation or runtime dependency requirement.
 
-## Nature soundscape
+## Privacy and registration safety
 
-The site loops a small gentle-breeze-and-birdsong field recording and requests playback immediately. The `<audio>` element uses `preload="none"`, so the file is only fetched when playback actually begins — the page no longer downloads a large audio file up front. Browsers that restrict audible autoplay begin it on the first touch, scroll or key interaction. A small persistent control lets visitors mute or restore the sound without being required to start the experience. See `AUDIO-CREDITS.md` for the release note.
-
-## Registration safety
-
-The prototype validates the form in the browser but deliberately does not transmit or store health information. Production launch requires a secure, approved intake endpoint, authentication and access controls, final consent language, retention rules and privacy review. Medical documents should be collected later through a separate secure clinical workflow.
+The current browser prototype validates application details but does not transmit or store health information. Production intake requires a secure approved endpoint, authentication, access controls, final consent language, retention rules and privacy review. Medical documents should be collected through a separate secure clinical workflow.
 
 ## Brand system
 
@@ -49,4 +47,4 @@ The prototype validates the form in the browser but deliberately does not transm
 - Cream: `#f3f0e7`
 - Paper: `#e5eadf`
 
-The visual system extends NirogBhumi's nature-led identity into a darker expedition editorial language with documentary photography, warm sunlight, topographic details and restrained medical-data cues.
+The visual system combines Himalayan landscapes, botanical foregrounds, topographic details and restrained medical-readiness cues within NirogBhumi’s nature-led identity.
