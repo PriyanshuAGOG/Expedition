@@ -15,7 +15,7 @@
     header.setAttribute('aria-labelledby', 'fee-heading-v20-title');
     header.innerHTML = `
       <p class="kicker">Programme pricing</p>
-      <h2 id="fee-heading-v20-title">A clear programme <em>fee.</em></h2>`;
+      <h2 id="fee-heading-v20-title">A clear <em>programme fee.</em></h2>`;
 
     overview.insertAdjacentElement('beforebegin', header);
   };
