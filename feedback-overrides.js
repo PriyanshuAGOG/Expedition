@@ -60,7 +60,7 @@
     }
 
     const purposeTitle = document.querySelector('#briefing-title');
-    if (purposeTitle) purposeTitle.innerHTML = 'Why we are <em>doing</em> this?';
+    if (purposeTitle) purposeTitle.innerHTML = 'Why we are <em>doing this?</em>';
   };
 
   const pricingConfig = window.NIROGBHUMI_PRICING || {
