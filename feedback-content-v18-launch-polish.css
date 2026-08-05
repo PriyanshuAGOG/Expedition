@@ -723,6 +723,16 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   object-position: center bottom;
   opacity: .16;
 }
+/* The heading carried a hard <br> after "want", but "Choose how you want"
+   is wider than .onboard-heading's 720px at this font size, so it wrapped
+   again and rendered as three ragged lines while every other chapter
+   heading on the page is a clean two. The <br> is gone from the markup;
+   balance lets the browser pick an even split at any width. */
+.onboard-heading h2 { text-wrap: balance; }
+/* Sits after </header>, not inside it — as the header's last child it
+   broke `.onboard-heading > p:last-child`, which is how both v3.js
+   (description copy) and styles-base.css (muted colour, size, margin)
+   target the sub-heading paragraph. */
 .onboard-divider {
   display: block;
   width: min(140px, 30%);
@@ -753,6 +763,68 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
    entirely and seeing the exact same overlap persist. */
 .trust-partners .section-seam.seam-top {
   height: clamp(70px, 12svh, 130px);
+}
+
+/* ============ 20. Section seams — stop the squashed-smear "line" ============ */
+/* Both seam sources are 1672x941 (aspect 1.78) but every seam box is a wide,
+   short band — 4:1 at the tallest, ~12:1 where the height is capped. With
+   the inherited `object-fit: fill` the art was being squeezed 2-11x
+   vertically, which smears the foliage into a streaky horizontal stripe
+   ending in a hard cut: the "odd line cropped out of some assets".
+   `cover` keeps the art's real proportions and crops instead of smearing.
+   Each source carries its detail in one half (canopy rows 0-475, terrain
+   rows 352-940 of 941), so object-position lands the crop on that half. */
+.section-seam,
+.final-refinement-v15 .gain-v15-seam { object-fit: cover; }
+/* Crop position is tuned to land on each source's soft fringe — the lower
+   edge of the canopy, the upper edge of the terrain — rather than the dense
+   middle of the art, which `cover` would otherwise turn into an opaque
+   curtain across the top of the section (it hid the Safety photograph
+   entirely at the default centre crop). The gain seams are far shorter
+   bands and sit over flat backgrounds, so they keep their own values. */
+.section-seam.canopy-seam { object-position: center 63%; }
+.section-seam.terrain-seam { object-position: center 55%; }
+.final-refinement-v15 .gain-v15-seam-bottom { object-position: center 25%; }
+.final-refinement-v15 .gain-v15-seam-top { object-position: center 75%; }
+/* Keeps the seam reading as atmospheric depth over the section behind it
+   instead of a solid band of foliage laid on top of the content. */
+.section-seam { opacity: .55; }
+
+/* The wide grounding strips are height-constrained and cropped with
+   object-fit, which leaves the same hard rectangular edges the seams had —
+   a visible sliver of an asset sitting on the background. Fade them out at
+   the top and at both ends so they read as ground the section sits on
+   rather than a pasted-in cutout. */
+.xpt-flora .flora-f,
+.journal-flora .flora-d,
+.onboard-flora .flora-d,
+.tp-ground {
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 0%, #000 55%),
+    linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(180deg, transparent 0%, #000 55%),
+    linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* Fade each seam away from the section edge it is anchored to, so the band
+   dissolves into the section instead of ending in a second hard line where
+   the cropped image stops. seam-flip-y applies scaleY(-1) to the element,
+   which flips the mask with it — so flipped seams need the gradient
+   reversed to keep the solid end against the same section edge. */
+.section-seam.seam-top,
+.section-seam.seam-bottom.seam-flip-y,
+.final-refinement-v15 .gain-v15-seam-top {
+  -webkit-mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 25%, transparent 100%);
+}
+.section-seam.seam-bottom,
+.section-seam.seam-top.seam-flip-y,
+.final-refinement-v15 .gain-v15-seam-bottom {
+  -webkit-mask-image: linear-gradient(0deg, #000 25%, transparent 100%);
+  mask-image: linear-gradient(0deg, #000 25%, transparent 100%);
 }
 
 /* ============ 18. Join options — one consistent CTA button across all four cards ============ */
