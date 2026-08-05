@@ -280,6 +280,17 @@ dialog::backdrop { background: rgba(1, 7, 4, .82); backdrop-filter: blur(6px); }
 #detail-notes-status { font-size: .68rem; color: var(--leaf); }
 .detail-notes-actions .btn-primary { min-height: 36px; padding: 0 16px; }
 
+.detail-history { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline); }
+.detail-history .btn-ghost { min-height: 36px; padding: 0 16px; }
+#detail-history-body { margin-top: 14px; display: grid; gap: 10px; font-size: .8rem; color: var(--muted); }
+.history-entry { padding: 10px 12px; border: 1px solid var(--hairline); border-radius: 6px 12px 6px 12px; background: rgba(3, 13, 8, .5); }
+.history-entry-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.history-entry-head strong { font-weight: 500; color: var(--cream); font-size: .78rem; }
+.history-entry-head span { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; color: var(--leaf); }
+.history-entry-fields { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.history-field-chip { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--hairline); font-size: .6rem; letter-spacing: .04em; color: var(--cream); }
+.detail-row a { color: var(--leaf); text-decoration: underline; text-underline-offset: 2px; }
+
 @media (max-width: 640px) {
   .admin-header { flex-direction: column; align-items: flex-start; }
   .admin-toolbar { flex-direction: column; align-items: stretch; }

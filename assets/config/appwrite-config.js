@@ -30,5 +30,7 @@ export const TABLES = {
   applications: 'applications',
   nominations: 'nominations',
   partnerships: 'partnerships',
+  applicationHistory: 'applicationHistory',
 };
 export const ADMIN_TEAM_ID = 'admins';
+export const UPLOADS_BUCKET_ID = 'evidence_uploads';

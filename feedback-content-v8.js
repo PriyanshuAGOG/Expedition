@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const CONTACT_EMAIL = 'Priyanshu@nirogbhumi.com';
+  const CONTACT_EMAIL = 'priyanshu@nirogbhumi.com';
 
   const heroMarkup = () => `
     <span class="hero-summary-item hero-summary-preparation">
@@ -190,7 +190,7 @@
           <label><span>Phone *</span><input type="tel" name="nomineePhone" autocomplete="tel" required></label>
           <label class="hp-field" aria-hidden="true" tabindex="-1"><span>Leave this field blank</span><input type="text" name="companyWebsite" tabindex="-1" autocomplete="off"></label>
           <output class="nomination-dialog-status" aria-live="polite"></output>
-          <button class="nomination-dialog-submit" type="submit">Prepare nomination <i>↗</i></button>
+          <button class="nomination-dialog-submit" type="submit">Submit Nomination <i>↗</i></button>
         </form>
       </div>
     </dialog>`;
@@ -199,7 +199,7 @@
     <article class="onboard-path nomination-trigger-card reveal visible">
       <span>02</span>
       <h3>Nominate someone</h3>
-      <p>Recommend a person living with Type 2 diabetes who may be ready to begin this journey.</p>
+      <p>Recommend a person living with Type 2 diabetes or prediabetes.</p>
       <button type="button" data-open-nomination>Nominate Now <i>↗</i></button>
     </article>`;
 

@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const CONTACT_EMAIL = 'Priyanshu@nirogbhumi.com';
+  const CONTACT_EMAIL = 'priyanshu@nirogbhumi.com';
   const CONTACT_PHONE = '+919588810249';
   const CONTACT_PHONE_DISPLAY = '+91 95888 10249';
   const WEBSITE = 'https://nirogbhumi.com';
@@ -28,59 +28,17 @@
           <div class="fee-v11-total"><small>Total if cleared</small><strong>₹49,500</strong><span>Inclusive of applicable GST</span></div>
         </div>
 
-        <div class="fee-v11-stage-grid">
-          <article class="fee-v11-stage fee-v11-stage-primary v11-reveal">
-            <header>
-              <span>Stage 01</span>
-              <div><small>60-day preparatory programme</small><strong>₹30,000</strong><em>inclusive of applicable GST</em></div>
-            </header>
-            <p class="fee-v11-payable">Payable by every applicant selected to join the preparatory programme.</p>
-            <h3>Included in this stage</h3>
-            <ul class="fee-v11-inclusions">
-              <li>Structured 60-day online preparation</li>
-              <li>Fitness, yoga, walking, strength, mobility and endurance development</li>
-              <li>Nutrition, sleep, stress-management and habit-transformation guidance</li>
-              <li>Community meetings and participant support</li>
-              <li>Review of participant-submitted reports by the designated medical team or consultant</li>
-              <li>Progress and expedition-readiness assessment</li>
-              <li>Final medical-clearance review</li>
-            </ul>
-          </article>
-
-          <article class="fee-v11-stage fee-v11-stage-secondary v11-reveal">
-            <header>
-              <span>Stage 02</span>
-              <div><small>Complete programme and expedition</small><strong>₹19,500</strong><em>inclusive of applicable GST</em></div>
-            </header>
-            <p class="fee-v11-payable">Payable only by participants who complete the preparatory programme, receive final medical clearance and join the Himalayan expedition.</p>
-            <div class="fee-v11-clearance">
-              <small>Medical-clearance safeguard</small>
-              <h3>Not cleared after the 60 days?</h3>
-              <p>No expedition-stage payment is required. The total programme fee remains ₹30,000 inclusive of applicable GST.</p>
-            </div>
-          </article>
-        </div>
-
-        <details class="fee-v11-local-costs v11-reveal">
-          <summary><span>Medical tests and personal health costs</span><i aria-hidden="true">+</i></summary>
-          <p>All prescribed laboratory tests, diagnostic investigations, medical consultations, certificates, medications and health-monitoring devices must be arranged locally and paid for directly by the participant. Nirog Bhumi will not conduct or pay for these tests.</p>
-        </details>
-
-        <section class="fee-v11-payment-path v11-reveal" aria-labelledby="fee-v11-payment-title">
-          <header>
-            <p class="kicker">When do you pay?</p>
-            <h3 id="fee-v11-payment-title">Three decisions,<br><em>no hidden stage.</em></h3>
-          </header>
-          <ol>
-            <li><span>01</span><div><small>Application</small><strong>No payment</strong><p>Submit your expression of interest and basic health information.</p></div></li>
-            <li><span>02</span><div><small>Programme admission</small><strong>₹30,000</strong><p>Payable upon acceptance into the 60-day programme.</p></div></li>
-            <li><span>03</span><div><small>Final medical clearance</small><strong>₹19,500 if cleared</strong><p>No further payment is required if final medical clearance is not received.</p></div></li>
-          </ol>
-        </section>
+        <aside class="fee-v18-cost-card v11-reveal" aria-label="Medical tests and personal health costs">
+          <span class="fee-v18-cost-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-2.8 8.2-7 10-4.2-1.8-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-5"/></svg></span>
+          <div>
+            <small>Medical tests and personal health costs</small>
+            <p>All prescribed laboratory tests, diagnostic investigations, medical consultations, certificates, medications and health-monitoring devices must be arranged locally and paid for directly by the participant. Nirog Bhumi will not conduct or pay for these tests.</p>
+          </div>
+        </aside>
 
         <aside class="fee-v11-final-note v11-reveal">
           <span aria-hidden="true">i</span>
-          <p><strong>Admission to the 60-day programme does not guarantee expedition eligibility.</strong> Final participation is subject to medical clearance.</p>
+          <p><strong>Admission to the 45-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong></p>
         </aside>
       </div>
 
@@ -163,7 +121,7 @@
 
     <div class="footer-v11-inner">
       <div class="footer-v11-brand">
-        <img src="assets/branding/webp/nirogbhumi-wordmark.webp" alt="NirogBhumi" width="900" height="206" loading="lazy" decoding="async">
+        <img src="assets/branding/webp/nirogbhumi-wordmark.webp" alt="Nirog Bhumi" width="900" height="206" loading="lazy" decoding="async">
         <div><strong>World Diabetes Day Himalayan Expedition 2026</strong><span>Jaipur, Rajasthan · India</span></div>
       </div>
 
@@ -176,12 +134,12 @@
 
       <div class="footer-v11-actions">
         <nav aria-label="Footer navigation"><a href="#briefing">Purpose</a><a href="#trail">Journey</a><a href="#safety">Safety</a><a href="#faq">FAQs</a></nav>
-        <a class="footer-v11-apply" href="apply.html" target="_top">Apply now <span>↗</span></a>
+        <a class="footer-v11-apply" href="apply.html" target="_top">Apply Now</a>
       </div>
 
-      <p class="footer-v11-disclaimer"><strong>Wellness education and expedition information only.</strong> NirogBhumi does not replace medical advice, diagnosis, emergency care or treatment. Speak with your treating physician before changing medication, diet or physical activity.</p>
+      <p class="footer-v11-disclaimer">Nirog Bhumi does not replace medical advice, diagnosis, emergency care or treatment. Speak with your treating physician before changing medication, diet or physical activity.</p>
 
-      <div class="footer-v11-bottom"><span>© 2026 NirogBhumi</span><a href="${WEBSITE}" target="_blank" rel="noopener">nirogbhumi.com</a></div>
+      <div class="footer-v11-bottom"><span>© 2026 Nirog Bhumi</span><a href="${WEBSITE}" target="_blank" rel="noopener">nirogbhumi.com</a></div>
     </div>`;
 
   const rebuildFooter = () => {

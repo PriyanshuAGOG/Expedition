@@ -14,10 +14,10 @@ if (!window.Appwrite) {
   throw new Error('assets/vendor/appwrite/sdk.js must be loaded before appwrite-client.js');
 }
 const {
-  Client, TablesDB, Account, Teams, Query, ID,
+  Client, TablesDB, Account, Teams, Storage, Query, ID,
 } = window.Appwrite;
 import {
-  APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, DATABASE_ID, TABLES, ADMIN_TEAM_ID,
+  APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID, DATABASE_ID, TABLES, ADMIN_TEAM_ID, UPLOADS_BUCKET_ID,
 } from '../config/appwrite-config.js';
 
 const isConfigured = APPWRITE_PROJECT_ID && APPWRITE_PROJECT_ID !== 'REPLACE_WITH_YOUR_APPWRITE_PROJECT_ID';
@@ -26,6 +26,7 @@ const client = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_P
 const tablesDB = new TablesDB(client);
 const account = new Account(client);
 const teams = new Teams(client);
+const storage = new Storage(client);
 
 class SubmissionError extends Error {}
 
@@ -35,8 +36,12 @@ class SubmissionError extends Error {}
  *
  * @param {'applications'|'nominations'|'partnerships'} tableKey
  * @param {Record<string, unknown>} data - form fields, matching the table's columns
- * @param {{ honeypot?: string }} [options] - honeypot is a decoy field name;
- *   if it has a value, this silently resolves without submitting (bot traffic)
+ * @param {{ honeypot?: string, rowId?: string }} [options] - honeypot is a decoy
+ *   field name; if it has a value, this silently resolves without submitting
+ *   (bot traffic). Passing `rowId` makes the call idempotent: create-or-update
+ *   the same row instead of always creating a new one — used by the
+ *   application form's review → edit → resubmit flow so re-submitting never
+ *   creates a duplicate application.
  */
 async function submitForm(tableKey, data, options = {}) {
   if (options.honeypot) {
@@ -53,6 +58,27 @@ async function submitForm(tableKey, data, options = {}) {
   if (!tableId) throw new SubmissionError(`Unknown form "${tableKey}"`);
 
   try {
+    if (options.rowId) {
+      // upsertRow creates the row on first submit and updates the same row
+      // on every later resubmit (edit flow) — never a second row for one
+      // rowId. Older Appwrite SDK builds may not expose upsertRow yet, so
+      // fall back to create-then-update-on-conflict for compatibility.
+      if (typeof tablesDB.upsertRow === 'function') {
+        return await tablesDB.upsertRow({
+          databaseId: DATABASE_ID, tableId, rowId: options.rowId, data,
+        });
+      }
+      try {
+        return await tablesDB.createRow({
+          databaseId: DATABASE_ID, tableId, rowId: options.rowId, data,
+        });
+      } catch (err) {
+        if (err?.code !== 409) throw err;
+        return await tablesDB.updateRow({
+          databaseId: DATABASE_ID, tableId, rowId: options.rowId, data,
+        });
+      }
+    }
     return await tablesDB.createRow({
       databaseId: DATABASE_ID,
       tableId,
@@ -67,8 +93,28 @@ async function submitForm(tableKey, data, options = {}) {
   }
 }
 
+/**
+ * Upload one file to the shared evidence/uploads bucket (public create-only —
+ * see scripts/appwrite/provision.mjs; read/update/delete stay admin-only).
+ * Returns the created file's id, or throws SubmissionError on failure.
+ */
+async function uploadFile(file) {
+  if (!isConfigured) {
+    throw new SubmissionError('This site is not yet connected to its backend.');
+  }
+  try {
+    const created = await storage.createFile({
+      bucketId: UPLOADS_BUCKET_ID, fileId: ID.unique(), file,
+    });
+    return created.$id;
+  } catch (err) {
+    console.error('[appwrite] file upload failed', err);
+    throw new SubmissionError(err?.message || `Could not upload "${file.name}". Please try again.`);
+  }
+}
+
 export {
-  client, tablesDB, account, teams, Query, ID,
-  DATABASE_ID, TABLES, ADMIN_TEAM_ID,
-  isConfigured, submitForm, SubmissionError,
+  client, tablesDB, account, teams, storage, Query, ID,
+  DATABASE_ID, TABLES, ADMIN_TEAM_ID, UPLOADS_BUCKET_ID,
+  isConfigured, submitForm, uploadFile, SubmissionError,
 };

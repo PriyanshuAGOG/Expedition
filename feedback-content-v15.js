@@ -33,7 +33,7 @@
       </article>
       <article class="prep-card-v15" style="--pillar-art:url('assets/botanicals/webp/60-flowering-weed.webp')">
         <b>03</b>
-        <h3>Fitness and Yog</h3>
+        <h3>Fitness &amp; Yoga</h3>
         <p>Progressive walking, strength, mobility, stamina and practical readiness for the trail.</p>
       </article>
       <article class="prep-card-v15" style="--pillar-art:url('assets/botanicals/webp/61-vine-loop.webp')">
@@ -63,7 +63,7 @@
     <div class="gain-v15-inner">
       <header class="gain-v15-heading reveal visible">
         <p class="kicker">Beyond the trail</p>
-        <h2 id="expedition-gains-title">What the expedition<br><em>leaves with you.</em></h2>
+        <h2 id="expedition-gains-title">Key Takeaways from the<br><em>Expedition.</em></h2>
         <p>Five outcomes that continue long after the descent.</p>
       </header>
 
@@ -74,23 +74,23 @@
         </article>
         <article class="gain-v15-stop reveal visible" role="listitem">
           <span>02</span>
-          <div><small>Influence</small><h3>Lead by example</h3><p>Your journey can inspire others to act for better metabolic health.</p></div>
+          <div><small>Influence</small><h3>Lead by example</h3><p>Inspire others to act towards better metabolic health.</p></div>
         </article>
         <article class="gain-v15-stop gain-v15-featured reveal visible" role="listitem">
           <span>03</span>
-          <div><small>Metabolic health</small><h3>Build lasting consistency</h3><p>Combine 45 days of preparation, daily movement and the physical challenge of the trek.</p></div>
+          <div><small>Metabolic health</small><h3>Build lasting consistency</h3><p>Carry on from where you left off with daily exercise, meditation, and a routine aligned with your circadian rhythm.</p></div>
         </article>
         <article class="gain-v15-stop reveal visible" role="listitem">
           <span>04</span>
-          <div><small>Community</small><h3>Find your people</h3><p>Train and travel with people who understand the journey and keep you moving.</p></div>
+          <div><small>Community</small><h3>Find your tribe</h3><p>Build a supportive community and discover how your experience can help others living with diabetes achieve their goals.</p></div>
         </article>
         <article class="gain-v15-stop reveal visible" role="listitem">
           <span>05</span>
-          <div><small>Memory</small><h3>Carry the story home</h3><p>Take home friendship, achievement and memories that last beyond the expedition.</p></div>
+          <div><small>Memory</small><h3>Carry the story home</h3><p>Take home friendship, achievements and memories that last beyond the expedition.</p></div>
         </article>
       </div>
 
-      <p class="gain-v15-closing reveal visible">The trail ends. What it changes can continue.</p>
+      <p class="gain-v15-closing reveal visible">The trail ends. But the rhythm must continue.</p>
     </div>
 
     <img class="gain-v15-seam gain-v15-seam-bottom" src="assets/experience/webp/22-canopy-seam.webp" alt="" loading="lazy" decoding="async">`;

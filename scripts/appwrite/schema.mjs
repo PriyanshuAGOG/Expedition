@@ -65,11 +65,20 @@ export const collections = [
       enumAttr('treatment', [
         'On medication', 'On insulin', 'Both medication and insulin', 'None of the above',
       ], true),
+      // Deprecated: no longer collected on the form (medical reports are
+      // requested instead, via the optional upload below). Column kept so
+      // historical applications that already have a value aren't destroyed.
       float('hba1c', false, { min: 3, max: 20 }),
+      int('bpSystolic', true, { min: 60, max: 260 }),
+      int('bpDiastolic', true, { min: 30, max: 180 }),
       strArray('conditions', 40),
-      enumAttr('timeCommitment', ['Yes', 'I need to discuss my schedule', 'No'], true),
+      enumAttr('timeCommitment', ['Yes', 'No'], true),
       enumAttr('availability', ['Yes', 'Likely, pending confirmation', 'No'], true),
       str('motivation', 1200, true),
+      // Metadata for files uploaded to UPLOADS_BUCKET_ID; the files
+      // themselves live in Storage, not in this row.
+      strArray('medicalReportFileIds', 60),
+      strArray('medicalReportFileNames', 200),
       str('emergencyName', 200, true),
       str('emergencyPhone', 40, true),
       str('emergencyRelationship', 120, true),
@@ -110,6 +119,29 @@ export const collections = [
     ],
     indexes: [
       { key: 'idx_status', type: 'key', attributes: ['status'] },
+    ],
+  },
+  {
+    // One row per edit to an existing application, so admins can see what
+    // changed and when. Written by the public client alongside every
+    // resubmit of an already-created application (create-only permission,
+    // same as the other tables) — never by editing the `applications` row
+    // in place, which stays the single current-state record.
+    id: 'applicationHistory',
+    name: 'Application History',
+    permissions: adminOnlyPermissions(),
+    attributes: [
+      str('applicationId', 64, true),
+      str('changedAt', 40, true),
+      str('changeSource', 40, false, { default: 'participant_edit' }),
+      strArray('changedFields', 60),
+      str('previousValues', 10000, false),
+      str('newValues', 10000, false),
+      strArray('filesAdded', 60),
+      strArray('filesRemoved', 60),
+    ],
+    indexes: [
+      { key: 'idx_applicationId', type: 'key', attributes: ['applicationId'] },
     ],
   },
   {

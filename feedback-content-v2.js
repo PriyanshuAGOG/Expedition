@@ -93,7 +93,7 @@
   const countdownMarkup = () => `
     <div class="eligibility-countdown" aria-labelledby="eligibility-countdown-title" aria-live="polite">
       <div class="eligibility-countdown-copy">
-        <p class="kicker">The journey begins now</p>
+        <p class="kicker">The journey begins</p>
         <h3 id="eligibility-countdown-title">Countdown to<br><em>World Diabetes Day.</em></h3>
       </div>
       <div class="eligibility-countdown-grid" role="timer" aria-atomic="true">
