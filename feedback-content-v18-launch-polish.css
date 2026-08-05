@@ -247,6 +247,11 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
+@media (max-width: 680px) {
+  .final-responsive-qa-v10 #partners .onboard-paths-v10 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
 .partner-trigger-card { cursor: default; }
 
 /* The nomination dialog's form styling only ever had to cover <input> —
@@ -283,12 +288,15 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
 .footer-v11-brand {
   flex-direction: column !important;
   justify-content: center !important;
+  justify-items: center !important;
   align-items: center !important;
   gap: 14px !important;
   text-align: center !important;
 }
+.footer-v11-brand > img { justify-self: center !important; }
 .footer-v11-brand > div {
   justify-items: center !important;
+  justify-self: center !important;
   text-align: center !important;
 }
 .footer-v11-links > * {
@@ -298,17 +306,27 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
 .footer-v11-actions {
   flex-direction: column !important;
   justify-content: center !important;
+  justify-items: center !important;
   gap: 18px !important;
 }
 .footer-v11-actions nav { justify-content: center !important; }
+.footer-v11-apply { justify-self: center !important; }
 .footer-v11-disclaimer {
   margin: 22px auto 0 !important;
   text-align: center !important;
 }
 .footer-v11-bottom { text-align: center; }
-@media (max-width: 680px) {
-  .footer-v11-brand { align-items: center !important; text-align: center !important; }
-  .footer-v11-brand > div { justify-items: center !important; text-align: center !important; }
+@media (max-width: 980px) {
+  /* v11.css's own ≤980px rules switch .footer-v11-brand and
+     .footer-v11-actions to CSS grid and explicitly left-align the logo
+     and the Apply Now button (justify-items/justify-self: start) for a
+     two-column desktop-ish layout that no longer applies once things
+     stack — re-centre both explicitly at the same breakpoint. */
+  .footer-v11-brand { justify-items: center !important; align-items: center !important; text-align: center !important; }
+  .footer-v11-brand > img { justify-self: center !important; }
+  .footer-v11-brand > div { justify-items: center !important; justify-self: center !important; text-align: center !important; }
+  .footer-v11-actions { justify-items: center !important; }
+  .footer-v11-apply { justify-self: center !important; }
   .footer-v11-bottom { flex-direction: column; align-items: center !important; text-align: center; }
 }
 
@@ -452,13 +470,25 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   .final-symmetry-v16 .hero-summary-v16 > span small { margin-top: 0; text-align: right; }
 }
 
-/* Hero CTA: only "Apply Now" remains after removing "Explore the Journey" —
-   centre it instead of leaving it aligned as though a second button exists. */
+/* Hero CTA: only "Apply Now" remains after removing "Explore the Journey".
+   .hero-ctas is a 2-column CSS grid (v16.css); with one child left it still
+   occupies only the first track, sitting left of true centre instead of
+   centred. Collapse it to a single, content-width column and centre that. */
 .hero-ctas-v18-single {
+  display: flex !important;
+  grid-template-columns: none !important;
   justify-content: center !important;
   width: 100%;
 }
-.hero-ctas-v18-single .hero-cta-primary { margin: 0 auto; }
+.hero-ctas-v18-single .hero-cta-primary {
+  flex: none !important;
+  width: auto !important;
+  min-width: min(320px, 100%);
+  margin: 0 auto;
+}
+@media (max-width: 680px) {
+  .hero-ctas-v18-single .hero-cta-primary { width: 100% !important; min-width: 0; }
+}
 
 /* ============ 10. Safety section — fix mobile-only decorative overlap ============ */
 /* .safety-flora .flora-a is positioned at top:42% of the whole section,
@@ -564,6 +594,11 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
 }
 
 .field-upload input[type="file"] { display: block; width: 100%; margin-top: 6px; font-size: .78rem; }
+.field-upload > small { display: block; clear: both; margin-top: 10px; line-height: 1.5; }
+@media (max-width: 480px) {
+  .field-upload input[type="file"] { font-size: .72rem; }
+  .field-upload > small { margin-top: 12px; }
+}
 .file-upload-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
 .file-upload-list li {
   display: flex;
