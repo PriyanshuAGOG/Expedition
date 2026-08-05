@@ -25,5 +25,11 @@
     "17-moss-covered-stone-steps.webp": {"x":600,"y":1320,"w":600,"h":440,"contentX":760,"contentY":1330,"contentW":280,"contentH":420},
     "18-mountain-portal-frame.webp": {"x":1200,"y":1320,"w":600,"h":440,"contentX":1360,"contentY":1330,"contentW":280,"contentH":420},
     "19-parallax-mountain-layer.webp": {"x":1800,"y":1320,"w":600,"h":440,"contentX":1810,"contentY":1347,"contentW":580,"contentH":386}
+  },
+  "standaloneAssets": {
+    "20-mossy-milestone-cluster.webp": {
+      "source": "recovered individual generation",
+      "intendedUse": "eligibility section lower-left milestone accent"
+    }
   }
 }
