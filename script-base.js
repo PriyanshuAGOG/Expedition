@@ -223,8 +223,25 @@
     const indicators = [...document.querySelectorAll('[data-step-indicator]')];
     const backButton = form.querySelector('.form-back'), nextButton = form.querySelector('.form-next'), submitButton = form.querySelector('.form-submit');
     const errors = form.querySelector('.form-errors'), confirmation = document.querySelector('.form-confirmation');
+    const reviewScreen = document.querySelector('.form-review');
+    const reviewList = reviewScreen?.querySelector('[data-review-list]');
     const motivation = form.querySelector('textarea[name="motivation"]'), counter = form.querySelector('[data-count]');
+    const fileInput = form.querySelector('[data-file-input]');
+    const fileListEl = form.querySelector('[data-file-list]');
     let currentStep = 1;
+    let selectedFiles = [];
+    let lastSubmittedSnapshot = null;
+
+    // One stable id per browser tab/session: the review → edit → resubmit
+    // flow always upserts this same application row instead of creating a
+    // new one each time "Submit Application" is pressed.
+    const APPLICATION_ID_KEY = 'expedition-application-id';
+    let applicationId = sessionStorage.getItem(APPLICATION_ID_KEY);
+    if (!applicationId) {
+      applicationId = window.crypto?.randomUUID ? window.crypto.randomUUID() : `app-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      sessionStorage.setItem(APPLICATION_ID_KEY, applicationId);
+    }
+
     const showStep = (step, moveFocus = true) => {
       currentStep = clamp(step, 1, steps.length);
       steps.forEach(panel => { const active = +panel.dataset.formStep === currentStep; panel.hidden = !active; panel.classList.toggle('active', active); });
@@ -233,50 +250,175 @@
       if (moveFocus) form.querySelector(`[data-form-step="${currentStep}"] legend`)?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
     };
     const validateCurrentStep = () => {
-      const fields = [...form.querySelector(`[data-form-step="${currentStep}"]`).querySelectorAll('[required]')]; let firstInvalid, invalidCount = 0;
+      const stepEl = form.querySelector(`[data-form-step="${currentStep}"]`);
+      const fields = [...stepEl.querySelectorAll('[required]')]; let firstInvalid, invalidCount = 0;
       fields.forEach(field => { const valid = field.checkValidity(); field.closest('.field')?.classList.toggle('invalid', !valid); if (!valid) { invalidCount += 1; firstInvalid ||= field; } });
+      const requiredGroup = stepEl.querySelector('[data-required-group]');
+      if (requiredGroup) {
+        const groupName = requiredGroup.dataset.requiredGroup;
+        const anyChecked = [...requiredGroup.querySelectorAll(`input[name="${groupName}"]`)].some(input => input.checked);
+        requiredGroup.classList.toggle('invalid', !anyChecked);
+        if (!anyChecked) { invalidCount += 1; firstInvalid ||= requiredGroup.querySelector(`input[name="${groupName}"]`); }
+      }
       if (!invalidCount) { errors.textContent = ''; return true; }
       errors.textContent = `Please complete ${invalidCount} required ${invalidCount === 1 ? 'field' : 'fields'} before continuing.`;
       firstInvalid?.focus({ preventScroll: true }); firstInvalid?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' }); return false;
     };
     nextButton.addEventListener('click', () => { if (validateCurrentStep()) showStep(currentStep + 1); });
     backButton.addEventListener('click', () => showStep(currentStep - 1));
-    form.addEventListener('input', event => { event.target.closest('.field')?.classList.remove('invalid'); if (event.target === motivation && counter) counter.textContent = motivation.value.length; });
+    form.addEventListener('input', event => {
+      event.target.closest('.field')?.classList.remove('invalid');
+      event.target.closest('[data-required-group]')?.classList.remove('invalid');
+      if (event.target === motivation && counter) counter.textContent = motivation.value.length;
+    });
     const none = form.querySelector('input[name="conditions"][value="none"]'), conditions = [...form.querySelectorAll('input[name="conditions"]')];
     conditions.forEach(input => input.addEventListener('change', () => { if (input === none && input.checked) conditions.filter(item => item !== none).forEach(item => item.checked = false); else if (input.checked && none) none.checked = false; }));
+
+    const MAX_FILE_BYTES = 15 * 1024 * 1024;
+    const ACCEPTED_FILE_PATTERN = /\.(pdf|jpe?g|png)$/i;
+    const renderFileList = () => {
+      if (!fileListEl) return;
+      fileListEl.replaceChildren();
+      selectedFiles.forEach((file, index) => {
+        const item = document.createElement('li');
+        const name = document.createElement('span');
+        name.textContent = file.name;
+        const size = document.createElement('small');
+        size.textContent = `${(file.size / (1024 * 1024)).toFixed(1)} MB`;
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.setAttribute('aria-label', `Remove ${file.name}`);
+        removeBtn.addEventListener('click', () => { selectedFiles.splice(index, 1); renderFileList(); });
+        item.append(name, size, removeBtn);
+        fileListEl.append(item);
+      });
+    };
+    fileInput?.addEventListener('change', () => {
+      const incoming = [...fileInput.files];
+      incoming.forEach(file => {
+        if (file.size > MAX_FILE_BYTES) { errors.textContent = `"${file.name}" is larger than 15MB and was not added.`; return; }
+        if (!ACCEPTED_FILE_PATTERN.test(file.name)) { errors.textContent = `"${file.name}" is not a supported file type (PDF, JPG or PNG only).`; return; }
+        selectedFiles.push(file);
+      });
+      fileInput.value = '';
+      renderFileList();
+    });
+
+    const REVIEW_FIELD_LABELS = {
+      fullName: 'Full name', email: 'Email', phone: 'Phone / WhatsApp', age: 'Age', city: 'City', state: 'State / region', country: 'Country',
+      diagnosisYear: 'Year diagnosed with Type 2 diabetes', treatment: 'Current treatment',
+      bpSystolic: 'Blood pressure — systolic (mmHg)', bpDiastolic: 'Blood pressure — diastolic (mmHg)',
+      timeCommitment: 'Can commit about one hour each morning', availability: 'Available Nov 12–19, 2026',
+      motivation: 'Why you want to join', emergencyName: 'Emergency contact name', emergencyPhone: 'Emergency contact phone', emergencyRelationship: 'Relationship to you',
+    };
+    const buildReview = () => {
+      if (!reviewList) return;
+      const data = new FormData(form);
+      reviewList.replaceChildren();
+      const addRow = (label, value) => {
+        const dt = document.createElement('dt'); dt.textContent = label;
+        const dd = document.createElement('dd'); dd.textContent = value;
+        reviewList.append(dt, dd);
+      };
+      Object.entries(REVIEW_FIELD_LABELS).forEach(([key, label]) => {
+        const value = data.get(key);
+        if (value) addRow(label, String(value));
+      });
+      const diagnosedConditions = data.getAll('conditions');
+      if (diagnosedConditions.length) addRow('Diagnosed conditions', diagnosedConditions.join(', '));
+      addRow('Medical reports', selectedFiles.length ? selectedFiles.map(file => file.name).join(', ') : 'None uploaded');
+    };
+
     form.addEventListener('submit', event => {
       event.preventDefault();
       if (!validateCurrentStep()) return;
-      if (submitButton.disabled) return;
-      submitButton.disabled = true;
-      const originalLabel = submitButton.innerHTML;
-      submitButton.innerHTML = 'Submitting…';
+      buildReview();
+      form.hidden = true;
+      if (reviewScreen) { reviewScreen.hidden = false; reviewScreen.focus(); }
+    });
+
+    reviewScreen?.querySelector('[data-edit-review]')?.addEventListener('click', () => {
+      if (reviewScreen) reviewScreen.hidden = true;
+      form.hidden = false;
+      showStep(steps.length);
+    });
+
+    const submitReviewButton = reviewScreen?.querySelector('[data-submit-review]');
+    submitReviewButton?.addEventListener('click', async () => {
+      if (submitReviewButton.disabled) return;
+      submitReviewButton.disabled = true;
+      const originalLabel = submitReviewButton.textContent;
+      submitReviewButton.textContent = 'Submitting…';
       errors.textContent = '';
-      import('./assets/js/appwrite-client.js').then(({ submitForm }) => {
+      try {
+        const { submitForm, uploadFile } = await import('./assets/js/appwrite-client.js');
         const data = new FormData(form);
         const numberOrUndefined = name => { const value = data.get(name); return value === null || value === '' ? undefined : Number(value); };
-        return submitForm('applications', {
+
+        const newFiles = selectedFiles.filter(file => !file.__uploadedId);
+        const uploadedIds = [];
+        for (const file of newFiles) {
+          // Sequential on purpose: keeps upload order predictable and avoids
+          // bursting many concurrent requests against the uploads bucket.
+          // eslint-disable-next-line no-await-in-loop
+          const id = await uploadFile(file);
+          file.__uploadedId = id;
+          uploadedIds.push(id);
+        }
+
+        const values = {
           fullName: data.get('fullName'), email: data.get('email'), phone: data.get('phone'),
           age: numberOrUndefined('age'), city: data.get('city'), state: data.get('state'), country: data.get('country'),
-          diagnosisYear: numberOrUndefined('diagnosisYear'), treatment: data.get('treatment'), hba1c: numberOrUndefined('hba1c'),
+          diagnosisYear: numberOrUndefined('diagnosisYear'), treatment: data.get('treatment'),
+          bpSystolic: numberOrUndefined('bpSystolic'), bpDiastolic: numberOrUndefined('bpDiastolic'),
           conditions: data.getAll('conditions'),
           timeCommitment: data.get('timeCommitment'), availability: data.get('availability'), motivation: data.get('motivation'),
           emergencyName: data.get('emergencyName'), emergencyPhone: data.get('emergencyPhone'), emergencyRelationship: data.get('emergencyRelationship'),
+          medicalReportFileIds: selectedFiles.map(file => file.__uploadedId).filter(Boolean),
+          medicalReportFileNames: selectedFiles.map(file => file.name),
           consentAccuracy: data.get('accuracy') === 'on', consentSelection: data.get('selection') === 'on',
           consentExpeditionContact: data.get('expeditionContact') === 'on', consentDpdp: data.get('dpdpConsent') === 'on',
           consentFutureContact: data.get('futureContact') === 'on',
-        }, { honeypot: data.get('companyWebsite') });
-      }).then(() => {
-        form.hidden = true; confirmation.hidden = false; confirmation.focus();
-      }).catch(err => {
+        };
+
+        await submitForm('applications', values, { honeypot: data.get('companyWebsite'), rowId: applicationId });
+
+        // Best-effort, session-scoped edit history: only meaningful once
+        // there's a prior snapshot from earlier in the same visit, since the
+        // client can't read its own previously-submitted row back (table
+        // reads are admin-team-only by design).
+        if (lastSubmittedSnapshot) {
+          const changedFields = Object.keys(values).filter(key => JSON.stringify(values[key]) !== JSON.stringify(lastSubmittedSnapshot[key]));
+          if (changedFields.length || uploadedIds.length) {
+            submitForm('applicationHistory', {
+              applicationId,
+              changedAt: new Date().toISOString(),
+              changeSource: 'participant_edit',
+              changedFields,
+              previousValues: JSON.stringify(lastSubmittedSnapshot),
+              newValues: JSON.stringify(values),
+              filesAdded: uploadedIds,
+              filesRemoved: [],
+            }).catch(() => {});
+          }
+        }
+        lastSubmittedSnapshot = values;
+
+        if (reviewScreen) reviewScreen.hidden = true;
+        confirmation.hidden = false; confirmation.focus();
+      } catch (err) {
         errors.textContent = err?.message || 'Something went wrong submitting this form. Please try again in a moment.';
         errors.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
-      }).finally(() => {
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalLabel;
-      });
+      } finally {
+        submitReviewButton.disabled = false;
+        submitReviewButton.textContent = originalLabel;
+      }
     });
-    confirmation?.querySelector('[data-edit-application]')?.addEventListener('click', () => { confirmation.hidden = true; form.hidden = false; showStep(3); });
+
+    confirmation?.querySelector('[data-edit-application]')?.addEventListener('click', () => {
+      confirmation.hidden = true; form.hidden = false; showStep(steps.length);
+    });
     showStep(1, false);
   }
 

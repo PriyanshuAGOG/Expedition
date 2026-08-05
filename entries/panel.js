@@ -1,6 +1,7 @@
 import {
-  account, teams, tablesDB, Query, DATABASE_ID, TABLES, ADMIN_TEAM_ID, isConfigured,
+  account, teams, tablesDB, storage, Query, DATABASE_ID, TABLES, ADMIN_TEAM_ID, UPLOADS_BUCKET_ID, isConfigured,
 } from '../assets/js/appwrite-client.js';
+import { APPWRITE_ENDPOINT, APPWRITE_PROJECT_ID } from '../assets/config/appwrite-config.js';
 
 const TABLE_CONFIG = {
   applications: {
@@ -40,9 +41,11 @@ const TABLE_CONFIG = {
 
 const FIELD_LABELS = {
   fullName: 'Full name', email: 'Email', phone: 'Phone', age: 'Age', city: 'City', state: 'State / region', country: 'Country',
-  diagnosisYear: 'Year diagnosed', treatment: 'Current treatment', hba1c: 'Latest HbA1c', conditions: 'Diagnosed conditions',
+  diagnosisYear: 'Year diagnosed', treatment: 'Current treatment', hba1c: 'Latest HbA1c (legacy)',
+  bpSystolic: 'Blood pressure — systolic (mmHg)', bpDiastolic: 'Blood pressure — diastolic (mmHg)', conditions: 'Diagnosed conditions',
   timeCommitment: 'Can commit the daily time?', availability: 'Available for expedition dates?', motivation: 'Motivation',
   emergencyName: 'Emergency contact name', emergencyPhone: 'Emergency contact phone', emergencyRelationship: 'Emergency contact relationship',
+  medicalReportFileNames: 'Medical reports',
   consentAccuracy: 'Confirmed information is accurate', consentSelection: 'Understands no guaranteed selection',
   consentExpeditionContact: 'Consented to contact about expedition', consentDpdp: 'Consented to DPDP notice', consentFutureContact: 'Opted into future updates',
   nomineeName: 'Nominee name', nomineeEmail: 'Nominee email', nomineePhone: 'Nominee phone',
@@ -51,8 +54,9 @@ const FIELD_LABELS = {
 };
 
 // Fields excluded from the auto-generated detail view because they're
-// rendered separately (status pill, submitted date, notes editor, record id).
-const DETAIL_HIDDEN_FIELDS = new Set(['status', 'internalNotes']);
+// rendered separately (status pill, submitted date, notes editor, record id,
+// medical-report download links, history section).
+const DETAIL_HIDDEN_FIELDS = new Set(['status', 'internalNotes', 'medicalReportFileIds', 'medicalReportFileNames']);
 const SORTABLE_KEYS = new Set(['$createdAt', 'status']);
 
 const state = {
@@ -372,6 +376,13 @@ async function applyBulkStatus() {
 
 // ---------- detail dialog ----------
 
+function fileViewUrl(fileId) {
+  if (typeof storage.getFileView === 'function') {
+    try { return storage.getFileView({ bucketId: UPLOADS_BUCKET_ID, fileId }).toString(); } catch { /* fall through */ }
+  }
+  return `${APPWRITE_ENDPOINT}/storage/buckets/${UPLOADS_BUCKET_ID}/files/${fileId}/view?project=${APPWRITE_PROJECT_ID}`;
+}
+
 function openDetail(row) {
   const title = row.fullName || row.nomineeName || row.contactName || 'Submission';
   const fields = Object.keys(row).filter((k) => !k.startsWith('$') && !DETAIL_HIDDEN_FIELDS.has(k));
@@ -380,11 +391,27 @@ function openDetail(row) {
       <span>${escapeHtml(FIELD_LABELS[key] || humanize(key))}</span>
       <strong>${escapeHtml(formatValue(row[key])) || '—'}</strong>
     </div>`).join('');
+
+  const fileIds = Array.isArray(row.medicalReportFileIds) ? row.medicalReportFileIds : [];
+  const fileNames = Array.isArray(row.medicalReportFileNames) ? row.medicalReportFileNames : [];
+  const filesHtml = fileIds.length
+    ? `<div class="detail-row"><span>Medical reports</span><strong>${fileIds.map((id, i) => `<a href="${fileViewUrl(id)}" target="_blank" rel="noopener">${escapeHtml(fileNames[i] || `File ${i + 1}`)}</a>`).join(', ')}</strong></div>`
+    : (state.activeTab === 'applications' ? '<div class="detail-row"><span>Medical reports</span><strong>None uploaded</strong></div>' : '');
+
+  const historyHtml = state.activeTab === 'applications'
+    ? `<div class="detail-history">
+        <button type="button" id="detail-history-toggle" class="btn-ghost">Show application history</button>
+        <div id="detail-history-body" hidden></div>
+      </div>`
+    : '';
+
   els['detail-content'].innerHTML = `
     <h2 class="detail-title">${escapeHtml(title)}</h2>
     <div class="detail-grid">
       <div class="detail-row"><span>Status</span><strong>${escapeHtml(humanize(row.status || 'new'))}</strong></div>
       <div class="detail-row"><span>Submitted</span><strong>${escapeHtml(formatDate(row.$createdAt))}</strong></div>
+      <div class="detail-row"><span>Last updated</span><strong>${escapeHtml(formatDate(row.$updatedAt))}</strong></div>
+      ${filesHtml}
       ${rowsHtml}
       <div class="detail-row"><span>Record ID</span><strong>${escapeHtml(row.$id)}</strong></div>
     </div>
@@ -395,7 +422,8 @@ function openDetail(row) {
         <output id="detail-notes-status" aria-live="polite"></output>
         <button type="button" id="detail-notes-save" class="btn-primary">Save note</button>
       </div>
-    </div>`;
+    </div>
+    ${historyHtml}`;
 
   const notesInput = els['detail-content'].querySelector('#detail-notes-input');
   const notesStatus = els['detail-content'].querySelector('#detail-notes-status');
@@ -409,6 +437,33 @@ function openDetail(row) {
       setTimeout(() => { notesStatus.textContent = ''; }, 1800);
     } catch (err) {
       notesStatus.textContent = `Could not save: ${err?.message || err}`;
+    }
+  });
+
+  const historyToggle = els['detail-content'].querySelector('#detail-history-toggle');
+  historyToggle?.addEventListener('click', async () => {
+    const body = els['detail-content'].querySelector('#detail-history-body');
+    if (!body) return;
+    body.hidden = !body.hidden;
+    if (body.hidden || body.dataset.loaded) return;
+    body.dataset.loaded = 'true';
+    body.textContent = 'Loading history…';
+    try {
+      const res = await tablesDB.listRows({
+        databaseId: DATABASE_ID,
+        tableId: TABLES.applicationHistory,
+        queries: [Query.equal('applicationId', row.$id), Query.orderDesc('changedAt'), Query.limit(50)],
+      });
+      if (!res.rows.length) { body.textContent = 'No edits recorded — this application has not been resubmitted since it was first created.'; return; }
+      body.innerHTML = res.rows.map((entry) => {
+        const changed = Array.isArray(entry.changedFields) ? entry.changedFields : [];
+        return `<div class="history-entry">
+          <div class="history-entry-head"><strong>${escapeHtml(formatDate(entry.changedAt))}</strong><span>${escapeHtml(humanize(entry.changeSource || 'edit'))}</span></div>
+          <div class="history-entry-fields">${changed.length ? changed.map((f) => `<span class="history-field-chip">${escapeHtml(FIELD_LABELS[f] || humanize(f))}</span>`).join('') : '<span class="history-field-chip">Files only</span>'}</div>
+        </div>`;
+      }).join('');
+    } catch (err) {
+      body.textContent = `Could not load history: ${err?.message || err}`;
     }
   });
 

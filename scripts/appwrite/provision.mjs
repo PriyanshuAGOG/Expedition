@@ -121,6 +121,35 @@ async function ensureColumns(def) {
   }
 }
 
+// Unlike ensureColumns (create-only), this keeps an existing enum column's
+// allowed values in sync with schema.mjs — needed when an option is removed
+// from a form (e.g. timeCommitment dropping "I need to discuss my
+// schedule"). Historical rows that already used a removed value are left
+// alone; only the column's own allow-list changes.
+async function ensureEnumsUpToDate(def) {
+  const enumAttrs = def.attributes.filter((attr) => attr.type === 'enum');
+  if (!enumAttrs.length) return;
+  await waitForColumnsReady(def.id);
+  const res = await tablesDB.listColumns({ databaseId: DATABASE_ID, tableId: def.id });
+  for (const attr of enumAttrs) {
+    const column = res.columns.find((c) => c.key === attr.key);
+    if (!column) continue;
+    const currentElements = column.elements || [];
+    const sameElements = currentElements.length === attr.elements.length
+      && attr.elements.every((el) => currentElements.includes(el));
+    if (sameElements) { skip(`${attr.key} (elements unchanged)`); continue; }
+    await tablesDB.updateEnumColumn({
+      databaseId: DATABASE_ID,
+      tableId: def.id,
+      key: attr.key,
+      elements: attr.elements,
+      required: attr.required,
+      xdefault: attr.default,
+    });
+    ok(`updated enum values for ${attr.key}`);
+  }
+}
+
 // Columns go through a brief "processing" phase server-side; indexes can't
 // be created on columns that aren't "available" yet.
 async function waitForColumnsReady(tableId, timeoutMs = 120_000) {
@@ -199,8 +228,12 @@ async function ensureUploadsBucket() {
       bucketId: UPLOADS_BUCKET_ID,
       name: UPLOADS_BUCKET_NAME,
       permissions: [
+        // Applicants upload their own medical-report files from the public
+        // form before ever signing in — mirrors the tables' "create(any)"
+        // pattern. Reading, updating or deleting a file still requires
+        // Admins-team membership.
+        Permission.create(Role.any()),
         Permission.read(Role.team(ADMIN_TEAM_ID)),
-        Permission.create(Role.team(ADMIN_TEAM_ID)),
         Permission.update(Role.team(ADMIN_TEAM_ID)),
         Permission.delete(Role.team(ADMIN_TEAM_ID)),
       ],
@@ -219,6 +252,7 @@ async function main() {
   for (const def of tableDefs) {
     await ensureTable(def);
     await ensureColumns(def);
+    await ensureEnumsUpToDate(def);
     await ensureIndexes(def);
   }
   await ensureAdminsTeam();

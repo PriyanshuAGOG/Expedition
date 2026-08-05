@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const CONTACT_EMAIL = 'Priyanshu@nirogbhumi.com';
+  const CONTACT_EMAIL = 'priyanshu@nirogbhumi.com';
   const CONTACT_PHONE = '+919588810249';
   const CONTACT_PHONE_DIGITS = '919588810249';
 
@@ -88,7 +88,7 @@
         <summary><span><small>Purpose 03</small>What we hope to learn about high altitude, glucose and remission</span><i aria-hidden="true">+</i></summary>
         <div class="purpose-detail">
           <p>The expedition also offers an opportunity to observe how sustained physical activity at high altitude may affect glucose regulation in people living with type 2 diabetes.</p>
-          <p>Existing research is limited and not fully consistent. Some studies suggest that hypoxia at high altitude may be associated with lower glucose levels or improved glucose regulation. However, the available evidence is still limited and does not establish high altitude as a treatment for diabetes. We will therefore study and document the experience responsibly, without claiming that climbing a mountain can reverse diabetes.</p>
+          <p>Some studies suggest that hypoxia at high altitude may be associated with lower glucose levels or improved glucose regulation. However, the available evidence is still limited and does not establish high altitude as a treatment for diabetes. We will therefore study and document the experience responsibly.</p>
           <p class="purpose-boundary">The initiative is hypothesis-generating, not a clinical trial or treatment claim.</p>
         </div>
       </details>`;
@@ -114,21 +114,16 @@
 
     const steps = [...document.querySelectorAll('#trail .xp-step')];
     setStep(steps[0], { footer: 'Initial application · 5 minutes' });
-    setStep(steps[1], {
-      heading: 'Assessment of individual profile.',
-      body: 'Physician review of health profile.',
-      removeFooter: true
-    });
-    setStep(steps[2], { footer: 'About one hour each morning' });
-    setStep(steps[3], {
+    setStep(steps[1], { footer: 'About one hour each morning' });
+    setStep(steps[2], {
       heading: 'Receive approval to trek.',
       footer: 'Submit medical reports'
     });
-    setStep(steps[4], {
+    setStep(steps[3], {
       heading: 'Hit the trail.',
       body: 'Complete the six-day route with the group.'
     });
-    setStep(steps[5], {
+    setStep(steps[4], {
       heading: 'Recover. Continue.',
       body: 'Bring the learning home and continue the practices beyond the expedition.',
       footer: 'Long-term continuity'
@@ -138,7 +133,7 @@
   const updatePreparation = () => {
     const pillars = [...document.querySelectorAll('.prep-pillars article')];
     if (pillars[0]) pillars[0].querySelector('p').textContent = 'Baseline assessment and final medical clearance.';
-    if (pillars[2]) pillars[2].querySelector('h3').textContent = 'Fitness and Yog';
+    if (pillars[2]) pillars[2].querySelector('h3').textContent = 'Fitness & Yoga';
     if (pillars[3]) pillars[3].querySelector('p').textContent = 'Stress management, breathwork, meditation and mental preparation.';
   };
 
@@ -149,17 +144,20 @@
 
   const updateSafety = () => {
     const items = [...document.querySelectorAll('.safety-sequence > li')];
-    if (items[0]) items[0].querySelector('p').textContent = 'Health history and physician approval.';
-    if (items[2]) {
-      items[2].querySelector('h3').textContent = 'Clearance before trek.';
-      items[2].querySelector('p').textContent = 'Fitness certificate from the treating physician and medical approval from the NirogBhumi designated medical consultant.';
+    if (items[0]) {
+      items[0].querySelector('h3').textContent = 'Screening Before Selection';
+      items[0].querySelector('p').textContent = 'Based on health history.';
     }
-    if (items[3]) items[3].querySelector('h3').textContent = 'Regular monitoring during the trek.';
+    if (items[2]) {
+      items[2].querySelector('h3').textContent = 'Clearance Before Trek';
+      items[2].querySelector('p').textContent = 'Fitness certificate from a physician.';
+    }
+    if (items[3]) items[3].querySelector('h3').textContent = 'Regular Monitoring During the Trek';
   };
 
   const updateEligibility = () => {
     const title = document.querySelector('#eligibility-title');
-    if (title) title.innerHTML = '<em>Eligibility.</em>';
+    if (title) title.innerHTML = 'Check Your <em>Eligibility.</em>';
 
     const panels = document.querySelector('#eligibility .check-panels');
     const eligibilityCard = panels?.querySelector('.check-panel:not(.requirements)');
@@ -169,9 +167,9 @@
     const list = eligibilityCard?.querySelector('ul');
     if (list) {
       list.innerHTML = `
-        <li>Adults living with type 2 diabetes</li>
+        <li>Adults living with Type 2 diabetes or prediabetes (based on a 2026 report)</li>
         <li>Should not have any diabetes-related complications</li>
-        <li>Able to commit about an hour each morning during September and October</li>
+        <li>Able to commit about an hour each morning from September to mid-November.</li>
         <li>Available from November 13–18, 2026 for the expedition</li>`;
     }
   };
@@ -179,11 +177,6 @@
   const updateCountdown = () => {
     const title = document.querySelector('#eligibility-countdown-title');
     if (title) title.innerHTML = 'Countdown to<br><em>The World Diabetes Day</em><small>(as per IST)</small>';
-  };
-
-  const updateDashboard = () => {
-    const dashboardTitle = document.querySelector('#dashboard-title');
-    if (dashboardTitle) dashboardTitle.textContent = 'Aggregated information, not private health data.';
   };
 
   const updateParticipants = () => {
@@ -256,8 +249,11 @@
     if (followCard) {
       followCard.querySelector(':scope > span')?.replaceChildren('03');
       const description = followCard.querySelector('p');
-      if (description) description.textContent = 'See how people with diabetes are taking it head on.';
-      followCard.href = `https://wa.me/${CONTACT_PHONE_DIGITS}?text=${encodeURIComponent('I would like to follow the World Diabetes Day Himalayan Expedition 2026')}`;
+      if (description) description.textContent = 'See how participants are taking diabetes head-on.';
+      followCard.href = 'https://chat.whatsapp.com/D8vwzdVgaLp2FRYySflJYL?s=cl&p=a&ilr=1';
+      followCard.target = '_blank';
+      followCard.rel = 'noopener noreferrer';
+      followCard.setAttribute('aria-label', 'Join the expedition WhatsApp group');
     }
 
     paths.classList.add('onboard-paths-three');
@@ -279,8 +275,8 @@
     if (!card) return;
     const kicker = card.querySelector('.kicker');
     const description = card.querySelector(':scope > p:not(.kicker)');
-    if (kicker) kicker.textContent = 'Global expedition';
-    if (description) description.textContent = 'The application takes about 5 minutes. Applying does not guarantee selection, and clinical documents will only be requested later through an approved secure process.';
+    if (kicker) kicker.textContent = 'World Diabetes Day Himalayan Expedition 2026';
+    if (description) description.textContent = 'The application takes about five minutes. Applying does not guarantee selection.';
 
     const meta = card.querySelector('.registration-meta');
     meta?.querySelectorAll(':scope > div').forEach(item => {
@@ -310,13 +306,6 @@
   };
 
   const updateApplicationPage = () => {
-    const quickFacts = document.querySelector('.application-quick-facts');
-    quickFacts?.querySelectorAll(':scope > div').forEach(item => {
-      const label = item.querySelector('span')?.textContent || '';
-      if (/programme fee|pricing|programme amount/i.test(label)) item.remove();
-      if (/^time$/i.test(label)) item.querySelector('strong').textContent = '5 minutes';
-    });
-
     const commitment = document.querySelector('select[name="timeCommitment"]')?.closest('label')?.querySelector(':scope > span');
     if (commitment) commitment.textContent = 'Can you commit about one hour each morning? *';
 
@@ -355,7 +344,6 @@
     updateSafety();
     updateEligibility();
     updateCountdown();
-    updateDashboard();
     updateParticipants();
     updateOnboarding();
     updateRegistration();

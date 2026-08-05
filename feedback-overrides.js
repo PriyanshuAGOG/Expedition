@@ -42,14 +42,14 @@
     });
 
     document.title = document.body.classList.contains('application-page')
-      ? `Apply · ${CANONICAL_NAME} · NirogBhumi`
-      : `${CANONICAL_NAME} · NirogBhumi`;
+      ? `Apply · ${CANONICAL_NAME} · Nirog Bhumi`
+      : `${CANONICAL_NAME} · Nirog Bhumi`;
 
     const description = document.querySelector('meta[name="description"]');
     if (description) {
       description.content = document.body.classList.contains('application-page')
-        ? `Apply for NirogBhumi's ${CANONICAL_NAME}.`
-        : `Learn about NirogBhumi's ${CANONICAL_NAME}, including preparation, eligibility, safety and the application process.`;
+        ? `Apply for Nirog Bhumi's ${CANONICAL_NAME}.`
+        : `Learn about Nirog Bhumi's ${CANONICAL_NAME}, including preparation, eligibility, safety and the application process.`;
     }
   };
 
@@ -60,7 +60,7 @@
     }
 
     const purposeTitle = document.querySelector('#briefing-title');
-    if (purposeTitle) purposeTitle.innerHTML = 'Why we are doing <em>this?</em>';
+    if (purposeTitle) purposeTitle.innerHTML = 'Why we are <em>doing this?</em>';
   };
 
   const pricingConfig = window.NIROGBHUMI_PRICING || {
@@ -180,7 +180,7 @@
         <div class="dpdp-dialog-body">
           <section>
             <h3>1. Data Fiduciary and contact</h3>
-            <p>NirogBhumi is the Data Fiduciary responsible for the personal data collected through this application. Privacy and grievance requests may be sent to <a href="mailto:${PROGRAMME_CONTACT}?subject=DPDP%20Rights%20Request">${PROGRAMME_CONTACT}</a> or raised by calling <a href="tel:+917357542882">${PROGRAMME_PHONE}</a>. Postal location: Jaipur, Rajasthan, India.</p>
+            <p>Nirog Bhumi is the Data Fiduciary responsible for the personal data collected through this application. Privacy and grievance requests may be sent to <a href="mailto:${PROGRAMME_CONTACT}?subject=DPDP%20Rights%20Request">${PROGRAMME_CONTACT}</a> or raised by calling <a href="tel:+917357542882">${PROGRAMME_PHONE}</a>. Postal location: Jaipur, Rajasthan, India.</p>
           </section>
           <section>
             <h3>2. Personal data covered by your consent</h3>
@@ -208,7 +208,7 @@
           </section>
           <section>
             <h3>5. Access and permitted sharing</h3>
-            <p>Access may be given only to authorised NirogBhumi personnel, designated medical consultants or reviewers, and approved service providers supporting secure intake and programme administration. Information may also be disclosed where required by law. Personal data will not be sold. Identifiable health information, stories, photographs or recordings will not be published without a separate and explicit consent appropriate to that use.</p>
+            <p>Access may be given only to authorised Nirog Bhumi personnel, designated medical consultants or reviewers, and approved service providers supporting secure intake and programme administration. Information may also be disclosed where required by law. Personal data will not be sold. Identifiable health information, stories, photographs or recordings will not be published without a separate and explicit consent appropriate to that use.</p>
           </section>
           <section>
             <h3>6. Retention, erasure and purpose limitation</h3>
@@ -221,15 +221,15 @@
           <section>
             <h3>8. Your rights and withdrawal of consent</h3>
             <p>Subject to applicable law, you may request information about your personal data and its processing, correction, completion or updating, erasure, grievance redressal, withdrawal of consent and nomination of another person to exercise rights in specified circumstances.</p>
-            <p>You may withdraw consent as easily as you gave it by emailing <a href="mailto:${PROGRAMME_CONTACT}?subject=DPDP%20Consent%20Withdrawal">${PROGRAMME_CONTACT}</a> with the subject “DPDP Consent Withdrawal” or by calling <a href="tel:+917357542882">${PROGRAMME_PHONE}</a>. Withdrawal will not invalidate processing already carried out on the basis of valid consent, but it may prevent NirogBhumi from continuing to assess or administer your application.</p>
+            <p>You may withdraw consent as easily as you gave it by emailing <a href="mailto:${PROGRAMME_CONTACT}?subject=DPDP%20Consent%20Withdrawal">${PROGRAMME_CONTACT}</a> with the subject “DPDP Consent Withdrawal” or by calling <a href="tel:+917357542882">${PROGRAMME_PHONE}</a>. Withdrawal will not invalidate processing already carried out on the basis of valid consent, but it may prevent Nirog Bhumi from continuing to assess or administer your application.</p>
           </section>
           <section>
             <h3>9. Grievance redressal</h3>
-            <p>Privacy and data-protection complaints may be sent through the contact channel above. NirogBhumi should acknowledge and address the grievance through its published process. Where applicable, you may approach the Data Protection Board of India after using the available grievance channel.</p>
+            <p>Privacy and data-protection complaints may be sent through the contact channel above. Nirog Bhumi should acknowledge and address the grievance through its published process. Where applicable, you may approach the Data Protection Board of India after using the available grievance channel.</p>
           </section>
           <section>
             <h3>10. Adults only and consent evidence</h3>
-            <p>This application is intended only for adults aged 18 or above. When the production system is activated, NirogBhumi should retain evidence of the notice version, consent choices and timestamps so consent can be demonstrated, reviewed and withdrawn.</p>
+            <p>This application is intended only for adults aged 18 or above. When the production system is activated, Nirog Bhumi should retain evidence of the notice version, consent choices and timestamps so consent can be demonstrated, reviewed and withdrawn.</p>
           </section>
         </div>
         <footer class="dpdp-dialog-footer">
@@ -243,8 +243,8 @@
     <label class="consent-row"><input type="checkbox" name="accuracy" required><span>I confirm the information is accurate to the best of my knowledge. *</span></label>
     <label class="consent-row"><input type="checkbox" name="selection" required><span>I understand that applying does not guarantee selection. *</span></label>
     <label class="consent-row"><input type="checkbox" name="expeditionContact" required><span>I consent to this information being used to assess my participation and contacting me about this expedition. *</span></label>
-    <label class="consent-row consent-row-dpdp"><input type="checkbox" name="dpdpConsent" required><span>I have read the <a href="#dpdp-consent-dialog" data-open-dpdp>DPDP Consent Notice and Privacy Policy</a> and consent to NirogBhumi processing my personal data, including the health information I provide, for the specific purposes stated in that notice. *</span></label>
-    <label class="consent-row consent-row-optional"><input type="checkbox" name="futureContact"><span>Optional: I agree that NirogBhumi may contact me about future programmes and initiatives. I can withdraw this consent at any time.</span></label>`;
+    <label class="consent-row consent-row-dpdp"><input type="checkbox" name="dpdpConsent" required><span>I have read the <a href="#dpdp-consent-dialog" data-open-dpdp>DPDP Consent Notice and Privacy Policy</a> and consent to Nirog Bhumi processing my personal data, including the health information I provide, for the specific purposes stated in that notice. *</span></label>
+    <label class="consent-row consent-row-optional"><input type="checkbox" name="futureContact"><span>Optional: I agree that Nirog Bhumi may contact me about future programmes and initiatives. I can withdraw this consent at any time.</span></label>`;
 
   const configureApplicationForm = () => {
     if (!document.body.classList.contains('application-page')) return;
@@ -274,16 +274,6 @@
     if (consents) {
       consents.setAttribute('aria-label', 'Application consents');
       consents.innerHTML = consentMarkup();
-    }
-
-    const existingMedicalNote = document.querySelector('.application-footer-note');
-    if (existingMedicalNote) {
-      const safetyNote = document.createElement('aside');
-      safetyNote.className = 'medical-safety-note';
-      safetyNote.setAttribute('role', 'note');
-      safetyNote.setAttribute('aria-label', 'Important medical guidance');
-      safetyNote.innerHTML = '<span class="medical-safety-icon" aria-hidden="true">✚</span><div><strong>Medical guidance remains essential</strong><p>NirogBhumi does not replace medical advice, diagnosis or treatment. Never stop or change medication without guidance from your treating doctor.</p></div>';
-      existingMedicalNote.replaceWith(safetyNote);
     }
 
     if (!document.querySelector('#dpdp-consent-dialog')) {

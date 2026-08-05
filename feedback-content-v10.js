@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const CONTACT_EMAIL = 'Priyanshu@nirogbhumi.com';
+  const CONTACT_EMAIL = 'priyanshu@nirogbhumi.com';
   const CONTACT_PHONE_DISPLAY = '+91 95888 10249';
   const CONTACT_PHONE_LINK = '+919588810249';
   const WEBSITE = 'https://nirogbhumi.com';

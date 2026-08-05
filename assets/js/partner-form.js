@@ -35,7 +35,7 @@ const dialogMarkup = () => `
         <label><span>Tell us more *</span><textarea name="message" rows="4" required minlength="20" maxlength="800" placeholder="What you're proposing and how you'd like to be involved."></textarea></label>
         <label class="hp-field" aria-hidden="true" tabindex="-1"><span>Leave this field blank</span><input type="text" name="companyWebsite" tabindex="-1" autocomplete="off"></label>
         <output class="nomination-dialog-status" aria-live="polite"></output>
-        <button class="nomination-dialog-submit" type="submit">Send partnership inquiry <i>↗</i></button>
+        <button class="nomination-dialog-submit" type="submit">Send partnership enquiry <i>↗</i></button>
       </form>
     </div>
   </dialog>`;

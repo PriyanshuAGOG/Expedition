@@ -21,9 +21,9 @@
 
     [...ctas.querySelectorAll('.hero-cta')].forEach(link => {
       const label = link.textContent.trim();
-      if (!/apply now|explore the journey/i.test(label)) link.remove();
+      if (!/^apply now$/i.test(label)) link.remove();
     });
-    ctas.classList.add('hero-ctas-v16');
+    ctas.classList.add('hero-ctas-v16', 'hero-ctas-v18-single');
   };
 
   const centreCommunityPillar = () => {

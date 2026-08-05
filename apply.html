@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#06110c">
-  <meta name="description" content="Apply for NirogBhumi's World Diabetes Day Himalayan Expedition 2026.">
-  <title>Apply for the Expedition · NirogBhumi</title>
+  <meta name="description" content="Apply for Nirog Bhumi's World Diabetes Day Himalayan Expedition 2026.">
+  <title>Apply for the Expedition · Nirog Bhumi</title>
   <link rel="icon" type="image/webp" href="assets/branding/webp/nirogbhumi-icon.webp">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,8 +17,8 @@
   </div>
 
   <header class="application-page-header">
-    <a href="/" aria-label="Return to the expedition homepage"><img src="assets/branding/webp/nirogbhumi-wordmark.webp" alt="NirogBhumi" width="900" height="206"></a>
-    <a class="application-back" href="/"><span aria-hidden="true">←</span> Back to expedition</a>
+    <a href="/" aria-label="Return to the expedition homepage"><img src="assets/branding/webp/nirogbhumi-wordmark.webp" alt="Nirog Bhumi" width="900" height="206"></a>
+    <a class="application-back" href="/"><span aria-hidden="true">←</span> Back to Expedition Page</a>
   </header>
 
   <main class="application-main" id="application-main">
@@ -26,15 +26,7 @@
       <p class="kicker">World Diabetes Day Expedition 2026</p>
       <h1 id="application-title">Apply for the <em>expedition.</em></h1>
       <p>Tell us about yourself, your Type 2 diabetes journey and your readiness for the 60-day preparation programme.</p>
-      <div class="application-quick-facts" aria-label="Application details">
-        <div><span>Time</span><strong>8–10 minutes</strong></div>
-        <div><span>Eligibility</span><strong>Adults with Type 2 diabetes</strong></div>
-        <div><span>Preparation</span><strong>60 days</strong></div>
-        <div><span>Expedition</span><strong>6 days</strong></div>
-        <div><span>Programme Fee</span><strong>₹ XX,XXX</strong></div>
-        <div><span>Status</span><strong>Opening soon</strong></div>
-      </div>
-      <p class="application-note">Applying does not guarantee selection. This form is an initial screening step, not medical clearance. Do not upload prescriptions or medical reports here.</p>
+      <p class="application-note">This form is an initial expression of interest. Applying does not guarantee selection.</p>
     </section>
 
     <section class="application-form-wrap" aria-label="Expedition application form">
@@ -60,16 +52,16 @@
           </fieldset>
 
           <fieldset class="form-step" data-form-step="2" hidden>
-            <legend><span>Step 2 of 3</span>Initial health screen</legend>
-            <p class="fieldset-note">Detailed clinical information and reports are collected securely only if you advance to medical review.</p>
+            <legend><span>Step 2 of 3</span>Recent Health Data</legend>
             <div class="field-grid">
               <label class="field"><span>Year diagnosed with Type 2 diabetes *</span><input type="number" name="diagnosisYear" min="1970" max="2026" inputmode="numeric" required></label>
               <label class="field"><span>Current treatment *</span><select name="treatment" required><option value="">Select</option><option>Lifestyle guidance only</option><option>Oral medication</option><option>Insulin</option><option>Insulin and oral medication</option><option>Other / unsure</option></select></label>
-              <label class="field"><span>Latest HbA1c, if known</span><input type="number" name="hba1c" min="3" max="20" step="0.1" inputmode="decimal" placeholder="e.g. 7.2"></label>
+              <label class="field"><span>Blood pressure — systolic (mmHg) *</span><input type="number" name="bpSystolic" min="70" max="260" inputmode="numeric" required></label>
+              <label class="field"><span>Blood pressure — diastolic (mmHg) *</span><input type="number" name="bpDiastolic" min="40" max="160" inputmode="numeric" required></label>
               <label class="field"><span>Current weekly activity *</span><select name="activity" required><option value="">Select</option><option>Mostly sedentary</option><option>1–2 active days</option><option>3–4 active days</option><option>5+ active days</option></select></label>
             </div>
-            <div class="check-group">
-              <p>Has a doctor diagnosed any of the following?</p>
+            <div class="check-group" data-required-group="conditions">
+              <p>Has a doctor diagnosed any of the following? *</p>
               <label><input type="checkbox" name="conditions" value="kidney"><span>Kidney disease</span></label>
               <label><input type="checkbox" name="conditions" value="vision"><span>Diabetes-related vision disease</span></label>
               <label><input type="checkbox" name="conditions" value="heart"><span>Heart disease</span></label>
@@ -84,12 +76,17 @@
           <fieldset class="form-step" data-form-step="3" hidden>
             <legend><span>Step 3 of 3</span>Readiness and consent</legend>
             <div class="field-grid">
-              <label class="field"><span>Can you commit about one hour and 15 minutes each morning? *</span><select name="timeCommitment" required><option value="">Select</option><option>Yes</option><option>I need to discuss my schedule</option><option>No</option></select></label>
+              <label class="field"><span>Can you commit about one hour and 15 minutes each morning? *</span><select name="timeCommitment" required><option value="">Select</option><option>Yes</option><option>No</option></select></label>
               <label class="field"><span>Available from November 12–19, 2026? *</span><select name="availability" required><option value="">Select</option><option>Yes</option><option>Likely, pending confirmation</option><option>No</option></select></label>
-              <label class="field field-wide"><span>Why does this expedition matter to you? *</span><textarea name="motivation" rows="5" minlength="80" maxlength="1200" required placeholder="Tell us about your motivation, expectations and what you hope to contribute."></textarea><small><span data-count>0</span>/1200</small></label>
+              <label class="field field-wide"><span>Why do you want to be part of this expedition? *</span><textarea name="motivation" rows="5" minlength="80" maxlength="1200" required placeholder="Tell us about your motivation, expectations and what you hope to contribute."></textarea><small><span data-count>0</span>/1200</small></label>
               <label class="field"><span>Emergency contact name *</span><input name="emergencyName" autocomplete="off" required></label>
               <label class="field"><span>Emergency contact phone *</span><input type="tel" name="emergencyPhone" autocomplete="off" required></label>
               <label class="field field-wide"><span>Relationship to you *</span><input name="emergencyRelationship" required></label>
+              <label class="field field-wide field-upload"><span>Upload your latest medical reports <small>(Optional)</small></span>
+                <input type="file" name="medicalReports" accept=".pdf,.jpg,.jpeg,.png" multiple data-file-input>
+                <small>You may upload recent reports containing blood sugar levels, lipid profile, or kidney profile. PDF, JPG or PNG, up to 15MB each.</small>
+                <ul class="file-upload-list" data-file-list aria-live="polite"></ul>
+              </label>
             </div>
             <div class="consent-group">
               <label><input type="checkbox" name="accuracy" required><span>I confirm the information is accurate to the best of my knowledge. *</span></label>
@@ -104,20 +101,29 @@
           <div class="form-actions">
             <button class="form-back" type="button" hidden>← Back</button>
             <button class="form-next" type="button">Continue <span>→</span></button>
-            <button class="form-submit" type="submit" hidden>Review application <span>↗</span></button>
+            <button class="form-submit" type="submit" hidden>Review Application</button>
           </div>
         </form>
+
+        <div class="form-review" hidden tabindex="-1" aria-labelledby="form-review-title">
+          <span class="form-review-eyebrow">Review your application</span>
+          <h3 id="form-review-title">Check your details before submitting.</h3>
+          <p>Nothing is sent to our team until you select “Submit Application”.</p>
+          <dl class="form-review-list" data-review-list></dl>
+          <div class="form-review-actions">
+            <button type="button" class="form-review-edit" data-edit-review>Edit Application</button>
+            <button type="button" class="form-review-submit" data-submit-review>Submit Application</button>
+          </div>
+        </div>
 
         <div class="form-confirmation" hidden tabindex="-1">
           <span>Application received</span>
           <h3>Thank you — your application has been submitted.</h3>
-          <p>Our team will review your application and follow up by email. This step does not request or store medical documents; those are only collected later through an approved secure process.</p>
-          <button type="button" data-edit-application>Edit application</button>
+          <p>Our team will review your application and follow up by email. Any medical reports you uploaded have been securely attached to your application.</p>
+          <button type="button" data-edit-application>Edit Application</button>
         </div>
       </div>
     </section>
-
-    <p class="application-footer-note">NirogBhumi does not replace medical advice, diagnosis or treatment. Never stop or change medication without your treating doctor's guidance.</p>
   </main>
 
   <script defer src="assets/vendor/appwrite/sdk.js"></script>

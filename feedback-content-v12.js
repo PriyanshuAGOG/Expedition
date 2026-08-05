@@ -50,22 +50,20 @@
     if (!pricing || pricing.querySelector('.fee-v12-participant-note')) return;
 
     const note = document.createElement('aside');
-    note.className = 'fee-v12-participant-note v11-visible';
+    note.className = 'fee-v12-participant-note fee-v18-cost-card v11-visible';
     note.setAttribute('aria-label', 'Additional participant costs');
     note.innerHTML = `
-      <span aria-hidden="true">+</span>
+      <span class="fee-v18-cost-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
       <div>
         <small>Additional participant costs</small>
         <ul>
-          <li>We may request participants to purchase some small-value tools. These purchases will be optional.</li>
+          <li>We may request participants to purchase some small-value tools. These purchases will be optional and paid for by the participant.</li>
           <li>Periodic testing will need to be arranged and paid for by the participant.</li>
         </ul>
       </div>`;
 
-    const localCosts = pricing.querySelector('.fee-v11-local-costs');
-    const paymentPath = pricing.querySelector('.fee-v11-payment-path');
+    const localCosts = pricing.querySelector('.fee-v18-cost-card');
     if (localCosts) localCosts.insertAdjacentElement('afterend', note);
-    else if (paymentPath) paymentPath.insertAdjacentElement('beforebegin', note);
     else pricing.querySelector('.fee-v11-inner')?.appendChild(note);
   };
 

@@ -44,7 +44,7 @@
     heading.className = 'trust-partners-heading trust-partners-heading-v20';
     heading.innerHTML = `
       <p class="kicker">Our partners</p>
-      <h2 id="trust-partners-title">Partners behind<br><em>the expedition.</em></h2>`;
+      <h2 id="trust-partners-title">Partners supporting<br><em>the expedition.</em></h2>`;
 
     const partners = [...grid.querySelectorAll('.partner-plaque')].map(partnerData);
     grid.className = 'trust-partners-grid trust-partners-grid-v20';
