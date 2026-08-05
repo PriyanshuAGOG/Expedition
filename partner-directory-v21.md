@@ -1,1 +1,0 @@
-Partner directory release marker. The production loader includes feedback-content-v21.js, which adds Diabetes & Desportes and sorts all partner tiles alphabetically.
