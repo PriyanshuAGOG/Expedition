@@ -80,6 +80,7 @@
     { selector: '#preparation', file: '16-floating-greenery-cluster.webp', className: 'art-cluster art-top-right', depth: 0.024 },
     { selector: '#expedition', file: '18-mountain-portal-frame.webp', className: 'art-portal art-bottom-right art-desktop', depth: 0.02 },
     { selector: '#eligibility', file: '06-hanging-vine-fringe.webp', className: 'art-fringe art-top-right', depth: -0.015 },
+    { selector: '#eligibility', file: '20-mossy-milestone-cluster.webp', className: 'art-milestone art-bottom-left', depth: 0.016 },
     { selector: '#journal', file: '08-himalayan-mist-archway.webp', className: 'art-mist-arch art-left-center art-desktop', depth: 0.018 },
     { selector: '#journal', file: '19-parallax-mountain-layer.webp', className: 'art-landscape art-landscape-bottom', depth: -0.012 },
     { selector: '#partners', file: '12-canopy-with-bell.webp', className: 'art-canopy art-canopy-top', depth: 0.014 },
