@@ -1,6 +1,7 @@
 /* Generated Himalayan section art integration, 2026-08-06. */
 .generated-section-art-v22 .generated-art-host {
   position: relative;
+  overflow: hidden;
   overflow: clip;
   isolation: isolate;
 }
@@ -55,7 +56,34 @@
   opacity: var(--generated-opacity, .34);
   transform: translate3d(0, var(--generated-shift), 0) scale(1);
 }
-.generated-section-art-v22 .generated-art-host > :not(.generated-art):not(.section-seam):not(.world-bg):not(.world-grade):not(.xp-trail-bg):not(.purpose-glow) {
+
+/* Lift only the actual reading and interaction layers. Existing scenic and
+   botanical backgrounds keep their original stacking contexts. */
+.generated-section-art-v22 :is(
+  .founder-note-inner,
+  .purpose-inner,
+  .glance-content,
+  .xp-inner,
+  .prep-intro,
+  .prep-pillars,
+  .expedition-copy,
+  .route-status,
+  .route-reveal,
+  .valley-quote,
+  .check-heading,
+  .check-panels,
+  .medical-note,
+  .inline-apply,
+  .evidence-intro,
+  .journal-details,
+  .journal-update,
+  .onboard-inner,
+  .onboard-divider,
+  .registration-intro,
+  .faq-heading,
+  .faq-list,
+  .trust-partners-inner
+) {
   position: relative;
   z-index: 2;
 }
@@ -80,6 +108,12 @@
 
 .generated-section-art-v22 .art-steps { width: clamp(280px, 36vw, 590px); --generated-opacity: .23; }
 .generated-section-art-v22 .art-bottom-left { left: -10%; bottom: -8%; }
+
+.generated-section-art-v22 .art-milestone {
+  width: clamp(230px, 27vw, 430px);
+  --generated-opacity: .24;
+}
+.generated-section-art-v22 .art-milestone.art-bottom-left { left: -7%; bottom: -10%; }
 
 .generated-section-art-v22 .art-cluster { width: clamp(210px, 24vw, 390px); --generated-opacity: .27; }
 .generated-section-art-v22 .art-top-right { right: -5%; top: 4%; }
@@ -143,6 +177,7 @@
   .generated-section-art-v22 .art-frame-right { width: 68vw; right: -34%; bottom: -4%; --generated-opacity: .13; }
   .generated-section-art-v22 .art-frame-center { width: 74vw; bottom: -18%; --generated-opacity: .1; }
   .generated-section-art-v22 .art-steps { width: 78vw; left: -34%; bottom: -2%; --generated-opacity: .16; }
+  .generated-section-art-v22 .art-milestone { width: 62vw; left: -28%; bottom: -2%; --generated-opacity: .16; }
   .generated-section-art-v22 .art-cluster { width: 58vw; --generated-opacity: .18; }
   .generated-section-art-v22 .art-top-right { right: -28%; top: 1%; }
   .generated-section-art-v22 .art-bottom-right { right: -28%; bottom: -3%; }
