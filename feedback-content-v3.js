@@ -229,7 +229,7 @@
     if (heading) {
       const kicker = heading.querySelector('.kicker');
       const description = heading.querySelector('p:last-child');
-      if (kicker) kicker.textContent = 'Ways to join';
+      if (kicker) kicker.textContent = 'Ways to take part';
       if (description) description.textContent = 'Participate, nominate someone, partner with us, or follow the journey.';
     }
 
