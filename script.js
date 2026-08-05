@@ -53,7 +53,8 @@
     'feedback-content-v16.js',
     'feedback-content-v18.js',
     'feedback-content-v19.js',
-    'feedback-content-v20.js'
+    'feedback-content-v20.js',
+    'feedback-content-v21.js'
   ];
 
   root.classList.add('expedition-booting');
@@ -140,7 +141,7 @@
       await waitForFonts();
 
       const buildMeta = document.querySelector('meta[name="build-version"]');
-      buildMeta?.setAttribute('content', '2026.08.04-pricing-heading-color-fix');
+      buildMeta?.setAttribute('content', '2026.08.05-partner-directory-v21');
     } catch (error) {
       console.error('[Expedition] Final production boot failed safely.', error);
     } finally {
