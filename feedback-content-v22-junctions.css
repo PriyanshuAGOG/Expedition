@@ -1,0 +1,243 @@
+/* Supplied PNG section boundaries
+ * Native joins remain untouched. These rules apply only to empty boundaries
+ * filled by feedback-content-v22-junctions.js.
+ */
+
+html.experience-v22-png-junctions-ready body {
+  overflow-x: hidden;
+}
+
+html.experience-v22-png-junctions-ready main {
+  overflow-x: clip;
+}
+
+/* Remove only the synthetic v22 top/bottom seams. Original section seams and
+ * existing leafy joins remain visible and are treated as native boundaries. */
+html.experience-v22-png-junctions-ready
+  .experience-v22-decor
+  > .experience-v22-seam {
+  display: none !important;
+}
+
+.experience-v22-png-junction {
+  --junction-height: var(--junction-height-desktop, 7.5rem);
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: var(--junction-height);
+  min-height: var(--junction-height);
+  margin-block: -0.35rem;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  user-select: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(7, 18, 13, 0) 0%,
+      rgba(7, 18, 13, 0.82) 24%,
+      rgba(7, 18, 13, 0.96) 50%,
+      rgba(7, 18, 13, 0.82) 76%,
+      rgba(7, 18, 13, 0) 100%
+    );
+}
+
+.experience-v22-png-junction::before,
+.experience-v22-png-junction::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset-inline: 0;
+  height: 42%;
+  pointer-events: none;
+}
+
+.experience-v22-png-junction::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(7, 18, 13, 0.72), transparent);
+}
+
+.experience-v22-png-junction::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(7, 18, 13, 0.72), transparent);
+}
+
+.experience-v22-png-junction > img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  max-width: none;
+  object-fit: fill;
+  object-position: center;
+  opacity: 0.94;
+  image-rendering: auto;
+  transform: translateZ(0);
+  filter:
+    saturate(1.06)
+    contrast(1.045)
+    brightness(0.86)
+    drop-shadow(0 0.8rem 1.35rem rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* The hero remains untouched. Its boundary begins after the hero and visually
+ * grows into the beginning of section two. */
+.experience-v22-png-junction-hero {
+  margin-top: 0;
+  margin-bottom: -0.45rem;
+  min-height: clamp(6rem, 8vw, 8rem);
+  height: clamp(6rem, 8vw, 8rem);
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(7, 18, 13, 0.02),
+      rgba(7, 18, 13, 0.94) 42%,
+      rgba(7, 18, 13, 1) 74%,
+      rgba(7, 18, 13, 0.2)
+    );
+}
+
+.experience-v22-png-junction-hero > img {
+  transform: translateY(7%) translateZ(0);
+  filter:
+    saturate(1.08)
+    contrast(1.05)
+    brightness(0.84)
+    drop-shadow(0 1rem 1.6rem rgba(0, 0, 0, 0.3));
+}
+
+/* Small positioning differences retain each supplied border's original
+ * silhouette instead of making all five variants feel identical. */
+.experience-v22-png-junction[data-junction-variant='2'] > img {
+  transform: translateY(-2%) translateZ(0);
+}
+
+.experience-v22-png-junction[data-junction-variant='3'] > img {
+  transform: translateY(2%) translateZ(0);
+}
+
+.experience-v22-png-junction[data-junction-variant='4'] > img {
+  filter:
+    saturate(1.04)
+    contrast(1.06)
+    brightness(0.82)
+    drop-shadow(0 0.85rem 1.4rem rgba(0, 0, 0, 0.3));
+}
+
+.experience-v22-png-junction[data-junction-variant='5'] > img {
+  transform: translateY(3%) translateZ(0);
+}
+
+/* Existing native joins should remain the visible authority wherever the
+ * runtime detects them. */
+html.experience-v22-png-junctions-ready main > .leafy-join,
+html.experience-v22-png-junctions-ready main > [data-native-section-join],
+html.experience-v22-png-junctions-ready main > .section-transition {
+  position: relative;
+  z-index: 3;
+}
+
+/* Laptop and compact desktop */
+@media (max-width: 1280px) {
+  .experience-v22-png-junction {
+    --junction-height: min(var(--junction-height-desktop, 7.5rem), 7.25rem);
+    margin-block: -0.3rem;
+  }
+
+  .experience-v22-png-junction > img {
+    filter:
+      saturate(1.045)
+      contrast(1.035)
+      brightness(0.85)
+      drop-shadow(0 0.7rem 1.15rem rgba(0, 0, 0, 0.27));
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .experience-v22-png-junction {
+    --junction-height: clamp(5.1rem, 8.5vw, 6.75rem);
+    margin-block: -0.25rem;
+  }
+
+  .experience-v22-png-junction-hero {
+    min-height: clamp(5.5rem, 9vw, 7rem);
+    height: clamp(5.5rem, 9vw, 7rem);
+  }
+}
+
+/* Mobile */
+@media (max-width: 680px) {
+  .experience-v22-png-junction {
+    --junction-height: clamp(4.35rem, 17vw, 5.85rem);
+    margin-block: -0.15rem;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(7, 18, 13, 0) 0%,
+        rgba(7, 18, 13, 0.88) 22%,
+        rgba(7, 18, 13, 0.98) 50%,
+        rgba(7, 18, 13, 0.88) 78%,
+        rgba(7, 18, 13, 0) 100%
+      );
+  }
+
+  .experience-v22-png-junction > img {
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    opacity: 0.93;
+    filter:
+      saturate(1.035)
+      contrast(1.035)
+      brightness(0.84)
+      drop-shadow(0 0.55rem 0.9rem rgba(0, 0, 0, 0.25));
+  }
+
+  .experience-v22-png-junction-hero {
+    min-height: clamp(4.8rem, 18vw, 6.1rem);
+    height: clamp(4.8rem, 18vw, 6.1rem);
+    margin-bottom: -0.2rem;
+  }
+
+  .experience-v22-png-junction-hero > img {
+    transform: translateY(5%) translateZ(0);
+  }
+}
+
+/* Narrow mobile */
+@media (max-width: 390px) {
+  .experience-v22-png-junction {
+    --junction-height: clamp(4rem, 18vw, 5rem);
+  }
+
+  .experience-v22-png-junction > img {
+    opacity: 0.91;
+  }
+}
+
+/* Short phones retain the border but surrender vertical space. */
+@media (max-width: 680px) and (max-height: 720px) {
+  .experience-v22-png-junction {
+    --junction-height: 4.15rem;
+  }
+
+  .experience-v22-png-junction-hero {
+    min-height: 4.55rem;
+    height: 4.55rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-v22-png-junction,
+  .experience-v22-png-junction > img {
+    animation: none !important;
+    transition: none !important;
+  }
+}

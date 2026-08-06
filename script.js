@@ -30,7 +30,10 @@
     'feedback-content-v18.css',
     'feedback-content-v19.css',
     'feedback-content-v20.css',
-    'feedback-content-v20-color-fix.css'
+    'feedback-content-v20-color-fix.css',
+    'feedback-content-v22.css',
+    'feedback-content-v22-qa.css',
+    'feedback-content-v22-junctions.css'
   ];
 
   const scripts = [
@@ -54,7 +57,9 @@
     'feedback-content-v18.js',
     'feedback-content-v19.js',
     'feedback-content-v20.js',
-    'feedback-content-v21.js'
+    'feedback-content-v21.js',
+    'feedback-content-v22.js',
+    'feedback-content-v22-junctions.js'
   ];
 
   root.classList.add('expedition-booting');
@@ -141,7 +146,7 @@
       await waitForFonts();
 
       const buildMeta = document.querySelector('meta[name="build-version"]');
-      buildMeta?.setAttribute('content', '2026.08.05-partner-directory-v21');
+      buildMeta?.setAttribute('content', '2026.08.06-botanical-junctions-v22');
     } catch (error) {
       console.error('[Expedition] Final production boot failed safely.', error);
     } finally {
