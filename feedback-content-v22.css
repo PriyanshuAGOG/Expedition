@@ -1,0 +1,651 @@
+/*
+ * Botanical Experience v22
+ * A final, non-destructive visual layer that distributes the existing expedition
+ * asset library across every landing-page section. Decorative assets are clipped
+ * inside their own layer, remain non-interactive, and scale down aggressively on
+ * tablets and phones to protect content, performance and readability.
+ */
+
+html.botanical-experience-v22 {
+  --v22-leaf: #d7f6a8;
+  --v22-forest: #07120d;
+  --v22-edge-opacity: .66;
+  --v22-scene-opacity: .14;
+  --v22-seam-opacity: .78;
+}
+
+html.botanical-experience-v22 body {
+  overflow-x: hidden;
+}
+
+html.botanical-experience-v22 .experience-v22-section {
+  position: relative;
+  isolation: isolate;
+}
+
+html.botanical-experience-v22 .experience-v22-section > :where(
+  header,
+  article,
+  aside,
+  form,
+  nav,
+  [class*="-inner"],
+  [class*="-content"],
+  [class*="-grid"],
+  [class*="-heading"],
+  [class*="-body"],
+  [class*="-cards"],
+  [class*="-list"],
+  [class*="-map"],
+  [class*="-path"],
+  [class*="-shell"],
+  [class*="-wrap"]
+) {
+  position: relative;
+  z-index: 3;
+}
+
+html.botanical-experience-v22 .experience-v22-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  contain: paint;
+}
+
+html.botanical-experience-v22 .experience-v22-decor img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+html.botanical-experience-v22 .experience-v22-scene {
+  width: clamp(34rem, 48vw, 68rem);
+  height: clamp(28rem, 62%, 58rem);
+  top: 10%;
+  right: -8%;
+  object-fit: cover;
+  object-position: center;
+  opacity: var(--v22-scene-opacity);
+  filter: saturate(.9) contrast(1.08) brightness(.72);
+  mix-blend-mode: luminosity;
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, rgba(0,0,0,.88) 28%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(100deg, transparent 0%, rgba(0,0,0,.88) 28%, #000 62%, transparent 100%);
+  transform: translate3d(0,0,0) scale(1.04);
+}
+
+html.botanical-experience-v22 .experience-v22-seam {
+  left: -2rem;
+  width: calc(100% + 4rem);
+  height: clamp(5rem, 8vw, 9.5rem);
+  object-fit: cover;
+  object-position: center;
+  opacity: var(--v22-seam-opacity);
+  filter: saturate(1.08) contrast(1.03) brightness(.82);
+}
+
+html.botanical-experience-v22 .experience-v22-seam-top {
+  top: -.15rem;
+  transform: translateY(-22%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.9) 42%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.9) 42%, transparent 100%);
+}
+
+html.botanical-experience-v22 .experience-v22-seam-bottom {
+  bottom: -.15rem;
+  transform: translateY(24%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.92) 42%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.92) 42%, transparent 100%);
+}
+
+html.botanical-experience-v22 .experience-v22-edge {
+  width: clamp(14rem, 22vw, 29rem);
+  height: auto;
+  opacity: var(--v22-edge-opacity);
+  filter: saturate(1.12) contrast(1.03) brightness(.82) drop-shadow(0 1.4rem 2.4rem rgba(0,0,0,.24));
+  transform-origin: center;
+}
+
+html.botanical-experience-v22 .experience-v22-edge-left {
+  left: clamp(-9rem, -7vw, -3rem);
+  bottom: clamp(1.5rem, 8%, 8rem);
+  transform: rotate(-3deg);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 54%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 54%, transparent 100%);
+}
+
+html.botanical-experience-v22 .experience-v22-edge-right {
+  right: clamp(-10rem, -8vw, -3rem);
+  top: clamp(5rem, 14%, 12rem);
+  transform: scaleX(-1) rotate(-2deg);
+  -webkit-mask-image: linear-gradient(270deg, #000 0%, #000 54%, transparent 100%);
+  mask-image: linear-gradient(270deg, #000 0%, #000 54%, transparent 100%);
+}
+
+html.botanical-experience-v22 .experience-v22-sprig {
+  width: clamp(6rem, 9vw, 11rem);
+  height: auto;
+  left: clamp(1rem, 7vw, 8rem);
+  top: clamp(7rem, 22%, 18rem);
+  opacity: .52;
+  filter: saturate(1.12) brightness(.9) drop-shadow(0 .8rem 1.3rem rgba(0,0,0,.2));
+  transform: rotate(-8deg);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: .66;
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere::before,
+html.botanical-experience-v22 .experience-v22-atmosphere::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+  background: radial-gradient(circle, rgba(215,246,168,.2) 0 1px, transparent 1.8px) 0 0 / 2.2rem 2.2rem;
+  -webkit-mask-image: radial-gradient(circle, #000, transparent 70%);
+  mask-image: radial-gradient(circle, #000, transparent 70%);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere::before {
+  width: 34rem;
+  height: 24rem;
+  top: 10%;
+  left: 8%;
+  opacity: .38;
+  transform: rotate(8deg);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere::after {
+  width: 29rem;
+  height: 21rem;
+  right: 4%;
+  bottom: 9%;
+  opacity: .25;
+  transform: rotate(-9deg);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere > i {
+  position: absolute;
+  display: block;
+  width: clamp(15rem, 32vw, 34rem);
+  height: clamp(5rem, 9vw, 9rem);
+  border-radius: 50%;
+  background: rgba(211,235,215,.08);
+  filter: blur(2.8rem);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere > i:nth-child(1) {
+  left: -4%;
+  top: 24%;
+  transform: rotate(-7deg);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere > i:nth-child(2) {
+  right: 8%;
+  top: 48%;
+  transform: rotate(5deg);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere > i:nth-child(3) {
+  left: 28%;
+  bottom: 8%;
+  transform: rotate(-2deg);
+}
+
+html.botanical-experience-v22 .experience-v22-atmosphere > span {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(112deg, transparent 24%, rgba(215,246,168,.025) 25%, transparent 27%),
+    linear-gradient(68deg, transparent 61%, rgba(215,246,168,.025) 62%, transparent 64%);
+}
+
+/* Distinct scene placement prevents consecutive sections from feeling templated. */
+html.botanical-experience-v22 .experience-v22-profile-2 .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-profile-5 .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-profile-8 .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-profile-11 .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-profile-14 .experience-v22-scene {
+  right: auto;
+  left: -7%;
+  -webkit-mask-image: linear-gradient(260deg, transparent 0%, rgba(0,0,0,.88) 28%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(260deg, transparent 0%, rgba(0,0,0,.88) 28%, #000 62%, transparent 100%);
+}
+
+html.botanical-experience-v22 .experience-v22-profile-3 .experience-v22-edge-left,
+html.botanical-experience-v22 .experience-v22-profile-6 .experience-v22-edge-left,
+html.botanical-experience-v22 .experience-v22-profile-9 .experience-v22-edge-left,
+html.botanical-experience-v22 .experience-v22-profile-12 .experience-v22-edge-left,
+html.botanical-experience-v22 .experience-v22-profile-15 .experience-v22-edge-left {
+  bottom: auto;
+  top: 11%;
+}
+
+html.botanical-experience-v22 .experience-v22-profile-4 .experience-v22-edge-right,
+html.botanical-experience-v22 .experience-v22-profile-7 .experience-v22-edge-right,
+html.botanical-experience-v22 .experience-v22-profile-10 .experience-v22-edge-right,
+html.botanical-experience-v22 .experience-v22-profile-13 .experience-v22-edge-right,
+html.botanical-experience-v22 .experience-v22-profile-16 .experience-v22-edge-right {
+  top: auto;
+  bottom: 10%;
+}
+
+html.botanical-experience-v22 .experience-v22-profile-2 .experience-v22-sprig,
+html.botanical-experience-v22 .experience-v22-profile-6 .experience-v22-sprig,
+html.botanical-experience-v22 .experience-v22-profile-10 .experience-v22-sprig,
+html.botanical-experience-v22 .experience-v22-profile-14 .experience-v22-sprig {
+  left: auto;
+  right: clamp(1rem, 8vw, 9rem);
+  top: auto;
+  bottom: 18%;
+  transform: scaleX(-1) rotate(-5deg);
+}
+
+html.botanical-experience-v22 .experience-v22-profile-3 .experience-v22-sprig,
+html.botanical-experience-v22 .experience-v22-profile-7 .experience-v22-sprig,
+html.botanical-experience-v22 .experience-v22-profile-11 .experience-v22-sprig,
+html.botanical-experience-v22 .experience-v22-profile-15 .experience-v22-sprig {
+  top: 46%;
+  left: auto;
+  right: 8%;
+}
+
+/* Scenic treatments use the actual photographic assets without competing with copy. */
+html.botanical-experience-v22 .experience-v22-tone-ravine .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-clearing .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-team .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-archive .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-camp .experience-v22-scene {
+  height: 74%;
+  opacity: .11;
+  mix-blend-mode: soft-light;
+  filter: saturate(.78) contrast(1.12) brightness(.66);
+}
+
+html.botanical-experience-v22 .experience-v22-tone-clouds .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-fog .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-canopy .experience-v22-scene,
+html.botanical-experience-v22 .experience-v22-tone-living .experience-v22-scene {
+  height: 42%;
+  top: 6%;
+  opacity: .16;
+  filter: saturate(.7) brightness(.9);
+  mix-blend-mode: screen;
+}
+
+html.botanical-experience-v22 .experience-v22-tone-forest-floor .experience-v22-scene {
+  top: auto;
+  bottom: -4%;
+  height: 46%;
+  width: 62%;
+  opacity: .2;
+  object-position: bottom;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.72) 55%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.72) 55%, transparent 100%);
+}
+
+/* Already immersive sections receive restrained secondary detail, not visual noise. */
+html.botanical-experience-v22 :is(#glance, #expedition-gains, #pricing, #trust-partners).experience-v22-section {
+  --v22-edge-opacity: .38;
+  --v22-scene-opacity: .075;
+  --v22-seam-opacity: .58;
+}
+
+html.botanical-experience-v22 :is(#glance, #expedition-gains, #pricing, #trust-partners) .experience-v22-sprig {
+  opacity: .34;
+}
+
+/* Flat or card-led sections receive the strongest garden framing. */
+html.botanical-experience-v22 :is(#briefing, #trail, #preparation, #safety, #eligibility, #register, #journal, #faq, #partners).experience-v22-section {
+  --v22-edge-opacity: .72;
+  --v22-scene-opacity: .13;
+}
+
+html.botanical-experience-v22 .experience-v22-footer-crown {
+  position: absolute;
+  inset: 0 0 auto;
+  height: clamp(5rem, 9vw, 9rem);
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  transform: translateY(-34%);
+}
+
+html.botanical-experience-v22 .experience-v22-footer-crown img {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+html.botanical-experience-v22 .experience-v22-footer-crown-left {
+  left: -2rem;
+  bottom: 0;
+  width: clamp(12rem, 22vw, 26rem);
+}
+
+html.botanical-experience-v22 .experience-v22-footer-crown-center {
+  left: 12%;
+  bottom: 0;
+  width: 76%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+html.botanical-experience-v22 .experience-v22-footer-crown-right {
+  right: -2rem;
+  bottom: 0;
+  width: clamp(12rem, 22vw, 26rem);
+  transform: scaleX(-1);
+}
+
+html.botanical-experience-v22 .site-footer {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Laptop QA: keep detail visible while protecting narrower content columns. */
+@media (max-width: 1280px) {
+  html.botanical-experience-v22 {
+    --v22-edge-opacity: .58;
+    --v22-scene-opacity: .11;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge {
+    width: clamp(12rem, 21vw, 21rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    width: clamp(29rem, 49vw, 48rem);
+    right: -12%;
+  }
+
+  html.botanical-experience-v22 .experience-v22-profile-2 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-5 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-8 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-11 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-14 .experience-v22-scene {
+    left: -12%;
+  }
+}
+
+/* Tablet portrait and landscape. */
+@media (max-width: 1024px) {
+  html.botanical-experience-v22 {
+    --v22-edge-opacity: .48;
+    --v22-scene-opacity: .085;
+    --v22-seam-opacity: .62;
+  }
+
+  html.botanical-experience-v22 .experience-v22-seam {
+    height: clamp(4.5rem, 10vw, 7rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge {
+    width: clamp(10rem, 25vw, 16rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-left {
+    left: -6rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-right {
+    right: -6rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    width: 62vw;
+    min-width: 29rem;
+    max-width: 42rem;
+    height: 58%;
+    right: -18%;
+  }
+
+  html.botanical-experience-v22 .experience-v22-profile-2 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-5 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-8 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-11 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-14 .experience-v22-scene {
+    left: -18%;
+  }
+
+  html.botanical-experience-v22 .experience-v22-sprig {
+    width: clamp(5rem, 10vw, 7rem);
+    opacity: .42;
+  }
+
+  html.botanical-experience-v22 .experience-v22-atmosphere::before,
+  html.botanical-experience-v22 .experience-v22-atmosphere::after {
+    transform: scale(.78);
+  }
+}
+
+/* Mobile-first protection: one dominant edge, compact seams and faint photography. */
+@media (max-width: 680px) {
+  html.botanical-experience-v22 {
+    --v22-edge-opacity: .34;
+    --v22-scene-opacity: .06;
+    --v22-seam-opacity: .52;
+  }
+
+  html.botanical-experience-v22 .experience-v22-decor {
+    contain: strict;
+  }
+
+  html.botanical-experience-v22 .experience-v22-seam {
+    left: -1rem;
+    width: calc(100% + 2rem);
+    height: clamp(3.8rem, 16vw, 5.4rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-seam-top {
+    transform: translateY(-30%);
+  }
+
+  html.botanical-experience-v22 .experience-v22-seam-bottom {
+    transform: translateY(31%);
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge {
+    width: clamp(9rem, 44vw, 13rem);
+    opacity: var(--v22-edge-opacity);
+    filter: saturate(1.06) brightness(.78) drop-shadow(0 .7rem 1rem rgba(0,0,0,.2));
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-left {
+    left: -6.2rem;
+    bottom: 5%;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-right {
+    right: -6.2rem;
+    top: 12%;
+  }
+
+  html.botanical-experience-v22 .experience-v22-profile-odd .experience-v22-edge-right {
+    display: none;
+  }
+
+  html.botanical-experience-v22 .experience-v22-profile-1 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-3 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-5 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-7 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-9 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-11 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-13 .experience-v22-edge-right,
+  html.botanical-experience-v22 .experience-v22-profile-15 .experience-v22-edge-right {
+    display: none;
+  }
+
+  html.botanical-experience-v22 .experience-v22-profile-2 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-4 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-6 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-8 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-10 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-12 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-14 .experience-v22-edge-left,
+  html.botanical-experience-v22 .experience-v22-profile-16 .experience-v22-edge-left {
+    display: none;
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    width: 94vw;
+    min-width: 0;
+    max-width: none;
+    height: 48%;
+    right: -42%;
+    top: 19%;
+    opacity: var(--v22-scene-opacity);
+    filter: saturate(.82) contrast(1.04) brightness(.7);
+  }
+
+  html.botanical-experience-v22 .experience-v22-profile-2 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-5 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-8 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-11 .experience-v22-scene,
+  html.botanical-experience-v22 .experience-v22-profile-14 .experience-v22-scene {
+    left: -42%;
+    right: auto;
+  }
+
+  html.botanical-experience-v22 .experience-v22-sprig {
+    width: 4.8rem;
+    opacity: .28;
+  }
+
+  html.botanical-experience-v22 .experience-v22-atmosphere {
+    opacity: .38;
+  }
+
+  html.botanical-experience-v22 .experience-v22-atmosphere::before {
+    width: 18rem;
+    height: 14rem;
+    left: -8rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-atmosphere::after {
+    width: 16rem;
+    height: 12rem;
+    right: -7rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-atmosphere > i {
+    width: 14rem;
+    height: 4rem;
+    filter: blur(2rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-footer-crown {
+    height: 5.5rem;
+    transform: translateY(-28%);
+  }
+
+  html.botanical-experience-v22 .experience-v22-footer-crown-left,
+  html.botanical-experience-v22 .experience-v22-footer-crown-right {
+    width: 10rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-footer-crown-center {
+    left: 5%;
+    width: 90%;
+  }
+}
+
+@media (max-width: 390px) {
+  html.botanical-experience-v22 .experience-v22-edge {
+    width: 9.5rem;
+    opacity: .28;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-left {
+    left: -6.8rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-right {
+    right: -6.8rem;
+  }
+
+  html.botanical-experience-v22 .experience-v22-sprig {
+    display: none;
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    opacity: .045;
+  }
+}
+
+/* Short laptop and mobile screens should not spend vertical space on decoration. */
+@media (max-height: 760px) {
+  html.botanical-experience-v22 .experience-v22-seam {
+    height: clamp(3.8rem, 7vw, 6rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    height: 52%;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge {
+    opacity: calc(var(--v22-edge-opacity) * .82);
+  }
+}
+
+@media (min-width: 1600px) {
+  html.botanical-experience-v22 {
+    --v22-edge-opacity: .7;
+    --v22-scene-opacity: .15;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge {
+    width: clamp(20rem, 20vw, 34rem);
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    width: min(52vw, 78rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 1025px) {
+  html.botanical-experience-v22 .experience-v22-edge-left {
+    animation: v22-botanical-breathe-left 18s ease-in-out infinite alternate;
+  }
+
+  html.botanical-experience-v22 .experience-v22-edge-right {
+    animation: v22-botanical-breathe-right 21s ease-in-out infinite alternate;
+  }
+
+  html.botanical-experience-v22 .experience-v22-atmosphere > i:nth-child(2) {
+    animation: v22-mist-drift 24s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes v22-botanical-breathe-left {
+  from { transform: rotate(-3deg) translate3d(0,0,0); }
+  to { transform: rotate(-1deg) translate3d(.7rem,-.5rem,0); }
+}
+
+@keyframes v22-botanical-breathe-right {
+  from { transform: scaleX(-1) rotate(-2deg) translate3d(0,0,0); }
+  to { transform: scaleX(-1) rotate(-4deg) translate3d(-.65rem,.4rem,0); }
+}
+
+@keyframes v22-mist-drift {
+  from { transform: rotate(5deg) translate3d(-1rem,0,0); }
+  to { transform: rotate(2deg) translate3d(2rem,-.6rem,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.botanical-experience-v22 .experience-v22-decor *,
+  html.botanical-experience-v22 .experience-v22-footer-crown * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

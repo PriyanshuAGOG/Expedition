@@ -1,0 +1,36 @@
+/* Final defensive QA corrections for the botanical experience layer. */
+
+html.botanical-experience-v22 .experience-v22-section > :not(.experience-v22-decor):not(img):not([aria-hidden="true"]):not([class*="grade"]):not([class*="mist"]):not([class*="glow"]):not([class*="contour"]):not([class*="shade"]) {
+  position: relative;
+  z-index: 3;
+}
+
+html.botanical-experience-v22 .experience-v22-section :is(a, button, input, select, textarea, summary, video, iframe) {
+  position: relative;
+  z-index: 4;
+}
+
+html.botanical-experience-v22 .experience-v22-decor,
+html.botanical-experience-v22 .experience-v22-footer-crown {
+  touch-action: none;
+}
+
+@media (max-height: 760px) {
+  html.botanical-experience-v22 .experience-v22-edge {
+    opacity: .44;
+  }
+
+  html.botanical-experience-v22 :is(#glance, #expedition-gains, #pricing, #trust-partners) .experience-v22-edge {
+    opacity: .3;
+  }
+}
+
+@media (max-width: 680px) and (max-height: 760px) {
+  html.botanical-experience-v22 .experience-v22-edge {
+    opacity: .25;
+  }
+
+  html.botanical-experience-v22 .experience-v22-scene {
+    opacity: .04;
+  }
+}
