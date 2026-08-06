@@ -472,14 +472,56 @@ function openDetail(row) {
 
 // ---------- export ----------
 
+// Uploaded reports live in Storage, so the row only carries ids and names.
+// Exporting those two raw arrays as comma-joined blobs in two cells is not
+// usable in a spreadsheet, so they're expanded into one pair of columns per
+// file — as many pairs as the widest row in this export actually needs.
+const REPORT_IDS_FIELD = 'medicalReportFileIds';
+const REPORT_NAMES_FIELD = 'medicalReportFileNames';
+
+function reportFilesFor(row) {
+  const ids = Array.isArray(row[REPORT_IDS_FIELD]) ? row[REPORT_IDS_FIELD] : [];
+  const names = Array.isArray(row[REPORT_NAMES_FIELD]) ? row[REPORT_NAMES_FIELD] : [];
+  return ids.map((id, i) => ({ id, name: names[i] || `File ${i + 1}`, url: fileViewUrl(id) }));
+}
+
 function exportCurrentViewToCsv() {
   const config = TABLE_CONFIG[state.activeTab];
   const rows = getFilteredRows();
   if (!rows.length) return;
   const systemFields = new Set(['$permissions', '$databaseId', '$tableId', '$sequence', '$collectionId']);
-  const fields = Array.from(new Set(rows.flatMap((r) => Object.keys(r)))).filter((k) => !systemFields.has(k));
-  const header = fields.map((f) => csvCell(FIELD_LABELS[f] || humanize(f))).join(',');
-  const body = rows.map((r) => fields.map((f) => csvCell(formatValue(r[f]))).join(',')).join('\r\n');
+  const fields = Array.from(new Set(rows.flatMap((r) => Object.keys(r))))
+    .filter((k) => !systemFields.has(k) && k !== REPORT_IDS_FIELD && k !== REPORT_NAMES_FIELD);
+
+  // Widest row decides the column count, so a table with no uploads (the
+  // nomination and support tables) gains no extra columns at all.
+  const maxReports = rows.reduce((max, r) => Math.max(max, reportFilesFor(r).length), 0);
+  const reportHeaders = [];
+  if (maxReports) {
+    reportHeaders.push('Medical reports (count)');
+    for (let i = 1; i <= maxReports; i += 1) {
+      reportHeaders.push(`Report ${i} file name`, `Report ${i} file ID`, `Report ${i} download URL`);
+    }
+  }
+
+  const header = [
+    ...fields.map((f) => FIELD_LABELS[f] || humanize(f)),
+    ...reportHeaders,
+  ].map(csvCell).join(',');
+
+  const body = rows.map((r) => {
+    const cells = fields.map((f) => csvCell(formatValue(r[f])));
+    if (maxReports) {
+      const files = reportFilesFor(r);
+      cells.push(csvCell(files.length));
+      for (let i = 0; i < maxReports; i += 1) {
+        const file = files[i];
+        cells.push(csvCell(file ? file.name : ''), csvCell(file ? file.id : ''), csvCell(file ? file.url : ''));
+      }
+    }
+    return cells.join(',');
+  }).join('\r\n');
+
   const csv = `﻿${header}\r\n${body}`;
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
