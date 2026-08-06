@@ -217,15 +217,34 @@ async function ensureEnumsUpToDate(def) {
     const sameElements = currentElements.length === attr.elements.length
       && attr.elements.every((el) => currentElements.includes(el));
     if (sameElements) { skip(`${attr.key} (elements unchanged)`); continue; }
-    await tablesDB.updateEnumColumn({
-      databaseId: DATABASE_ID,
-      tableId: def.id,
-      key: attr.key,
-      elements: attr.elements,
-      required: attr.required,
-      xdefault: attr.default,
-    });
-    ok(`updated enum values for ${attr.key}`);
+    try {
+      await tablesDB.updateEnumColumn({
+        databaseId: DATABASE_ID,
+        tableId: def.id,
+        key: attr.key,
+        elements: attr.elements,
+        required: attr.required,
+        // Like updateColumn() above: xdefault is a mandatory SDK parameter
+        // that throws on undefined, so an attribute with no default needs
+        // an explicit null rather than passing attr.default straight
+        // through. This was the actual crash on the first provisioning run
+        // after this pass — treatment (which has no default either) never
+        // hit it because its live elements already matched, but
+        // timeCommitment's elements had drifted (a legacy option removed
+        // from the form) so this path finally ran and threw before
+        // anything downstream — including the two new unique indexes —
+        // got a chance to.
+        xdefault: attr.default ?? null,
+      });
+      ok(`updated enum values for ${attr.key}`);
+    } catch (err) {
+      warn(`could not update enum values for ${attr.key}: ${err?.message || err}`);
+      blockedBy(
+        `${def.id}.${attr.key} — enum elements out of date`,
+        err?.message || String(err),
+        `Update the "${attr.key}" column's allowed values in the Appwrite console to match schema.mjs, then re-run this workflow.`,
+      );
+    }
   }
 }
 
