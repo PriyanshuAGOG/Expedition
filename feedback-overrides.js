@@ -60,7 +60,7 @@
 
   const updateLandingCopy = () => {
     const purposeTitle = document.querySelector('#briefing-title');
-    if (purposeTitle) purposeTitle.innerHTML = 'Why are we <em>doing</em> this?';
+    if (purposeTitle) purposeTitle.innerHTML = 'Why are we <em>doing this?</em>';
   };
 
   const pricingConfig = window.NIROGBHUMI_PRICING || {
