@@ -1,18 +1,6 @@
 (() => {
   'use strict';
 
-  const rebuildHeroFacts = () => {
-    const summary = document.querySelector('.hero-campaign > p');
-    if (!summary) return;
-
-    summary.className = 'hero-campaign-summary hero-summary-v15';
-    summary.setAttribute('aria-label', '45 days of preparation, World Diabetes Day 2026, six-day Himalayan expedition');
-    summary.innerHTML = `
-      <span><strong>45 days</strong><small>of preparation</small></span>
-      <span><strong>World Diabetes Day</strong><small>2026</small></span>
-      <span><strong>6-day</strong><small>Himalayan expedition</small></span>`;
-  };
-
   const rebuildPreparation = () => {
     const section = document.querySelector('#preparation');
     const grid = section?.querySelector('.prep-pillars');
@@ -63,7 +51,7 @@
     <div class="gain-v15-inner">
       <header class="gain-v15-heading reveal visible">
         <p class="kicker">Beyond the trail</p>
-        <h2 id="expedition-gains-title">Key Takeaways from the<br><em>Expedition.</em></h2>
+        <h2 id="expedition-gains-title">Key takeaways from the<br><em>Expedition</em></h2>
         <p>Five outcomes that continue long after the descent.</p>
       </header>
 
@@ -111,7 +99,6 @@
   };
 
   const run = () => {
-    rebuildHeroFacts();
     rebuildPreparation();
     rebuildGains();
     tightenSectionJoin();

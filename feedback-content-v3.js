@@ -52,13 +52,6 @@
     });
   };
 
-  const updateHeroSummary = () => {
-    const summary = document.querySelector('.hero-campaign > p');
-    if (!summary) return;
-    summary.classList.add('hero-campaign-summary');
-    summary.innerHTML = '<strong>60 days of preparation · 6 day Himalayan expedition</strong><strong class="hero-campaign-date">World Diabetes Day 2026</strong>';
-  };
-
   const updatePurposeSection = () => {
     const intro = document.querySelector('.purpose-heading > p:last-child');
     if (intro) {
@@ -145,14 +138,14 @@
   const updateSafety = () => {
     const items = [...document.querySelectorAll('.safety-sequence > li')];
     if (items[0]) {
-      items[0].querySelector('h3').textContent = 'Screening Before Selection';
+      items[0].querySelector('h3').textContent = 'Screening before selection';
       items[0].querySelector('p').textContent = 'Based on health history.';
     }
     if (items[2]) {
-      items[2].querySelector('h3').textContent = 'Clearance Before Trek';
+      items[2].querySelector('h3').textContent = 'Clearance before trek';
       items[2].querySelector('p').textContent = 'Fitness certificate from a physician.';
     }
-    if (items[3]) items[3].querySelector('h3').textContent = 'Regular Monitoring During the Trek';
+    if (items[3]) items[3].querySelector('h3').textContent = 'Regular monitoring during the trek';
   };
 
   const updateEligibility = () => {
@@ -220,10 +213,6 @@
   };
 
   const updateOnboarding = () => {
-    document.querySelectorAll('.hero-cta').forEach(link => {
-      if (/become a partner/i.test(link.textContent)) link.remove();
-    });
-
     const section = document.querySelector('#partners');
     const heading = section?.querySelector('.onboard-heading');
     if (heading) {
@@ -336,7 +325,6 @@
       return;
     }
 
-    updateHeroSummary();
     updatePurposeSection();
     updateParticipantJourney();
     updatePreparation();

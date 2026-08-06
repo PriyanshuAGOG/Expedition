@@ -116,11 +116,17 @@
           </div>
         </div>
 
-        <div class="form-confirmation" hidden tabindex="-1">
-          <span>Application received</span>
-          <h3>Thank you — your application has been submitted.</h3>
-          <p>Our team will review your application and follow up by email. Any medical reports you uploaded have been securely attached to your application.</p>
-          <button type="button" data-edit-application>Edit Application</button>
+        <div class="form-confirmation" hidden tabindex="-1" role="status" aria-live="polite">
+          <span class="form-confirmation-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M4 12.5l5.2 5.2L20 7"/></svg>
+          </span>
+          <h3 id="form-confirmation-title" tabindex="-1">Application Submitted</h3>
+          <p>Thank you for submitting your expression of interest for the World Diabetes Day Himalayan Expedition 2026. We have received your application. Submission does not guarantee selection. The Nirog Bhumi team will contact you if further information or screening is required.</p>
+          <p class="form-confirmation-reference" data-application-reference hidden></p>
+          <div class="form-confirmation-actions">
+            <a class="form-confirmation-back" href="index.html">Back to Expedition Page</a>
+            <button type="button" data-edit-application>Edit Application</button>
+          </div>
         </div>
       </div>
     </section>

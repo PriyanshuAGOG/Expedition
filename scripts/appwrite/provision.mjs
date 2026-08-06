@@ -183,7 +183,9 @@ async function ensureIndexes(def) {
       databaseId: DATABASE_ID,
       tableId: def.id,
       key: idx.key,
-      type: idx.type === 'key' ? TablesDBIndexType.Key : idx.type,
+      type: idx.type === 'key' ? TablesDBIndexType.Key
+        : idx.type === 'unique' ? TablesDBIndexType.Unique
+          : idx.type,
       columns: idx.attributes,
     });
     ok(`created index ${idx.key}`);
