@@ -126,18 +126,11 @@
   text-underline-offset: 3px;
 }
 .application-page .consent-row.invalid { border-color: #ff9b88; background: rgba(255, 155, 136, .06); }
+/* The yellow-orange "Optional" badge was removed (second pass). The dashed
+   border still distinguishes this row from the required consents, and the
+   copy itself opens with "Optional:", so the consent's optional status is
+   still conveyed without a corner badge reserving space. */
 .application-page .consent-row-optional { border-style: dashed; background: rgba(217, 188, 120, .035); }
-.application-page .consent-row-optional::after {
-  content: "Optional";
-  position: absolute;
-  right: 12px;
-  top: 9px;
-  color: #d9bc78;
-  font-size: .43rem;
-  font-weight: 750;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
 
 .dpdp-dialog {
   width: min(920px, calc(100% - 28px));
@@ -190,6 +183,10 @@
 .dpdp-dialog-body p:last-child { margin-bottom: 0; }
 .dpdp-dialog-body ul { display: grid; gap: 8px; margin: 0; padding-left: 20px; }
 .dpdp-dialog-body a { color: var(--leaf); text-decoration: underline; text-underline-offset: 3px; }
+/* One clear line between the final purpose bullet and the paragraph that
+   follows it — margin rather than <br> or an empty paragraph, so the gap is
+   part of the layout and holds at every width. */
+.dpdp-dialog-body ul + .dpdp-purpose-note { margin-top: 18px; }
 .dpdp-dialog-footer {
   display: flex;
   align-items: center;
@@ -251,7 +248,6 @@
   .application-page .application-quick-facts div { display: block !important; }
   .application-page .application-quick-facts div:last-child { grid-column: 1 / -1; }
   .application-page .consent-row { padding: 14px 13px; }
-  .application-page .consent-row-optional::after { position: static; display: block; width: max-content; margin-left: auto; margin-top: 8px; }
   .dpdp-dialog { width: calc(100% - 16px); max-height: 94svh; border-radius: 6px 22px 6px 22px; }
   .dpdp-dialog-shell { max-height: 94svh; }
   .dpdp-dialog-header { padding: 19px 16px; }

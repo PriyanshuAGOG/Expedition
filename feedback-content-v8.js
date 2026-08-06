@@ -3,24 +3,6 @@
 
   const CONTACT_EMAIL = 'priyanshu@nirogbhumi.com';
 
-  const heroMarkup = () => `
-    <span class="hero-summary-item hero-summary-preparation">
-      <b>60 days</b><small>of preparation</small>
-    </span>
-    <span class="hero-summary-item hero-summary-date">
-      <b>World Diabetes Day</b><small>2026</small>
-    </span>
-    <span class="hero-summary-item hero-summary-expedition">
-      <b>6-day</b><small>Himalayan expedition</small>
-    </span>`;
-
-  const updateHeroSummary = () => {
-    const summary = document.querySelector('.hero-campaign > p');
-    if (!summary) return;
-    summary.className = 'hero-campaign-summary hero-campaign-summary-v8';
-    summary.innerHTML = heroMarkup();
-  };
-
   const pricingMarkup = () => `
     <section class="fee-journey immersive-panel" id="pricing" aria-labelledby="fee-journey-title">
       <img class="fee-journey-bg" src="assets/experience/webp/13-waterfall-ravine.webp" alt="A green Himalayan valley rising through mist" loading="lazy" decoding="async">
@@ -289,7 +271,6 @@
 
   const run = () => {
     if (document.body.classList.contains('application-page')) return;
-    updateHeroSummary();
     rebuildGains();
     rebuildPricing();
     rebuildNomination();

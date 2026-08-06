@@ -28,7 +28,24 @@ const account = new Account(client);
 const teams = new Teams(client);
 const storage = new Storage(client);
 
-class SubmissionError extends Error {}
+class SubmissionError extends Error {
+  // Carries the backend's status code and error type through to callers so a
+  // uniqueness conflict can be told apart from a generic failure and mapped
+  // onto the right field. Without this the original code was lost and every
+  // failure looked the same to the form.
+  constructor(message, { code, type } = {}) {
+    super(message);
+    this.code = code;
+    this.type = type;
+  }
+}
+
+// Appwrite answers 409 both for "a row with this id already exists" (which the
+// upsert path below handles by updating that row) and for "a unique index
+// rejected this value" (a genuine duplicate that must surface to the user).
+// Only the first is safe to retry as an update.
+const isRowIdConflict = (err) => err?.code === 409
+  && !/index|unique/i.test(String(err?.message || ''));
 
 /**
  * Create a row in one of the public-facing tables (applications,
@@ -73,7 +90,11 @@ async function submitForm(tableKey, data, options = {}) {
           databaseId: DATABASE_ID, tableId, rowId: options.rowId, data,
         });
       } catch (err) {
-        if (err?.code !== 409) throw err;
+        // Only an id collision means "this session's row already exists,
+        // update it". A unique-index rejection must not be quietly turned
+        // into an update of somebody else's row — rethrow so the caller can
+        // report it as a duplicate.
+        if (!isRowIdConflict(err)) throw err;
         return await tablesDB.updateRow({
           databaseId: DATABASE_ID, tableId, rowId: options.rowId, data,
         });
@@ -89,6 +110,7 @@ async function submitForm(tableKey, data, options = {}) {
     console.error(`[appwrite] ${tableKey} submission failed`, err);
     throw new SubmissionError(
       err?.message || 'Something went wrong submitting this form. Please try again in a moment.',
+      { code: err?.code, type: err?.type },
     );
   }
 }

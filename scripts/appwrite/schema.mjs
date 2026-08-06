@@ -99,7 +99,21 @@ export const collections = [
     ],
     indexes: [
       { key: 'idx_status', type: 'key', attributes: ['status'] },
-      { key: 'idx_email', type: 'key', attributes: ['email'] },
+      // Database-level duplicate protection for participant applications.
+      // The browser cannot check for an existing application first — every
+      // table is create-only for the public and readable only by the Admins
+      // team — so uniqueness has to be enforced here, where it also survives
+      // concurrent submits and repeated retries. The client stores `email`
+      // lowercased/trimmed and `phone` stripped of spaces, brackets, hyphens
+      // and dots (script-base.js normaliseEmail/normalisePhone), so these
+      // indexes compare normalised values and formatting variants of the
+      // same address or number collide as intended.
+      //
+      // The review -> edit -> resubmit flow upserts one fixed row id per
+      // session, so editing an existing application updates that same row and
+      // is never rejected as a duplicate of itself.
+      { key: 'uniq_email', type: 'unique', attributes: ['email'] },
+      { key: 'uniq_phone', type: 'unique', attributes: ['phone'] },
     ],
   },
   {
@@ -150,9 +164,12 @@ export const collections = [
     permissions: adminOnlyPermissions(),
     attributes: [
       str('contactName', 200, true),
-      str('organisation', 200, false),
+      // Organisation and phone are mandatory on the Support the Expedition
+      // form (second pass). Required here as well as in the browser so a
+      // request that skips the form's own validation is still rejected.
+      str('organisation', 200, true),
       email('email', true),
-      str('phone', 40, false),
+      str('phone', 40, true),
       enumAttr('partnershipType', [
         'Health', 'Equipment', 'Travel & Logistics', 'Media & Storytelling', 'Other',
       ], true),

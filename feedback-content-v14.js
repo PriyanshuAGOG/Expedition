@@ -54,7 +54,7 @@
         <span>approximately one hour each morning</span>
       </div>
       <div class="glance-v14-card glance-v14-experience glance-v18-experience">
-        <small>Tracking Experience</small>
+        <small>Trekking Experience</small>
         <strong>Not required</strong>
         <span>readiness is built progressively</span>
         <a class="glance-v18-route-link" href="${DAYARA_URL}" target="_blank" rel="noopener" aria-label="View the Dayara Bugyal trek details on Indiahikes">
@@ -84,7 +84,7 @@
   const removeItinerary = () => {
     // The full landing-page itinerary section was removed at the user's
     // request; the Dayara Bugyal trek details remain reachable via the
-    // route link inside the "Tracking Experience" glance card.
+    // route link inside the "Trekking Experience" glance card.
     document.querySelector('#expedition')?.remove();
   };
 
@@ -93,6 +93,8 @@
     if (!list) return;
     list.className = 'faq-list faq-list-v14';
     list.innerHTML = `
+      <details class="reveal visible"><summary>Why are we doing this?<span>+</span></summary><p>The expedition is designed to explore how structured preparation, daily movement, medical screening, and community support can help people living with Type 2 diabetes or prediabetes build confidence and sustainable routines while preparing for a carefully planned Himalayan trek.</p></details>
+      <details class="reveal visible"><summary>What will I gain from this expedition?<span>+</span></summary><p>The experience is intended to help participants build confidence, strengthen daily routines, connect with a supportive community, and carry practical habits such as exercise, meditation, and alignment with the circadian rhythm beyond the expedition. Individual experiences and outcomes may vary.</p></details>
       <details class="reveal visible"><summary>What happens during the 45 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
       <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No previous trekking experience is required. The planned route is suitable for physically fit beginners, but every participant must complete the preparation program and receive final medical clearance.</p></details>
       <details class="reveal visible"><summary>What is the Dayara Bugyal route like?<span>+</span></summary><p>The reference route covers about 21 km over four trekking days within a six-day journey. It rises from roughly 7,100 ft to 11,830 ft, with gradual sections as well as some steeper forest and meadow climbs.</p></details>

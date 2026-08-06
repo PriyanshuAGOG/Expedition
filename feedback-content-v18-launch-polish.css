@@ -57,31 +57,17 @@
     opacity: calc(var(--front-o,1) * clamp(0, (var(--reveal,1) - .42) / .36, 1));
     transform: translate3d(calc(-50% + var(--title-front-x,0px)), calc(var(--title-front-y,0px) + (1 - var(--reveal,1)) * 34px), 0);
   }
-  html.expedition-ready .campaign-v14 .hero-campaign {
-    opacity: calc(var(--chrome-o,1) * var(--reveal,1));
-    transform: translateX(-50%) translateY(calc((1 - var(--reveal,1)) * 26px));
-  }
   html.expedition-ready .campaign-v14 .hero-vine { opacity: calc(.58 * var(--reveal,1)); }
   html.expedition-ready .campaign-v14 .hero-brand,
   html.expedition-ready .hero-chrome { opacity: calc(var(--chrome-o,1) * var(--reveal,1)); }
 }
 html:not(.expedition-ready) .parallax-hero .title-band,
-html:not(.expedition-ready) .parallax-hero .hero-presents,
-html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
+html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
 
-/* ============ 2. Hero stat strip: thinner, less top-heavy ============ */
-.final-symmetry-v16 .hero-campaign-v16 {
-  gap: 7px !important;
-  bottom: clamp(20px, 4.4svh, 46px) !important;
-}
-.final-symmetry-v16 .hero-summary-v16 { padding: 3px !important; }
-.final-symmetry-v16 .hero-summary-v16 > span {
-  min-height: 42px !important;
-  gap: 2px !important;
-  padding: 6px 8px !important;
-}
-.final-symmetry-v16 .hero-ctas-v16 { gap: 8px !important; }
-.final-symmetry-v16 .hero-ctas-v16 .hero-cta { min-height: 42px !important; }
+/* ============ 2. Hero ============ */
+/* The hero information strip and the hero "Apply Now" button were removed
+   from the hero entirely (second pass), so every rule that sized, spaced or
+   re-centred them has gone with them. */
 /* The mobile floating nav bar this variable reserved space for was removed site-wide
    (navigation-removed-v14 / .floating-nav{display:none}), but several v10 rules still
    pad and offset around a phantom 62px bar. Zeroing it here fixes the hero CTA gap
@@ -90,11 +76,6 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   --v10-mobile-nav-height: 0px;
 }
 @media (max-width: 680px) {
-  .final-symmetry-v16 .hero-campaign-v16 {
-    bottom: max(16px, calc(env(safe-area-inset-bottom) + 10px)) !important;
-  }
-  .final-symmetry-v16 .hero-ctas-v16 .hero-cta { min-height: 40px !important; }
-  .final-symmetry-v16 .hero-ctas-v16 .hero-cta-primary { min-height: 44px !important; }
 }
 
 /* ============ 3. "Expedition at a glance" — concise, single-screen rhythm ============ */
@@ -131,10 +112,10 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   .final-simplification-v14 .glance-v14-card { min-height: 112px !important; padding: 14px !important; }
 }
 
-/* ============ 8. "Tracking Experience" card — Dayara Bugyal route link ============ */
-/* Folds the standalone "Route" card into the Tracking Experience card so the
+/* ============ 8. "Trekking Experience" card — Dayara Bugyal route link ============ */
+/* Folds the standalone "Route" card into the Trekking Experience card so the
    glance grid has exactly five cards (Expedition, Altitude, Training Period,
-   Daily Commitment, Tracking Experience) instead of six. */
+   Daily Commitment, Trekking Experience) instead of six. */
 .glance-v18-experience {
   grid-column: 1 / -1;
   display: flex;
@@ -438,89 +419,6 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   .tp-fern-left, .tp-fern-right { opacity: .2; width: 34vw; }
 }
 
-/* ============ 9. Hero stat strip — larger, still balanced ============ */
-/* The "45 Days" value/label pair read noticeably smaller than the strip's
-   other two items; enlarge all three consistently (label most of all) while
-   keeping fluid clamp() sizing so it never grows into the big "2026" title
-   behind it at any viewport, including short-height desktop windows. */
-.final-symmetry-v16 .hero-summary-v16 > span b {
-  font-size: clamp(1.05rem, 2.2vw, 1.6rem) !important;
-}
-.final-symmetry-v16 .hero-summary-v16 > span small {
-  display: block;
-  margin-top: 2px;
-  font-size: clamp(.66rem, 1.15vw, .82rem) !important;
-  letter-spacing: .02em;
-  opacity: .82;
-}
-@media (max-height: 700px) and (min-width: 681px) {
-  .final-symmetry-v16 .hero-campaign-v16 { bottom: clamp(14px, 3svh, 28px) !important; }
-  .final-symmetry-v16 .hero-summary-v16 > span b { font-size: clamp(.95rem, 1.9vw, 1.3rem) !important; }
-}
-@media (max-width: 680px) {
-  /* .hero-summary-v16 is a 3-column CSS grid (v16.css); stack it to one
-     column so each of the three items gets the full row width instead of
-     a cramped 1/3-width cell, which is what was forcing the enlarged text
-     to overflow its cell and overlap its neighbours. */
-  .final-symmetry-v16 .hero-summary-v16 { grid-template-columns: minmax(0, 1fr) !important; }
-  .final-symmetry-v16 .hero-summary-v16 > span {
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    width: 100%;
-    padding-inline: 16px !important;
-  }
-  .final-symmetry-v16 .hero-summary-v16 > span + span::before {
-    left: 14px !important;
-    right: 14px !important;
-    top: -1px !important;
-    bottom: auto !important;
-    width: auto !important;
-    height: 1px !important;
-    background: linear-gradient(90deg, transparent, rgba(215, 246, 168, .24), transparent) !important;
-  }
-  .final-symmetry-v16 .hero-summary-v16 > span b,
-  .final-symmetry-v16 .hero-summary-v16 > span small { width: auto !important; }
-  .final-symmetry-v16 .hero-summary-v16 > span b { font-size: clamp(1rem, 4.4vw, 1.2rem) !important; }
-  .final-symmetry-v16 .hero-summary-v16 > span small { margin-top: 0; text-align: right; }
-}
-
-/* Hero CTA: only "Apply Now" remains after removing "Explore the Journey".
-   .hero-ctas is a 2-column CSS grid (v16.css, selector .final-symmetry-v16
-   .hero-ctas-v16 — two classes, so a plain single-class .hero-ctas-v18-single
-   rule can never outrank it on specificity regardless of load order). With
-   one child left it still occupies only the first 1fr track, sitting left of
-   true centre instead of spanning the row. Chain both classes on the same
-   selector to tie (and win on source order), collapse to one column, and
-   stretch the button the full width of the hero CTA area at every breakpoint. */
-.hero-ctas-v16.hero-ctas-v18-single {
-  display: flex !important;
-  grid-template-columns: none !important;
-  justify-content: center !important;
-  width: 100%;
-}
-.hero-ctas-v16.hero-ctas-v18-single .hero-cta-primary {
-  flex: 1 1 auto !important;
-  width: 100% !important;
-  min-width: 0;
-  margin: 0;
-  text-align: center;
-}
-/* v10.css's own ≤680px rule (.final-responsive-qa-v10 .campaign-v14
-   .hero-ctas) re-imposes the 2-column grid at phone widths with three
-   chained classes' worth of specificity, beating the two-class rule above.
-   Match its exact ancestor chain (html.final-responsive-qa-v10 >
-   body.campaign-v14) so this rule outranks it instead of losing the tie. */
-@media (max-width: 680px) {
-  .final-responsive-qa-v10 .campaign-v14 .hero-ctas-v18-single {
-    display: flex !important;
-    grid-template-columns: none !important;
-  }
-  .final-responsive-qa-v10 .campaign-v14 .hero-ctas-v18-single .hero-cta-primary {
-    width: 100% !important;
-    min-width: 0;
-  }
-}
-
 /* ============ 10. Safety section — fix mobile-only decorative overlap ============ */
 /* .safety-flora .flora-a is positioned at top:42% of the whole section,
    tuned for the desktop layout where the image and copy sit side by side.
@@ -624,8 +522,32 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   .form-review-actions button { width: 100%; }
 }
 
-.field-upload input[type="file"] { display: block; width: 100%; margin-top: 6px; font-size: .78rem; }
-.field-upload > small { display: block; clear: both; margin-top: 10px; line-height: 1.5; }
+/* Upload field: helper text vs. the divider line.
+   styles-base.css styles `.field > small` as an absolutely-positioned corner
+   hint (right:0; bottom:9px) — fine for a one-word hint beside a text input,
+   but the upload field's `small` is a full sentence, so it was being laid on
+   top of the file input's bottom border (the "divider") and the selected-file
+   list. An earlier pass added margins here without resetting `position`, so
+   the overlap survived. Returning it to normal flow is the actual fix.
+   The divider then moves off the input and onto the field wrapper, so it sits
+   after the input, helper text, file list and validation area, and is pushed
+   down naturally as files are added — no fixed heights, no absolute offsets. */
+.field.field-upload { padding-bottom: 14px; border-bottom: 1px solid rgba(243, 240, 231, .26); }
+.field-upload input[type="file"] {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  border-bottom: 0;
+  font-size: .78rem;
+}
+.field-upload > small {
+  position: static;
+  right: auto;
+  bottom: auto;
+  display: block;
+  margin-top: 10px;
+  line-height: 1.55;
+}
 @media (max-width: 480px) {
   .field-upload input[type="file"] { font-size: .72rem; }
   .field-upload > small { margin-top: 12px; }
@@ -867,4 +789,97 @@ html:not(.expedition-ready) .parallax-hero .hero-campaign { opacity: 0; }
   margin: 18px auto 0;
   opacity: .5;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .32));
+}
+
+/* ============ 21. Ready to apply — centre the three-item meta group ============ */
+/* The Programme Fee item is removed at runtime (v3.js updateRegistration),
+   leaving three items — but styles-base.css still declares
+   `.campaign-v14 .registration-cta-card .registration-meta` as a FOUR-column
+   grid. At three children the fourth track stays empty, so the group hugs the
+   left of the card and reads visibly off-centre against the heading, worst at
+   laptop widths where the empty track is widest. Both earlier three-column
+   corrections (.registration-meta-no-price in v3.css and
+   .registration-cta-v18 here) are two-class selectors and lose the cascade to
+   that three-class rule regardless of load order — this matches its
+   specificity and lands later, so it actually applies. */
+.campaign-v14 .registration-cta-card .registration-meta-no-price {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  justify-content: center;
+  justify-items: center;
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+}
+.campaign-v14 .registration-cta-card .registration-meta-no-price > div {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  width: 100%;
+  text-align: center;
+}
+@media (max-width: 680px) {
+  /* styles-base collapses this to a 2-column grid on phones, which leaves the
+     third item alone on its own row and off-centre again. One column keeps
+     every item centred under the heading. */
+  .campaign-v14 .registration-cta-card .registration-meta-no-price {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 4px;
+  }
+}
+
+/* ============ 22. Application submitted — success state ============ */
+/* Restrained on purpose: this is a medical application, so the success card
+   uses the same green expedition surface as the review screen with a single
+   checkmark, no celebratory motion. */
+.form-confirmation-mark {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(215, 246, 168, .34);
+  border-radius: 50%;
+  background: rgba(215, 246, 168, .1);
+  color: var(--leaf, #d7f6a8);
+}
+.form-confirmation-mark svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.form-confirmation h3:focus-visible,
+.form-confirmation h3:focus { outline: 2px solid var(--leaf, #d7f6a8); outline-offset: 6px; }
+.form-confirmation-reference {
+  margin-top: 14px;
+  color: rgba(243, 240, 231, .55);
+  font-size: .68rem;
+  letter-spacing: .04em;
+  word-break: break-all;
+}
+.form-confirmation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.form-confirmation-actions .form-confirmation-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  color: var(--ink, #07120d);
+  background: var(--leaf, #d7f6a8);
+  font-size: .72rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+@media (max-width: 560px) {
+  .form-confirmation-actions { flex-direction: column; align-items: stretch; }
+  .form-confirmation-actions .form-confirmation-back { justify-content: center; }
+  .form-confirmation-actions button { width: 100%; }
 }

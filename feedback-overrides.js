@@ -3,7 +3,12 @@
 
   const CANONICAL_NAME = 'World Diabetes Day Himalayan Expedition 2026';
   const PROGRAMME_CONTACT = 'nirogbhumi@gmail.com';
-  const PROGRAMME_PHONE = '+91 73575 42882';
+  // Privacy/grievance contact for the DPDP notice and the optional-consent
+  // withdrawal line. Deliberately spelled out rather than derived from
+  // PROGRAMME_CONTACT: the mailbox is on the nirogbhoomi.com domain, and
+  // hardcoding it also keeps feedback-content-v3.js's global
+  // nirogbhumi@gmail.com -> priyanshu@nirogbhumi.com rewrite from touching it.
+  const PRIVACY_CONTACT = 'priyanshu@nirogbhoomi.com';
 
   const replaceProgrammeName = value => {
     if (typeof value !== 'string' || !value) return value;
@@ -54,13 +59,8 @@
   };
 
   const updateLandingCopy = () => {
-    const heroOverview = document.querySelector('.hero-campaign > p');
-    if (heroOverview) {
-      heroOverview.innerHTML = '<strong>60 days of preparation</strong> · 6 day Himalayan expedition · World Diabetes Day 2026';
-    }
-
     const purposeTitle = document.querySelector('#briefing-title');
-    if (purposeTitle) purposeTitle.innerHTML = 'Why we are <em>doing this?</em>';
+    if (purposeTitle) purposeTitle.innerHTML = 'Why are we <em>doing</em> this?';
   };
 
   const pricingConfig = window.NIROGBHUMI_PRICING || {
@@ -173,22 +173,20 @@
           <div>
             <p class="kicker">Privacy and consent</p>
             <h2 id="dpdp-dialog-title">DPDP Consent Notice and Privacy Policy</h2>
-            <small>Effective 1 August 2026 · Version 1.0</small>
+            <small>Effective 1 August 2026 · Version 1.1</small>
           </div>
           <button type="button" data-close-dpdp aria-label="Close privacy notice">×</button>
         </header>
         <div class="dpdp-dialog-body">
           <section>
             <h3>1. Data Fiduciary and contact</h3>
-            <p>Nirog Bhumi is the Data Fiduciary responsible for the personal data collected through this application. Privacy and grievance requests may be sent to <a href="mailto:${PROGRAMME_CONTACT}?subject=DPDP%20Rights%20Request">${PROGRAMME_CONTACT}</a> or raised by calling <a href="tel:+917357542882">${PROGRAMME_PHONE}</a>. Postal location: Jaipur, Rajasthan, India.</p>
+            <p>Nirog Bhumi is the Data Fiduciary responsible for the personal data collected through this application. Privacy and grievance requests may be sent to Priyanshu Agarwal at <a href="mailto:${PRIVACY_CONTACT}?subject=DPDP%20Rights%20Request">${PRIVACY_CONTACT}</a>.</p>
           </section>
           <section>
             <h3>2. Personal data covered by your consent</h3>
             <ul>
               <li>Identity and contact data, including your name, age, email address, phone number and location.</li>
-              <li>Health-related data that you choose to provide, including diagnosis year, current treatment, HbA1c and conditions selected in the initial health screen.</li>
-              <li>Readiness information, including availability, time commitment, motivation and emergency-contact details.</li>
-              <li>Consent records, submission time, notice version and security or access logs when the production intake system is activated.</li>
+              <li>Health-related data that you choose to provide, including diagnosis year, current treatment, blood-pressure readings, conditions selected in the health screen and any medical reports you upload.</li>
             </ul>
           </section>
           <section>
@@ -200,40 +198,33 @@
               <li>Planning and administering preparation, safety, travel and expedition operations.</li>
               <li>Maintaining necessary records, preventing misuse, handling grievances and complying with legal obligations.</li>
             </ul>
-            <p>Your information will not be used for unrelated promotional communication unless you separately select the optional future-programmes consent.</p>
+            <p class="dpdp-purpose-note">Your information will not be used for unrelated promotional communication unless you separately select the optional future-programmes consent.</p>
           </section>
           <section>
-            <h3>4. Current prototype status</h3>
-            <p>This prototype currently validates entries in your browser and does not transmit or store the completed application. Before formal applications open, it must be connected to an approved secure intake system. If the production collection, purpose, recipient categories or retention approach materially changes, an updated notice will be shown before consent is taken.</p>
-          </section>
-          <section>
-            <h3>5. Access and permitted sharing</h3>
+            <h3>4. Access and permitted sharing</h3>
             <p>Access may be given only to authorised Nirog Bhumi personnel, designated medical consultants or reviewers, and approved service providers supporting secure intake and programme administration. Information may also be disclosed where required by law. Personal data will not be sold. Identifiable health information, stories, photographs or recordings will not be published without a separate and explicit consent appropriate to that use.</p>
           </section>
           <section>
-            <h3>6. Retention, erasure and purpose limitation</h3>
-            <p>Application data will be retained only for as long as reasonably necessary to assess and administer this expedition, resolve grievances and meet legal obligations. A documented retention schedule must be approved before the production form opens. Data that is no longer required will be securely erased or irreversibly anonymised. Contact data used for future initiatives will be retained only until that separate optional consent is withdrawn or the purpose ends.</p>
+            <h3>5. Retention, erasure and purpose limitation</h3>
+            <p>Application data may be retained for up to 13 months after the expedition for study, research, evaluation, and necessary record-keeping connected to the expedition. After this retention period, the data will be securely deleted or anonymised unless a longer retention period is required under applicable law.</p>
+            <p>Contact data used for future initiatives is retained only until that separate optional consent is withdrawn or the purpose ends.</p>
           </section>
           <section>
-            <h3>7. Security safeguards and breach response</h3>
-            <p>The production intake must use appropriate access controls, confidentiality restrictions, encryption in transit and at rest where applicable, logging, secure backups and incident-response procedures. Access must be limited to people who require the data for the stated purposes. Personal-data breaches will be handled and notified in accordance with applicable law.</p>
+            <h3>6. Security safeguards and breach response</h3>
+            <p>Applications are submitted over an encrypted connection and stored in a hosted database. Submitted applications and any uploaded medical reports are readable only by the designated Nirog Bhumi administrator team; the public application form can create records but cannot read them back. Personal-data breaches will be handled and notified in accordance with applicable law.</p>
+            <p>Additional safeguards — including a documented access-review process, formal logging and retention of security logs, encrypted backups and a written incident-response procedure — are being put in place. This notice will be updated as each one becomes active, and no additional control is claimed here before it is.</p>
           </section>
           <section>
-            <h3>8. Your rights and withdrawal of consent</h3>
+            <h3>7. Your rights and withdrawal of consent</h3>
             <p>Subject to applicable law, you may request information about your personal data and its processing, correction, completion or updating, erasure, grievance redressal, withdrawal of consent and nomination of another person to exercise rights in specified circumstances.</p>
-            <p>You may withdraw consent as easily as you gave it by emailing <a href="mailto:${PROGRAMME_CONTACT}?subject=DPDP%20Consent%20Withdrawal">${PROGRAMME_CONTACT}</a> with the subject “DPDP Consent Withdrawal” or by calling <a href="tel:+917357542882">${PROGRAMME_PHONE}</a>. Withdrawal will not invalidate processing already carried out on the basis of valid consent, but it may prevent Nirog Bhumi from continuing to assess or administer your application.</p>
+            <p>You may withdraw consent as easily as you gave it by emailing <a href="mailto:${PRIVACY_CONTACT}?subject=DPDP%20Consent%20Withdrawal">${PRIVACY_CONTACT}</a> with the subject “DPDP Consent Withdrawal”. Withdrawal will not invalidate processing already carried out on the basis of valid consent, but it may prevent Nirog Bhumi from continuing to assess or administer your application.</p>
           </section>
           <section>
-            <h3>9. Grievance redressal</h3>
+            <h3>8. Grievance redressal</h3>
             <p>Privacy and data-protection complaints may be sent through the contact channel above. Nirog Bhumi should acknowledge and address the grievance through its published process. Where applicable, you may approach the Data Protection Board of India after using the available grievance channel.</p>
-          </section>
-          <section>
-            <h3>10. Adults only and consent evidence</h3>
-            <p>This application is intended only for adults aged 18 or above. When the production system is activated, Nirog Bhumi should retain evidence of the notice version, consent choices and timestamps so consent can be demonstrated, reviewed and withdrawn.</p>
           </section>
         </div>
         <footer class="dpdp-dialog-footer">
-          <p>Read this notice before selecting the required DPDP consent checkbox.</p>
           <button type="button" data-close-dpdp>Close notice</button>
         </footer>
       </div>
@@ -244,7 +235,7 @@
     <label class="consent-row"><input type="checkbox" name="selection" required><span>I understand that applying does not guarantee selection. *</span></label>
     <label class="consent-row"><input type="checkbox" name="expeditionContact" required><span>I consent to this information being used to assess my participation and contacting me about this expedition. *</span></label>
     <label class="consent-row consent-row-dpdp"><input type="checkbox" name="dpdpConsent" required><span>I have read the <a href="#dpdp-consent-dialog" data-open-dpdp>DPDP Consent Notice and Privacy Policy</a> and consent to Nirog Bhumi processing my personal data, including the health information I provide, for the specific purposes stated in that notice. *</span></label>
-    <label class="consent-row consent-row-optional"><input type="checkbox" name="futureContact"><span>Optional: I agree that Nirog Bhumi may contact me about future programmes and initiatives. I can withdraw this consent at any time.</span></label>`;
+    <label class="consent-row consent-row-optional"><input type="checkbox" name="futureContact"><span>Optional: I agree that Nirog Bhumi may contact me about future programmes and initiatives. I can withdraw this consent at any time by contacting <a href="mailto:${PRIVACY_CONTACT}?subject=Withdraw%20optional%20contact%20consent">${PRIVACY_CONTACT}</a>.</span></label>`;
 
   const configureApplicationForm = () => {
     if (!document.body.classList.contains('application-page')) return;

@@ -231,6 +231,24 @@
     let currentStep = 1;
     let selectedFiles = [];
     let lastSubmittedSnapshot = null;
+    // Latches true once the server confirms a write, so nothing can submit
+    // a second time without an explicit "Edit Application".
+    let submitted = false;
+    const referenceEl = confirmation?.querySelector('[data-application-reference]');
+
+    // Normalisation is shared with the duplicate check enforced by the
+    // database's unique indexes — the same value that is compared is the
+    // value that gets stored, so formatting variants can't slip past.
+    const normaliseEmail = value => String(value || '').trim().toLowerCase();
+    // Strip spaces, brackets, hyphens and dots but keep a leading "+", so
+    // "+91 98765 43210", "+91-98765-43210" and "(+91) 9876543210" all reduce
+    // to "+919876543210".
+    const normalisePhone = value => String(value || '').trim().replace(/[\s()\-.]/g, '');
+    const isDuplicateError = err => {
+      const message = String(err?.message || '');
+      return err?.code === 409
+        || /already exists|duplicate|unique/i.test(message);
+    };
 
     // One stable id per browser tab/session: the review → edit → resubmit
     // flow always upserts this same application row instead of creating a
@@ -346,7 +364,7 @@
 
     const submitReviewButton = reviewScreen?.querySelector('[data-submit-review]');
     submitReviewButton?.addEventListener('click', async () => {
-      if (submitReviewButton.disabled) return;
+      if (submitted || submitReviewButton.disabled) return;
       submitReviewButton.disabled = true;
       const originalLabel = submitReviewButton.textContent;
       submitReviewButton.textContent = 'Submitting…';
@@ -368,7 +386,11 @@
         }
 
         const values = {
-          fullName: data.get('fullName'), email: data.get('email'), phone: data.get('phone'),
+          fullName: data.get('fullName'),
+          // Stored normalised so the database's unique indexes treat
+          // "Priyanshu@Example.com" and "priyanshu@example.com", or
+          // "+91 98765 43210" and "(+91) 9876543210", as one person.
+          email: normaliseEmail(data.get('email')), phone: normalisePhone(data.get('phone')),
           age: numberOrUndefined('age'), city: data.get('city'), state: data.get('state'), country: data.get('country'),
           diagnosisYear: numberOrUndefined('diagnosisYear'), treatment: data.get('treatment'),
           bpSystolic: numberOrUndefined('bpSystolic'), bpDiastolic: numberOrUndefined('bpDiastolic'),
@@ -405,18 +427,61 @@
         }
         lastSubmittedSnapshot = values;
 
+        // Only reached on a confirmed successful write. The button stays
+        // disabled from here on (it is only re-enabled in the catch below),
+        // so a second click, a double-tap or an accidental Enter cannot
+        // submit again. Re-entering via "Edit Application" re-enables it
+        // explicitly, and because the row id is fixed per session that path
+        // updates the same record rather than creating a second one.
+        submitted = true;
         if (reviewScreen) reviewScreen.hidden = true;
-        confirmation.hidden = false; confirmation.focus();
+        form.hidden = true;
+        confirmation.hidden = false;
+        if (referenceEl) {
+          referenceEl.textContent = `Reference: ${applicationId}`;
+          referenceEl.hidden = false;
+        }
+        // Files are the only sensitive thing held in memory after success;
+        // the application id is deliberately kept so support can look the
+        // submission up and so an edit updates the same row.
+        selectedFiles = [];
+        renderFileList();
+        errors.textContent = '';
+        // Focus the heading rather than the container so screen readers
+        // announce the success message itself.
+        (confirmation.querySelector('#form-confirmation-title') || confirmation).focus();
       } catch (err) {
-        errors.textContent = err?.message || 'Something went wrong submitting this form. Please try again in a moment.';
+        const message = err?.message || '';
+        // The applications table carries unique indexes on the normalised
+        // email and phone, so a second application from the same person is
+        // rejected by the database rather than by the browser. Map that
+        // conflict onto the field it came from instead of surfacing a raw
+        // backend error.
+        if (isDuplicateError(err)) {
+          const dupEmail = /email/i.test(message);
+          const dupPhone = /phone/i.test(message);
+          if (dupPhone && !dupEmail) {
+            errors.textContent = 'This phone number is already linked to an application.';
+          } else if (dupEmail && !dupPhone) {
+            errors.textContent = 'This email address is already linked to an application.';
+          } else {
+            errors.textContent = 'This email address is already linked to an application.';
+          }
+        } else {
+          errors.textContent = message || 'Something went wrong submitting this form. Please try again in a moment.';
+        }
         errors.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
-      } finally {
         submitReviewButton.disabled = false;
         submitReviewButton.textContent = originalLabel;
       }
     });
 
     confirmation?.querySelector('[data-edit-application]')?.addEventListener('click', () => {
+      // Editing an already-submitted application re-arms the submit button.
+      // The row id is unchanged, so this updates the same record and is not
+      // reported as a duplicate of itself.
+      submitted = false;
+      if (submitReviewButton) submitReviewButton.disabled = false;
       confirmation.hidden = true; form.hidden = false; showStep(steps.length);
     });
     showStep(1, false);

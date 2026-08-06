@@ -6,12 +6,6 @@
   const CONTACT_PHONE_LINK = '+919588810249';
   const WEBSITE = 'https://nirogbhumi.com';
 
-  const removeObsoleteHeroActions = () => {
-    document.querySelectorAll('.hero-ctas a').forEach(link => {
-      if (/partner/i.test(link.textContent || '')) link.remove();
-    });
-  };
-
   const polishOnboarding = () => {
     const section = document.querySelector('#partners');
     if (!section) return;
@@ -101,7 +95,6 @@
 
   const run = () => {
     if (document.body.classList.contains('application-page')) return;
-    removeObsoleteHeroActions();
     polishOnboarding();
     rebuildFooter();
     addResponsiveHooks();
