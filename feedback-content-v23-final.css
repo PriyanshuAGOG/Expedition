@@ -1,0 +1,52 @@
+/* Final landing-page refinements: hero title depth and purpose copy wrapping. */
+
+/*
+ * Hero depth, back to front:
+ * near trees (6) -> 2026 (7) -> Himalayan Expedition (8)
+ * -> World Diabetes Day (9) -> foreground forest (10).
+ * This keeps the title embedded in the landscape while preventing the left
+ * and right near-tree layers from clipping “Himalayan Expedition”.
+ */
+#top .title-front {
+  z-index: 7;
+}
+
+#top .title-middle {
+  z-index: 8;
+}
+
+#top .title-back {
+  z-index: 9;
+}
+
+#top .layer-foreground,
+#top .mobile-foreground {
+  z-index: 10;
+}
+
+/* Give the purpose statement enough measure to resolve into the requested
+ * two-line composition on laptop/desktop without changing mobile readability. */
+#briefing .purpose-heading {
+  max-width: 1040px;
+}
+
+#briefing .purpose-heading > p:last-child {
+  max-width: 980px;
+}
+
+@media (min-width: 900px) {
+  #briefing .purpose-heading > p:last-child {
+    font-size: clamp(.9rem, 1.16vw, 1.05rem);
+    line-height: 1.65;
+  }
+
+  #briefing .purpose-second-line-v23 {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 899px) {
+  #briefing .purpose-heading > p:last-child {
+    max-width: 660px;
+  }
+}
