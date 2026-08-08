@@ -1,0 +1,275 @@
+/* DPDP consent-withdrawal mechanism · Version 1.3 */
+
+.consent-withdrawal-dialog {
+  width: min(92vw, 640px);
+  max-width: 640px;
+  max-height: min(88svh, 760px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  color: #f4f1e8;
+  background: #071b11;
+  border: 1px solid rgba(215, 246, 168, 0.42);
+  border-radius: 28px;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.56);
+  color-scheme: dark;
+}
+
+.consent-withdrawal-dialog::backdrop {
+  background: rgba(2, 8, 5, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.consent-withdrawal-shell {
+  position: relative;
+  padding: clamp(1.35rem, 4vw, 2.35rem);
+  background:
+    radial-gradient(circle at 85% 4%, rgba(215, 246, 168, 0.09), transparent 34%),
+    linear-gradient(145deg, rgba(11, 45, 28, 0.98), rgba(5, 24, 15, 0.99));
+}
+
+.consent-withdrawal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.45rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(215, 246, 168, 0.18);
+}
+
+.consent-withdrawal-header .kicker {
+  margin: 0 0 0.55rem;
+  color: #d7f6a8;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.consent-withdrawal-header h2 {
+  margin: 0;
+  color: #f6f2e8;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(2rem, 7vw, 3.45rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.consent-withdrawal-close {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  color: #e8f5d3;
+  background: rgba(7, 18, 13, 0.62);
+  border: 1px solid rgba(215, 246, 168, 0.28);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.consent-withdrawal-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.consent-withdrawal-form > label:not(.consent-withdrawal-confirmation):not(.consent-withdrawal-hp) {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.consent-withdrawal-form label > span {
+  color: rgba(244, 241, 232, 0.84);
+  font-size: 0.86rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.consent-withdrawal-form input[type='text'],
+.consent-withdrawal-form input[type='email'],
+.consent-withdrawal-form input[type='tel'] {
+  width: 100%;
+  min-height: 3.2rem;
+  box-sizing: border-box;
+  padding: 0.85rem 1rem;
+  color: #f5f1e8;
+  -webkit-text-fill-color: #f5f1e8;
+  caret-color: #d7f6a8;
+  background: rgba(3, 18, 11, 0.82);
+  border: 1px solid rgba(215, 246, 168, 0.22);
+  border-radius: 14px;
+  outline: none;
+  font: inherit;
+  color-scheme: dark;
+}
+
+.consent-withdrawal-form input::placeholder {
+  color: rgba(244, 241, 232, 0.38);
+  -webkit-text-fill-color: rgba(244, 241, 232, 0.38);
+}
+
+.consent-withdrawal-form input:focus-visible,
+.consent-withdrawal-close:focus-visible,
+.consent-withdrawal-submit:focus-visible,
+.footer-consent-withdrawal-link:focus-visible,
+.dpdp-inline-withdrawal-link:focus-visible {
+  outline: 2px solid #d7f6a8;
+  outline-offset: 3px;
+}
+
+.consent-withdrawal-confirmation {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.78rem;
+  align-items: flex-start;
+  margin-top: 0.15rem;
+  padding: 0.95rem 1rem;
+  background: rgba(215, 246, 168, 0.06);
+  border: 1px solid rgba(215, 246, 168, 0.18);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.consent-withdrawal-confirmation input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0.1rem 0 0;
+  accent-color: #d7f6a8;
+}
+
+.consent-withdrawal-confirmation span {
+  line-height: 1.5;
+}
+
+.consent-withdrawal-status {
+  min-height: 1.2rem;
+  color: rgba(244, 241, 232, 0.75);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.consent-withdrawal-status strong,
+.consent-withdrawal-status a {
+  color: #d7f6a8;
+}
+
+.consent-withdrawal-submit {
+  width: 100%;
+  min-height: 3.35rem;
+  padding: 0.85rem 1.1rem;
+  color: #092014;
+  background: #d7f6a8;
+  border: 1px solid #d7f6a8;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, opacity 160ms ease;
+}
+
+.consent-withdrawal-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #e4ffc0;
+}
+
+.consent-withdrawal-submit:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.consent-withdrawal-hp {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+.footer-v11-bottom .footer-consent-withdrawal-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-size: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(215, 246, 168, 0.42);
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.footer-v11-bottom .footer-consent-withdrawal-link:hover {
+  color: #d7f6a8;
+  text-decoration-color: #d7f6a8;
+}
+
+.dpdp-inline-withdrawal-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.65rem 1.15rem;
+  color: #d7f6a8;
+  background: rgba(215, 246, 168, 0.055);
+  border: 1px solid rgba(215, 246, 168, 0.45);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.dpdp-inline-withdrawal-link:hover {
+  color: #092014;
+  background: #d7f6a8;
+}
+
+@media (max-width: 680px) {
+  .consent-withdrawal-dialog {
+    width: min(94vw, 640px);
+    max-height: 90svh;
+    border-radius: 22px;
+  }
+
+  .consent-withdrawal-shell {
+    padding: 1.25rem;
+  }
+
+  .consent-withdrawal-header {
+    margin-bottom: 1.1rem;
+  }
+
+  .consent-withdrawal-header h2 {
+    font-size: clamp(1.9rem, 10vw, 2.7rem);
+  }
+
+  .consent-withdrawal-form input[type='text'],
+  .consent-withdrawal-form input[type='email'],
+  .consent-withdrawal-form input[type='tel'] {
+    min-height: 3.05rem;
+  }
+
+  .footer-v11-bottom {
+    row-gap: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .consent-withdrawal-submit {
+    transition: none;
+  }
+}

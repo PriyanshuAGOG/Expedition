@@ -27,6 +27,7 @@ const APPLICATION_STATUSES = [
 ];
 const NOMINATION_STATUSES = ['new', 'contacted', 'invited', 'declined', 'archived'];
 const PARTNERSHIP_STATUSES = ['new', 'in_discussion', 'confirmed', 'declined', 'archived'];
+const CONSENT_WITHDRAWAL_STATUSES = ['new', 'verified', 'processed', 'unable_to_verify', 'closed'];
 
 const adminOnlyPermissions = () => ([
   `create("any")`,
@@ -180,6 +181,30 @@ export const collections = [
     ],
     indexes: [
       { key: 'idx_status', type: 'key', attributes: ['status'] },
+    ],
+  },
+  {
+    // Dedicated privacy-operation queue. Public visitors can create a
+    // withdrawal request, while only the Admins team can read or process it.
+    // Repeat requests are permitted deliberately: a participant may need to
+    // submit a corrected request or withdraw consent for a later processing
+    // purpose after a previous request has already been handled.
+    id: 'consentWithdrawals',
+    name: 'Consent Withdrawal Requests',
+    permissions: adminOnlyPermissions(),
+    attributes: [
+      str('fullName', 200, true),
+      email('email', true),
+      str('phone', 40, true),
+      bool('confirmedWithdrawal', true),
+      str('requestedAt', 40, true),
+      enumAttr('status', CONSENT_WITHDRAWAL_STATUSES, false, { default: 'new' }),
+      str('source', 60, false, { default: 'web_consent_withdrawal' }),
+      str('internalNotes', 2000, false),
+    ],
+    indexes: [
+      { key: 'idx_status', type: 'key', attributes: ['status'] },
+      { key: 'idx_email', type: 'key', attributes: ['email'] },
     ],
   },
 ];

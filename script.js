@@ -31,7 +31,8 @@
     'feedback-content-v19.css',
     'feedback-content-v20.css',
     'feedback-content-v20-color-fix.css',
-    'feedback-content-v23-final.css'
+    'feedback-content-v23-final.css',
+    'feedback-content-v24-dpdp-withdrawal.css'
   ];
 
   const scripts = [
@@ -57,7 +58,8 @@
     'feedback-content-v20.js',
     'feedback-content-v21.js',
     'feedback-content-v22-privacy.js',
-    'feedback-content-v23-final.js'
+    'feedback-content-v23-final.js',
+    'feedback-content-v24-dpdp-withdrawal.js'
   ];
 
   root.classList.add('expedition-booting');
@@ -144,7 +146,7 @@
       await waitForFonts();
 
       const buildMeta = document.querySelector('meta[name="build-version"]');
-      buildMeta?.setAttribute('content', '2026.08.07-final-landing-copy-hero-v23');
+      buildMeta?.setAttribute('content', '2026.08.08-dpdp-withdrawal-v24');
     } catch (error) {
       console.error('[Expedition] Final production boot failed safely.', error);
     } finally {
