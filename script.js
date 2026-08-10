@@ -31,7 +31,8 @@
     'feedback-content-v19.css',
     'feedback-content-v20.css',
     'feedback-content-v20-color-fix.css',
-    'feedback-content-v23-final.css'
+    'feedback-content-v23-final.css',
+    'feedback-content-v24-register-interest.css'
   ];
 
   const scripts = [
@@ -57,7 +58,8 @@
     'feedback-content-v20.js',
     'feedback-content-v21.js',
     'feedback-content-v22-privacy.js',
-    'feedback-content-v23-final.js'
+    'feedback-content-v23-final.js',
+    'feedback-content-v24-register-interest.js'
   ];
 
   root.classList.add('expedition-booting');
