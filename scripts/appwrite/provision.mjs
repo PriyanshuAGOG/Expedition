@@ -20,7 +20,7 @@
 //   APPWRITE_ADMIN_EMAILS  comma-separated emails to invite into the Admins
 //                           team via Appwrite's built-in invite email.
 
-import { Client, TablesDB, Teams, Storage, Permission, Role, TablesDBIndexType } from 'node-appwrite';
+import { Client, TablesDB, Teams, Storage, Permission, Role, Query, TablesDBIndexType } from 'node-appwrite';
 import {
   DATABASE_ID, DATABASE_NAME,
   ADMIN_TEAM_ID, ADMIN_TEAM_NAME,
@@ -94,9 +94,48 @@ async function ensureTable(def) {
   }
 }
 
+// Appwrite's list endpoints page at a server-side default (well under the
+// 29 columns "applications" now has), so a bare listColumns()/listIndexes()
+// silently truncates on any table past that size — columns beyond the cutoff
+// look "missing" to callers even though they already exist, which made
+// ensureColumns() try to re-create one and get a 409 from Appwrite. Every
+// caller below goes through these two paginated helpers instead, looping on
+// offset until the response's own `total` count is satisfied.
+async function listAllColumns(tableId) {
+  const columns = [];
+  let total = Infinity;
+  while (columns.length < total) {
+    const res = await tablesDB.listColumns({
+      databaseId: DATABASE_ID,
+      tableId,
+      queries: [Query.limit(100), Query.offset(columns.length)],
+    });
+    total = res.total;
+    columns.push(...res.columns);
+    if (!res.columns.length) break; // guard against an unexpected total mismatch
+  }
+  return columns;
+}
+
+async function listAllIndexes(tableId) {
+  const indexes = [];
+  let total = Infinity;
+  while (indexes.length < total) {
+    const res = await tablesDB.listIndexes({
+      databaseId: DATABASE_ID,
+      tableId,
+      queries: [Query.limit(100), Query.offset(indexes.length)],
+    });
+    total = res.total;
+    indexes.push(...res.indexes);
+    if (!res.indexes.length) break;
+  }
+  return indexes;
+}
+
 async function existingColumnKeys(tableId) {
-  const res = await tablesDB.listColumns({ databaseId: DATABASE_ID, tableId });
-  return new Set(res.columns.map((c) => c.key));
+  const columns = await listAllColumns(tableId);
+  return new Set(columns.map((c) => c.key));
 }
 
 async function createColumn(tableId, attr) {
@@ -151,8 +190,8 @@ function updateColumn(tableId, attr) {
 
 async function ensureColumns(def) {
   step(`Columns for "${def.id}"`);
-  const res = await tablesDB.listColumns({ databaseId: DATABASE_ID, tableId: def.id });
-  const existing = new Map(res.columns.map((c) => [c.key, c]));
+  const columns = await listAllColumns(def.id);
+  const existing = new Map(columns.map((c) => [c.key, c]));
 
   for (const attr of def.attributes) {
     const column = existing.get(attr.key);
@@ -209,9 +248,9 @@ async function ensureEnumsUpToDate(def) {
   const enumAttrs = def.attributes.filter((attr) => attr.type === 'enum');
   if (!enumAttrs.length) return;
   await waitForColumnsReady(def.id);
-  const res = await tablesDB.listColumns({ databaseId: DATABASE_ID, tableId: def.id });
+  const columns = await listAllColumns(def.id);
   for (const attr of enumAttrs) {
-    const column = res.columns.find((c) => c.key === attr.key);
+    const column = columns.find((c) => c.key === attr.key);
     if (!column) continue;
     const currentElements = column.elements || [];
     const sameElements = currentElements.length === attr.elements.length
@@ -253,9 +292,9 @@ async function ensureEnumsUpToDate(def) {
 async function waitForColumnsReady(tableId, timeoutMs = 120_000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
-    const res = await tablesDB.listColumns({ databaseId: DATABASE_ID, tableId });
-    const pending = res.columns.filter((c) => c.status === 'processing');
-    const failed = res.columns.filter((c) => c.status === 'failed' || c.status === 'stuck');
+    const columns = await listAllColumns(tableId);
+    const pending = columns.filter((c) => c.status === 'processing');
+    const failed = columns.filter((c) => c.status === 'failed' || c.status === 'stuck');
     if (failed.length) {
       throw new Error(`Column(s) failed on ${tableId}: ${failed.map((c) => c.key).join(', ')}`);
     }
@@ -266,8 +305,8 @@ async function waitForColumnsReady(tableId, timeoutMs = 120_000) {
 }
 
 async function existingIndexKeys(tableId) {
-  const res = await tablesDB.listIndexes({ databaseId: DATABASE_ID, tableId });
-  return new Set(res.indexes.map((i) => i.key));
+  const indexes = await listAllIndexes(tableId);
+  return new Set(indexes.map((i) => i.key));
 }
 
 async function ensureIndexes(def) {
