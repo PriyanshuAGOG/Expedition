@@ -265,6 +265,12 @@
     if (consents) {
       consents.setAttribute('aria-label', 'Application consents');
       consents.innerHTML = consentMarkup();
+      if (!consents.parentElement.querySelector('.consent-related-links')) {
+        const relatedLinks = document.createElement('p');
+        relatedLinks.className = 'consent-related-links';
+        relatedLinks.innerHTML = 'Read the <a href="policies/participant-terms.html">Participant Terms &amp; Conditions</a> and other <a href="policies/index.html">policies &amp; guidelines</a>. To withdraw a consent later, use the <a href="consent-withdrawal.html">privacy &amp; consent form</a>.';
+        consents.insertAdjacentElement('afterend', relatedLinks);
+      }
     }
 
     if (!document.querySelector('#dpdp-consent-dialog')) {

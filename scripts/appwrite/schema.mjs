@@ -27,6 +27,13 @@ const APPLICATION_STATUSES = [
 ];
 const NOMINATION_STATUSES = ['new', 'contacted', 'invited', 'declined', 'archived'];
 const PARTNERSHIP_STATUSES = ['new', 'in_discussion', 'confirmed', 'declined', 'archived'];
+const PRIVACY_REQUEST_STATUSES = ['new', 'in_progress', 'completed', 'rejected'];
+// Mirrors the rights listed in the DPDP Consent Notice (feedback-content-v22-privacy.js,
+// section 8): access, correction, erasure, withdrawal of consent, and grievance
+// redressal, plus a catch-all for anything that doesn't fit those categories.
+const PRIVACY_REQUEST_TYPES = [
+  'Access my data', 'Correct my data', 'Erase my data', 'Withdraw consent', 'Grievance / complaint', 'Other',
+];
 
 const adminOnlyPermissions = () => ([
   `create("any")`,
@@ -175,6 +182,35 @@ export const collections = [
       ], true),
       str('message', 1200, true),
       enumAttr('status', PARTNERSHIP_STATUSES, false, { default: 'new' }),
+      str('source', 60, false, { default: 'web' }),
+      str('internalNotes', 2000, false),
+    ],
+    indexes: [
+      { key: 'idx_status', type: 'key', attributes: ['status'] },
+    ],
+  },
+  {
+    // Backs the site's consent-withdrawal / privacy-request form
+    // (consent-withdrawal.html), linked from the footer and from the DPDP
+    // notice. A public, unauthenticated site can't verify who is submitting
+    // a rights request, so this only records the request for an admin to
+    // action manually against the matching application/nomination/
+    // partnership row — it does not itself delete or alter any other table.
+    id: 'privacyRequests',
+    name: 'Privacy Requests',
+    permissions: adminOnlyPermissions(),
+    attributes: [
+      str('fullName', 200, true),
+      email('email', true),
+      str('phone', 40, false),
+      enumAttr('requestType', PRIVACY_REQUEST_TYPES, true),
+      // Free-text pointer the requester supplies to help an admin locate
+      // their existing record (the email/phone they applied with, an
+      // application reference, etc.) — not a foreign key, since a privacy
+      // request must still be accepted even if it doesn't match anything.
+      str('applicationReference', 200, false),
+      str('details', 2000, true),
+      enumAttr('status', PRIVACY_REQUEST_STATUSES, false, { default: 'new' }),
       str('source', 60, false, { default: 'web' }),
       str('internalNotes', 2000, false),
     ],

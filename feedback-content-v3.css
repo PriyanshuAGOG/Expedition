@@ -144,6 +144,21 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.registration-terms-note {
+  margin: clamp(20px, 3svh, 28px) 0 0;
+  color: rgba(243, 240, 231, .5);
+  font-size: .62rem;
+  letter-spacing: .01em;
+  text-align: center;
+}
+.registration-terms-note a {
+  color: var(--leaf);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 700;
+}
+.registration-terms-note a:hover { color: var(--cream); }
+
 /* Make the medical and wellness disclaimer easy to read */
 .site-footer .footer-disclaimer {
   max-width: 980px;
