@@ -38,7 +38,7 @@
 
         <aside class="fee-v11-final-note v11-reveal">
           <span aria-hidden="true">i</span>
-          <p><strong>Admission to the 45-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong></p>
+          <p><strong>Admission to the 45-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong> Full terms: <a href="policies/programme-fee-payments.html">Programme Fee &amp; Payments</a> and <a href="policies/cancellation-refunds.html">Cancellation, Refunds &amp; Changes</a>.</p>
         </aside>
       </div>
 
@@ -133,7 +133,7 @@
       </div>
 
       <div class="footer-v11-actions">
-        <nav aria-label="Footer navigation"><a href="#briefing">Purpose</a><a href="#trail">Journey</a><a href="#safety">Safety</a><a href="#faq">FAQs</a></nav>
+        <nav aria-label="Footer navigation"><a href="#briefing">Purpose</a><a href="#trail">Journey</a><a href="#safety">Safety</a><a href="#faq">FAQs</a><a href="policies/index.html">Policies</a><a href="consent-withdrawal.html">Privacy &amp; Consent</a></nav>
         <a class="footer-v11-apply" href="apply.html" target="_top">Apply Now</a>
       </div>
 

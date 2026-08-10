@@ -275,6 +275,15 @@
       if (/^dates$/i.test(label)) item.querySelector('strong').textContent = '13–18 Nov';
     });
     meta?.classList.add('registration-meta-no-price');
+
+    if (!card.querySelector('.registration-terms-note')) {
+      const applyButton = card.querySelector('.primary-apply-button');
+      const note = document.createElement('p');
+      note.className = 'registration-terms-note';
+      note.innerHTML = 'By applying you agree to the <a href="policies/participant-terms.html">Participant Terms &amp; Conditions</a>.';
+      if (applyButton) applyButton.insertAdjacentElement('beforebegin', note);
+      else card.appendChild(note);
+    }
   };
 
   const updateFaqs = () => {

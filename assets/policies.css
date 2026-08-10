@@ -1,0 +1,388 @@
+/* Shared shell + typography for the standalone policy/guideline pages
+   (policies/*.html) and the consent-withdrawal request page.
+
+   Page chrome deliberately reuses existing, already-polished site
+   components rather than a parallel set — .application-background,
+   .application-page-header and .application-back (all defined once in
+   styles-base.css and already responsive) are used verbatim in each new
+   page's markup, so these pages share apply.html's exact header and
+   backdrop instead of a look-alike copy that could drift from it.
+
+   The rules below are only what's genuinely new: a centred long-form hero,
+   restrained botanical framing consistent with how reading-heavy sections
+   (#eligibility, #faq) decorate on the landing page, the document-body
+   typography, and a self-contained static footer (no JS rebuild — these
+   pages sit outside the legacy script.js pipeline on purpose, so nothing
+   here depends on load order).
+
+   Two distinct typographic systems are in play:
+
+   1. Page chrome (kicker, page title, intro line, footer) uses the site's
+      own display type — Georgia-serif, green/ink colour tokens — so these
+      pages read as part of nirogbhumi.com.
+
+   2. The transcribed document body (.policy-doc) follows Nirog Bhumi's own
+      document convention as supplied: Calibri, 11pt body / 12pt section
+      headings, 1.1 line spacing. Calibri is a Microsoft ClearType font and
+      isn't licensed for @font-face web embedding, so it isn't self-hosted
+      here; the stack below renders as true Calibri wherever it's already
+      installed (Windows, Microsoft 365) and falls back to the closest
+      comparable system sans-serif elsewhere — the standard, honest way to
+      reference a proprietary font on the web without claiming an embedded
+      copy that doesn't exist. */
+
+:root {
+  --policy-font: Calibri, "Calibri Light", "Segoe UI", "Segoe UI Historic", ui-sans-serif, -apple-system, system-ui, Arial, sans-serif;
+  --policy-body-size: 11pt;
+  --policy-heading-size: 12pt;
+  --policy-line-height: 1.1;
+}
+
+/* ============ Hero ============ */
+/* Header/back-link/backdrop reuse .application-page-header, .application-back
+   and .application-background verbatim from styles-base.css — same markup
+   pattern as apply.html, no new selectors needed for the shell itself. */
+.policy-main {
+  position: relative;
+  isolation: isolate;
+  width: min(880px, 100%);
+  margin: 0 auto;
+  padding: clamp(56px, 9svh, 96px) clamp(18px, 5vw, 40px) 100px;
+}
+
+.policy-hero {
+  position: relative;
+  isolation: isolate;
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 6svh, 56px);
+  text-align: center;
+}
+.policy-hero .kicker { display: block; margin-bottom: 14px; color: var(--leaf); font-size: .6rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+.policy-hero h1 {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+  font-weight: 520;
+  line-height: .96;
+  letter-spacing: -.045em;
+}
+.policy-hero h1 em { color: var(--leaf); font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-style: italic; }
+.policy-hero > p { position: relative; z-index: 1; margin: 18px 0 0; color: var(--muted); font-size: .86rem; line-height: 1.65; }
+.policy-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin-top: 20px;
+  color: rgba(243, 240, 231, .5);
+  font-size: .64rem;
+  letter-spacing: .04em;
+}
+.policy-divider {
+  display: block;
+  width: min(120px, 26%);
+  margin: 26px auto 0;
+  opacity: .55;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .32));
+}
+
+/* Restrained corner framing — two small flora accents only, matching the
+   #eligibility/#faq treatment rather than a heavier landing-page section,
+   since this is dense reading content and shouldn't compete with it.
+   The whole box sits *above* the hero (bottom:100% of the hero's own box,
+   plus a margin gap) rather than overlapping its top edge, so the accents
+   sit in the empty space between the page header and the hero and never
+   share a line box with the kicker or heading text — anchoring by top:0
+   inside the hero (the previous approach) put them directly behind long
+   single-word headings like "Participant" at wider viewports. */
+/* top:auto explicitly overrides the shared .botanical-field class's
+   inset:0 (which sets top:0) — without it, having both top and bottom
+   set left the box anchored at the hero's top edge and growing downward
+   into the heading instead of sitting above it. */
+.policy-flora { position: absolute; z-index: 0; top: auto; left: -8px; right: -8px; bottom: 100%; height: 68px; margin-bottom: 10px; overflow: visible; pointer-events: none; }
+.policy-flora .flora { position: absolute; bottom: 0; display: block; max-width: none; height: auto; opacity: .4; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .4)); }
+.policy-flora .flora-a { left: 0; width: 7vw; max-width: 78px; }
+.policy-flora .flora-b { right: 0; width: 6vw; max-width: 68px; }
+@media (max-width: 680px) {
+  .policy-flora { height: 44px; opacity: .8; }
+  .policy-flora .flora-a { width: 14vw; }
+  .policy-flora .flora-b { width: 12vw; }
+}
+
+/* ============ Cross-document navigation ============ */
+/* Same component on the hub page and at the foot of every individual
+   policy, so moving between related documents never depends on the footer. */
+.policy-related {
+  width: min(880px, 100%);
+  margin: clamp(48px, 7svh, 76px) auto 0;
+  padding-top: clamp(28px, 4svh, 40px);
+  border-top: 1px solid var(--hairline);
+}
+.policy-related h2 { margin: 0 0 16px; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.policy-related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.policy-related-grid a {
+  display: block;
+  padding: 16px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px 22px 10px 22px;
+  background: rgba(215, 246, 168, .035);
+  transition: border-color .2s, background .2s;
+}
+.policy-related-grid a:hover { border-color: rgba(215, 246, 168, .4); background: rgba(215, 246, 168, .07); }
+.policy-related-grid small { display: block; margin-bottom: 6px; color: var(--leaf); font-size: .58rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.policy-related-grid strong { display: block; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 1rem; }
+.policy-related-grid span { display: block; margin-top: 6px; color: var(--muted); font-size: .74rem; line-height: 1.5; }
+
+/* ============ Hub page: full index of policy cards ============ */
+.policy-index-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 0 0 8px; }
+.policy-index-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px 32px 14px 32px;
+  background: rgba(7, 18, 13, .55);
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.policy-index-card:hover { border-color: rgba(215, 246, 168, .4); background: rgba(215, 246, 168, .06); transform: translateY(-2px); }
+.policy-index-card small { display: block; color: var(--leaf); font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.policy-index-card strong { display: block; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 1.24rem; color: var(--cream); }
+.policy-index-card p { margin: 0; color: var(--muted); font-size: .82rem; line-height: 1.6; }
+.policy-index-card span.go { margin-top: auto; padding-top: 4px; color: var(--leaf); font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.policy-index-card span.go::after { content: " →"; }
+
+.policy-index-note {
+  margin: clamp(40px, 6svh, 60px) 0 0;
+  padding: 20px 24px;
+  border-left: 3px solid var(--leaf);
+  border-radius: 4px 14px 4px 14px;
+  background: rgba(215, 246, 168, .05);
+}
+.policy-index-note p { margin: 0; color: var(--muted); font-size: .82rem; line-height: 1.65; }
+.policy-index-note p + p { margin-top: 10px; }
+.policy-index-note a { color: var(--leaf); text-decoration: underline; text-underline-offset: 3px; }
+.policy-index-note a:hover { color: var(--cream); }
+
+@media (max-width: 680px) {
+  .policy-index-grid { grid-template-columns: 1fr; }
+}
+
+/* ============ Document body: Calibri 11/12pt, 1.1 line height ============ */
+.policy-doc {
+  position: relative;
+  padding: clamp(26px, 4vw, 44px);
+  border: 1px solid var(--hairline);
+  border-radius: 14px 32px 14px 32px;
+  background: rgba(7, 18, 13, .55);
+  font-family: var(--policy-font);
+  font-size: var(--policy-body-size);
+  line-height: var(--policy-line-height);
+  color: rgba(243, 240, 231, .88);
+}
+.policy-doc > *:first-child { margin-top: 0; }
+.policy-doc section { margin: 0 0 2.2em; }
+.policy-doc section:last-child { margin-bottom: 0; }
+.policy-doc h2 {
+  margin: 0 0 .7em;
+  font-family: var(--policy-font);
+  font-size: var(--policy-heading-size);
+  font-weight: 700;
+  line-height: var(--policy-line-height);
+  color: var(--cream);
+}
+.policy-doc h3 {
+  margin: 1.6em 0 .5em;
+  font-family: var(--policy-font);
+  font-size: var(--policy-body-size);
+  font-weight: 700;
+  line-height: var(--policy-line-height);
+  color: var(--cream);
+}
+.policy-doc h3:first-child { margin-top: 0; }
+.policy-doc p { margin: 0 0 .9em; }
+.policy-doc p:last-child { margin-bottom: 0; }
+.policy-doc ul, .policy-doc ol { margin: 0 0 .9em; padding-left: 1.4em; }
+.policy-doc li { margin-bottom: .45em; }
+.policy-doc li:last-child { margin-bottom: 0; }
+.policy-doc strong { color: var(--cream); font-weight: 700; }
+.policy-doc a { color: var(--leaf); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.policy-doc a:hover { color: var(--cream); }
+.policy-doc hr { margin: 1.8em 0; border: 0; border-top: 1px solid var(--hairline); }
+
+/* The source documents' single-cell centred tables (their equivalent of a
+   callout / important-note box) render as this, not as a data table. */
+.policy-callout {
+  margin: 0 0 1.1em;
+  padding: .9em 1.1em;
+  border-left: 3px solid var(--leaf);
+  border-radius: 4px 14px 4px 14px;
+  background: rgba(215, 246, 168, .06);
+  font-size: var(--policy-body-size);
+  line-height: 1.35;
+}
+.policy-callout p { margin: 0; }
+.policy-callout p + p { margin-top: .6em; }
+
+.policy-doc-table-wrap { width: 100%; margin: 0 0 1.1em; overflow-x: auto; }
+.policy-doc table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-family: var(--policy-font);
+  font-size: var(--policy-body-size);
+  line-height: 1.3;
+}
+.policy-doc th, .policy-doc td {
+  padding: .55em .7em;
+  border: 1px solid var(--hairline);
+  text-align: left;
+  vertical-align: top;
+}
+.policy-doc th { color: var(--leaf); font-weight: 700; background: rgba(215, 246, 168, .06); white-space: nowrap; }
+.policy-doc caption { margin-bottom: .5em; text-align: left; font-weight: 700; color: var(--cream); }
+
+.policy-doc-footnote {
+  margin-top: 1.6em;
+  padding-top: 1.2em;
+  border-top: 1px solid var(--hairline);
+  color: rgba(243, 240, 231, .55);
+  font-size: .95em;
+  font-style: italic;
+}
+
+/* ============ Consent / privacy request form (consent-withdrawal.html) ============ */
+/* Standalone form styling — the site's real .field/.nomination-dialog-form
+   rules live in the layered feedback-content-v*.css files that only load
+   behind script.js's boot gate, which this page deliberately doesn't use
+   (see file header). These rules borrow the same tokens, corner radii and
+   spacing rhythm so the form still reads as the same product. */
+.policy-form-wrap {
+  padding: clamp(26px, 4vw, 44px);
+  border: 1px solid var(--hairline);
+  border-radius: 14px 32px 14px 32px;
+  background: rgba(7, 18, 13, .55);
+}
+.policy-form-wrap > p {
+  margin: 0 0 26px;
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.65;
+}
+.policy-form { display: grid; gap: 18px; }
+.policy-field { display: grid; gap: 8px; }
+.policy-field span {
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.policy-field input,
+.policy-field select,
+.policy-field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px 16px 8px 16px;
+  background: rgba(243, 240, 231, .05);
+  color: var(--cream);
+  font: inherit;
+  font-size: .88rem;
+  line-height: 1.5;
+}
+.policy-field textarea { resize: vertical; min-height: 110px; }
+.policy-field input:focus,
+.policy-field select:focus,
+.policy-field textarea:focus {
+  outline: 2px solid rgba(215, 246, 168, .55);
+  outline-offset: 1px;
+  border-color: rgba(215, 246, 168, .5);
+}
+.policy-field input::placeholder,
+.policy-field textarea::placeholder { color: rgba(243, 240, 231, .38); }
+.policy-field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--leaf) 50%), linear-gradient(135deg, var(--leaf) 50%, transparent 50%); background-position: calc(100% - 20px) center, calc(100% - 14px) center; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
+.policy-hp-field { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.policy-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 560px) { .policy-form-row { grid-template-columns: 1fr; } }
+
+.policy-form-submit {
+  justify-self: start;
+  margin-top: 6px;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--leaf);
+  color: var(--ink);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .18s, box-shadow .18s, opacity .18s;
+}
+.policy-form-submit:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(215, 246, 168, .22); }
+.policy-form-submit:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.policy-form-status {
+  display: block;
+  min-height: 1.4em;
+  color: var(--leaf);
+  font-size: .78rem;
+  font-weight: 600;
+}
+.policy-form-status[data-tone="error"] { color: #f3a5a5; }
+
+.policy-form-success {
+  padding: clamp(26px, 4vw, 44px);
+  border: 1px solid rgba(215, 246, 168, .35);
+  border-radius: 14px 32px 14px 32px;
+  background: rgba(215, 246, 168, .07);
+  text-align: center;
+}
+.policy-form-success h2 { margin: 0 0 12px; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 1.5rem; color: var(--cream); }
+.policy-form-success p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.65; }
+
+@media (max-width: 680px) {
+  .policy-form-wrap { padding: 22px 18px; border-radius: 10px 22px 10px 22px; }
+}
+
+/* ============ Static footer (no JS — these pages sit outside script.js) ============ */
+.policy-page-footer {
+  position: relative;
+  isolation: isolate;
+  margin-top: clamp(48px, 8svh, 90px);
+  padding: clamp(36px, 6vw, 56px) clamp(18px, 5vw, 58px) clamp(28px, 4vw, 40px);
+  border-top: 1px solid var(--hairline);
+  background: rgba(4, 12, 8, .75);
+}
+.policy-page-footer-inner { width: min(880px, 100%); margin: 0 auto; }
+.policy-page-footer-links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 18px; }
+.policy-page-footer-links a { color: rgba(244, 241, 232, .62); font-size: .62rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.policy-page-footer-links a:hover { color: var(--leaf); }
+.policy-page-footer p { margin: 0 0 10px; max-width: 760px; color: rgba(243, 240, 231, .55); font-size: .68rem; line-height: 1.6; }
+.policy-page-footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 16px; color: rgba(243, 240, 231, .4); font-size: .6rem; letter-spacing: .04em; }
+
+/* Print consistency: 11pt/1.1 spacing is a print-derived spec, so a printed
+   copy of the page should keep it exactly, without the site chrome. */
+@media print {
+  .application-page-header, .application-back, .policy-related, .policy-page-footer,
+  .policy-flora, .policy-divider, .application-background { display: none; }
+  .policy-main { width: 100%; padding: 0; }
+  .policy-doc { border: 0; background: none; color: #111; padding: 0; }
+  .policy-doc h2, .policy-doc h3, .policy-doc strong, .policy-doc th { color: #111; }
+  .policy-hero h1, .policy-hero h1 em { color: #111; font-style: normal; }
+}
+
+@media (max-width: 680px) {
+  .policy-main { padding: 40px 14px 72px; }
+  .policy-hero h1 { font-size: clamp(2.1rem, 10vw, 2.8rem); }
+  .policy-doc { padding: 20px 16px; border-radius: 10px 22px 10px 22px; }
+  .policy-related-grid { grid-template-columns: 1fr; }
+  .policy-page-footer { padding: 32px 16px 24px; }
+}

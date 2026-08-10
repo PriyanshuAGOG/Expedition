@@ -37,6 +37,17 @@ const TABLE_CONFIG = {
     ],
     searchKeys: ['contactName', 'organisation', 'email', 'message'],
   },
+  privacyRequests: {
+    label: 'Privacy Requests',
+    statuses: ['new', 'in_progress', 'completed', 'rejected'],
+    columns: [
+      { key: 'fullName', label: 'Name' },
+      { key: 'email', label: 'Email' },
+      { key: 'requestType', label: 'Request' },
+      { key: 'applicationReference', label: 'Reference' },
+    ],
+    searchKeys: ['fullName', 'email', 'phone', 'applicationReference', 'details'],
+  },
 };
 
 const FIELD_LABELS = {
@@ -50,6 +61,7 @@ const FIELD_LABELS = {
   consentExpeditionContact: 'Consented to contact about expedition', consentDpdp: 'Consented to DPDP notice', consentFutureContact: 'Opted into future updates',
   nomineeName: 'Nominee name', nomineeEmail: 'Nominee email', nomineePhone: 'Nominee phone',
   contactName: 'Contact name', organisation: 'Organisation', partnershipType: 'Partnership type', message: 'Message',
+  requestType: 'Request type', applicationReference: 'Reference supplied by requester', details: 'Details',
   status: 'Status', source: 'Source', internalNotes: 'Internal notes', $id: 'Record ID', $createdAt: 'Submitted', $updatedAt: 'Last updated',
 };
 

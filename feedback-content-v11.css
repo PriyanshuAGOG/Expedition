@@ -296,6 +296,8 @@
 .fee-v11-final-note > span { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); background: var(--leaf); font-family: Georgia,"Times New Roman",serif; font-style: italic; }
 .fee-v11-final-note p { margin: 0; color: rgba(244,241,232,.7); font-size: .72rem; line-height: 1.6; }
 .fee-v11-final-note strong { color: var(--cream); }
+.fee-v11-final-note a { color: var(--leaf); text-decoration: underline; text-underline-offset: 2px; font-weight: 700; }
+.fee-v11-final-note a:hover { color: var(--cream); }
 
 /* Gains: open mountain-elevation map, no stack of green boxes. */
 .final-production-v11 .gain-world-v11 {

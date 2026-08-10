@@ -132,6 +132,20 @@
    still conveyed without a corner badge reserving space. */
 .application-page .consent-row-optional { border-style: dashed; background: rgba(217, 188, 120, .035); }
 
+.application-page .consent-related-links {
+  margin: 14px 0 0;
+  color: rgba(243, 240, 231, .5);
+  font-size: .64rem;
+  line-height: 1.6;
+}
+.application-page .consent-related-links a {
+  color: var(--leaf);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.application-page .consent-related-links a:hover { color: var(--cream); }
+
 .dpdp-dialog {
   width: min(920px, calc(100% - 28px));
   max-height: min(90svh, 920px);

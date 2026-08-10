@@ -13,7 +13,7 @@
         <div>
           <p class="kicker">Privacy and Consent</p>
           <h2 id="dpdp-dialog-title">DPDP Consent Notice and Privacy Policy</h2>
-          <small>Effective 7 August 2026 · Version 1.2</small>
+          <small>Effective 10 August 2026 · Version 1.3</small>
         </div>
         <button type="button" data-close-dpdp aria-label="Close privacy notice">×</button>
       </header>
@@ -120,7 +120,7 @@
           <p>You may withdraw your consent by contacting Nirog Bhumi at:</p>
           <p><a href="mailto:${PRIVACY_EMAIL}?subject=DPDP%20Consent%20Withdrawal">${PRIVACY_EMAIL}</a></p>
           <p>You may write “DPDP Consent Withdrawal” in the subject line to help us process the request more quickly, but use of that exact subject line is not mandatory.</p>
-          <p>Nirog Bhumi should also make an accessible privacy-request or consent-withdrawal mechanism available through its website where practicable.</p>
+          <p>You can also submit an access, correction, erasure or consent-withdrawal request directly through our <a href="consent-withdrawal.html" target="_blank" rel="noopener">Privacy &amp; Consent Withdrawal form</a>.</p>
           <p>Withdrawal of consent will not invalidate processing lawfully undertaken before withdrawal. However, where particular personal or health information is necessary to assess, screen or administer your application, withdrawal may mean that Nirog Bhumi is unable to continue processing your application or permit your participation.</p>
         </section>
 

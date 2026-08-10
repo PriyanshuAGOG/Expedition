@@ -1,0 +1,62 @@
+/* Temporary launch-timing change — see feedback-content-v24-register-interest.js
+   for the full explanation and revert instructions. Pricing details are
+   hidden here (display:none), not deleted: everything below still exists
+   in the DOM and comes back the instant this stylesheet (and its sibling
+   script) are removed from script.js's load lists. */
+
+#pricing.register-mode-v24 .fee-heading-v20,
+#pricing.register-mode-v24 .fee-v11-overview,
+#pricing.register-mode-v24 .fee-v18-cost-card,
+#pricing.register-mode-v24 .fee-v11-final-note {
+  display: none !important;
+}
+
+.register-mode-hidden {
+  display: none !important;
+}
+
+/* Hiding the "Time: 5 mins" meta tile leaves the registration-meta grid
+   (forced to 3 columns elsewhere with !important — see the "Ready to
+   apply — centre the three-item meta group" comment in
+   feedback-content-v18-launch-polish.css for why it has to be !important
+   too) with an empty track, off-centre against the heading. This selector
+   is one class more specific than that rule, so it wins outright. Mobile
+   already collapses to a single column regardless of item count, so it
+   needs no matching override. */
+.campaign-v14 .registration-cta-card .registration-meta-no-price:has(> .register-mode-hidden) {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.fee-v24-register-panel {
+  position: relative;
+  z-index: 4;
+  width: min(640px, 100%);
+  margin: 0 auto;
+  padding: clamp(34px, 5vw, 58px) clamp(22px, 5vw, 46px);
+  text-align: center;
+  border: 1px solid rgba(215, 246, 168, .24);
+  border-radius: 10px 40px 10px 40px;
+  background: linear-gradient(145deg, rgba(8, 27, 17, .72), rgba(4, 16, 10, .5));
+  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .32);
+}
+.fee-v24-register-panel h2 {
+  margin: 0 0 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.1rem, 4.4vw, 3.3rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+.fee-v24-register-panel h2 em { color: var(--leaf); font-style: italic; }
+.fee-v24-register-panel > p:not(.kicker) {
+  margin: 0 auto;
+  max-width: 460px;
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.65;
+}
+.fee-v24-register-panel .fee-v24-register-button { margin: clamp(26px, 4svh, 38px) auto 0; }
+
+@media (max-width: 680px) {
+  .fee-v24-register-panel { padding: 30px 20px; border-radius: 8px 28px 8px 28px; }
+}
