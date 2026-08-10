@@ -7,6 +7,17 @@
     ? new URL('.', currentScript.src)
     : new URL('./', window.location.href);
 
+  // This is the manifest scripts/build-bundle.mjs reads to produce
+  // bundle.css/bundle.js — it is NOT loaded directly at runtime (see
+  // `bundledStylesheets`/`bundledScripts` below). Every file listed here
+  // still exists individually and is still the place to make edits; after
+  // editing any of them, run `node scripts/build-bundle.mjs` to fold the
+  // change into the two files the boot sequence actually fetches. See
+  // CLAUDE.md for why: loading 47 tiny files individually meant the
+  // browser's per-origin connection limit turned this into several
+  // serialized waves of requests before the page could ever become
+  // visible — bundling cut that to two requests without changing a single
+  // line of what any of these files actually do.
   const stylesheets = [
     'feedback-overrides.css',
     'feedback-content-v2.css',
@@ -61,6 +72,12 @@
     'feedback-content-v23-final.js',
     'feedback-content-v24-register-interest.js'
   ];
+
+  // What the boot sequence actually fetches. Regenerated from the two
+  // manifests above by scripts/build-bundle.mjs — see the comment on
+  // `stylesheets` above.
+  const bundledStylesheets = ['bundle.css'];
+  const bundledScripts = ['bundle.js'];
 
   root.classList.add('expedition-booting');
   root.classList.remove('expedition-ready');
@@ -132,16 +149,24 @@
 
   const waitForFonts = async () => {
     if (!document.fonts?.ready) return;
-    await Promise.race([document.fonts.ready, delay(1600)]);
+    // The site only uses system fonts (no @font-face) so fonts.ready
+    // resolves as soon as those are located locally — no network wait.
+    // The delay() here is only a safety cap for the rare case that never
+    // resolves, not an expected wait, so it can stay short.
+    await Promise.race([document.fonts.ready, delay(250)]);
   };
 
   const boot = async () => {
     try {
-      await Promise.all(stylesheets.map(loadStylesheet));
+      await Promise.all(bundledStylesheets.map(loadStylesheet));
 
-      for (const filename of scripts) {
-        await loadScript(filename);
-      }
+      // bundle.js is one file (the ~24 modules it contains already run in
+      // their original order, back to back, because it's a literal
+      // concatenation — see scripts/build-bundle.mjs), so there's no
+      // ordering to preserve across multiple loadScript() calls here
+      // anymore. Promise.all still reads correctly if bundledScripts ever
+      // grows back to more than one entry.
+      await Promise.all(bundledScripts.map(loadScript));
 
       await waitForFonts();
 
@@ -155,9 +180,14 @@
   };
 
   failsafeTimer = window.setTimeout(() => {
+    // Was 12s — with the boot sequence now down to two bundled requests
+    // instead of 47, anything still not ready by 6s is a genuine stall
+    // (offline, blocked request), not normal loading time, so there's no
+    // reason to leave a real visitor staring at a blank screen for 12s
+    // waiting to find that out.
     console.warn('[Expedition] Boot timeout reached; revealing the best available state.');
     revealFinalPage();
-  }, 12000);
+  }, 6000);
 
   boot();
 })();

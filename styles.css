@@ -1,4 +1,11 @@
-@import url('./styles-base.css');
+/*
+ * styles-base.css is linked directly in <head> (before this file), not
+ * @import-ed from here — @import is render-blocking on its own fetch
+ * completing first, so it turned one CSS request into two sequential ones
+ * before any styling (including the boot gate below) could apply. A plain
+ * second <link> lets the browser fetch both in parallel with the same
+ * cascade order (styles-base.css's rules still apply first).
+ */
 
 /*
  * Production boot gate.
@@ -13,7 +20,11 @@ html {
 html:not(.expedition-ready) body {
   visibility: hidden !important;
   opacity: 0 !important;
-  animation: expedition-boot-fallback 0s linear 12s forwards;
+  /* CSS-only fallback for the pathological case where script.js itself
+     never runs (blocked/failed request) — matches the JS failsafeTimer's
+     6s so a real stall never leaves the page blank noticeably longer via
+     one path than the other. */
+  animation: expedition-boot-fallback 0s linear 6s forwards;
 }
 
 html.expedition-ready body {
@@ -22,8 +33,12 @@ html.expedition-ready body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  html:not(.expedition-ready) body {
+    transform: translateY(6px);
+  }
   html.expedition-ready body {
-    transition: opacity 140ms ease-out;
+    transform: translateY(0);
+    transition: opacity 220ms ease-out, transform 220ms ease-out;
   }
 }
 
