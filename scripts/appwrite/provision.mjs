@@ -208,12 +208,17 @@ async function ensureColumns(def) {
       continue;
     }
 
-    // A column's type is immutable in Appwrite — there's no update*Column
-    // call that can turn an existing `string` into `text` or vice versa.
-    // Silently skipping this (the size/required checks below don't touch
-    // type at all) would hide exactly the situation that motivated this
-    // check: a column created under an old, since-changed schema.mjs type.
-    if (column.type !== attr.type) {
+    // A column's type is immutable in Appwrite, so a genuine type change
+    // (only string <-> text has come up in practice) needs a manual
+    // delete-and-recreate. This can't be a plain `column.type !== attr.type`
+    // comparison, though: Appwrite reports several of our logical schema
+    // types under a shared underlying storage type — email and enum columns
+    // both come back as `type: "string"`, and float comes back as `type:
+    // "double"` — so that comparison flagged 11 columns that were never
+    // actually wrong. Only string vs text is a real, distinguishable change.
+    const wantsText = attr.type === 'text';
+    const isText = column.type === 'text';
+    if (wantsText !== isText) {
       blockedBy(
         `${def.id}.${attr.key} — type ${column.type} → ${attr.type}`,
         `Appwrite does not support changing a column's type in place.`,
