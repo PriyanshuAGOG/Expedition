@@ -154,6 +154,11 @@ async function createColumn(tableId, attr) {
       return tablesDB.createBooleanColumn({ ...base, xdefault });
     case 'enum':
       return tablesDB.createEnumColumn({ ...base, elements, xdefault });
+    case 'text':
+      // Unbounded text has no `size` — stored off-page, not inline in the
+      // row, so it doesn't count against MariaDB's row-width cap the way a
+      // large `string` column does.
+      return tablesDB.createTextColumn({ ...base, xdefault });
     default:
       throw new Error(`Unknown attribute type "${type}" for ${tableId}.${key}`);
   }
@@ -183,6 +188,8 @@ function updateColumn(tableId, attr) {
       return tablesDB.updateBooleanColumn(base);
     case 'enum':
       return tablesDB.updateEnumColumn({ ...base, elements });
+    case 'text':
+      return tablesDB.updateTextColumn(base);
     default:
       throw new Error(`Unknown attribute type "${type}" for ${tableId}.${key}`);
   }
@@ -198,6 +205,20 @@ async function ensureColumns(def) {
     if (!column) {
       await createColumn(def.id, attr);
       ok(`created column ${attr.key}`);
+      continue;
+    }
+
+    // A column's type is immutable in Appwrite — there's no update*Column
+    // call that can turn an existing `string` into `text` or vice versa.
+    // Silently skipping this (the size/required checks below don't touch
+    // type at all) would hide exactly the situation that motivated this
+    // check: a column created under an old, since-changed schema.mjs type.
+    if (column.type !== attr.type) {
+      blockedBy(
+        `${def.id}.${attr.key} — type ${column.type} → ${attr.type}`,
+        `Appwrite does not support changing a column's type in place.`,
+        `Delete the "${attr.key}" column on the "${def.id}" table in the Appwrite console, then re-run this workflow to recreate it as ${attr.type}. If the table has no rows depending on this column yet, this is safe.`,
+      );
       continue;
     }
 

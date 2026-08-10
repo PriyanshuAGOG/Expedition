@@ -46,6 +46,13 @@ const adminOnlyPermissions = () => ([
 // (string/email/integer/float/boolean/enum) that provision.mjs dispatches on.
 const str = (key, size, required, opts = {}) => ({ type: 'string', key, size, required, array: false, ...opts });
 const strArray = (key, size, opts = {}) => ({ type: 'string', key, size, required: false, array: true, ...opts });
+// Unbounded text (Appwrite's createTextColumn, no `size` param) — unlike a
+// large `string` column, this isn't stored inline in the row, so it doesn't
+// count against MariaDB's ~65KB row-width cap. Use this instead of str()
+// with a big size for anything that can genuinely grow large (JSON blobs,
+// free-form long text); a table can only afford one or two large `string`
+// columns before hitting "maximum number or size of columns" on creation.
+const text = (key, required, opts = {}) => ({ type: 'text', key, required, array: false, ...opts });
 const email = (key, required, opts = {}) => ({ type: 'email', key, required, array: false, ...opts });
 const int = (key, required, opts = {}) => ({ type: 'integer', key, required, array: false, ...opts });
 const float = (key, required, opts = {}) => ({ type: 'float', key, required, array: false, ...opts });
@@ -156,8 +163,8 @@ export const collections = [
       str('changedAt', 40, true),
       str('changeSource', 40, false, { default: 'participant_edit' }),
       strArray('changedFields', 60),
-      str('previousValues', 10000, false),
-      str('newValues', 10000, false),
+      text('previousValues', false),
+      text('newValues', false),
       strArray('filesAdded', 60),
       strArray('filesRemoved', 60),
     ],
