@@ -50,7 +50,6 @@
 .fee-v24-register-panel h2 em { color: var(--leaf); font-style: italic; }
 .fee-v24-register-panel > p:not(.kicker) {
   margin: 0 auto;
-  max-width: 460px;
   color: var(--muted);
   font-size: .86rem;
   line-height: 1.65;

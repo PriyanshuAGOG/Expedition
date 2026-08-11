@@ -1212,8 +1212,8 @@
 
     const steps = [...document.querySelectorAll('#trail .xp-step')];
     setStep(steps[0], {
-      heading: 'Apply.',
-      body: 'Express your interest, and our team will personally reach out to you.',
+      heading: 'Express your interest.',
+      body: 'Our team will personally reach out to you.',
       footer: 'Initial application · 20 seconds'
     });
     setStep(steps[1], { footer: 'About one hour each morning' });
@@ -3658,7 +3658,7 @@
     <div class="fee-v24-register-panel">
       <p class="kicker">Registrations open</p>
       <h2>Register your <em>interest.</em></h2>
-      <p>Register your interest on WhatsApp and our team will personally walk you through the next steps.</p>
+      <p>Register your interest, and our team will personally walk you through the next steps.</p>
       <a class="primary-apply-button fee-v24-register-button" href="${WHATSAPP_URL}" target="_blank" rel="noopener noreferrer">Register Interest</a>
     </div>`;
 
