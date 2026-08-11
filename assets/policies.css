@@ -306,6 +306,16 @@
 .policy-field input::placeholder,
 .policy-field textarea::placeholder { color: rgba(243, 240, 231, .38); }
 .policy-field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--leaf) 50%), linear-gradient(135deg, var(--leaf) 50%, transparent 50%); background-position: calc(100% - 20px) center, calc(100% - 14px) center; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
+/* Native <option> elements render with the browser/OS's own popup surface,
+   not the page's translucent dark background — without an explicit opaque
+   background + text color here, some platforms (notably Chromium on
+   Windows) fall back to black-on-white or white-on-white, unreadable
+   against this dark theme. Solid, high-contrast colors from the existing
+   palette, not a custom JS dropdown. */
+.policy-field select option {
+  background: #0b1e15;
+  color: #f3f0e7;
+}
 .policy-hp-field { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .policy-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }

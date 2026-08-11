@@ -13,7 +13,16 @@
 <!--
   INTERNAL — not rendered, not shown on the site.
   Document: Privacy & Consent Withdrawal request form
-  Version: 1.0 (initial publication)
+  Version: 1.1 — 2026-08-11: hero paragraph fully replaced with clearer
+  withdrawal-of-consent language; removed the DPDP explanatory paragraph
+  above the form (that notice already lives at the application form's
+  medical-consent step and in Participant Terms & Conditions §6); removed
+  the public Application Form related-card, since the application route is
+  not publicly surfaced for now; related-policy cards now match the All
+  Policies hub cards exactly; fixed low-contrast native <select> options in
+  assets/policies.css.
+  Version: 1.2 — 2026-08-11: added Food & Meal Arrangements and Travel
+  Guidelines to the related-policy cards now that those pages exist.
   No source Google Doc — Nirog Bhumi-authored form, submitted to the
   privacyRequests Appwrite table for internal review.
   Full revision history: /policies/CHANGELOG.md — update that file, and this
@@ -39,14 +48,12 @@
       </div>
       <p class="kicker">Privacy &amp; Consent</p>
       <h1>Privacy &amp; Consent <em>Withdrawal.</em></h1>
-      <p>Use this form to request access to, correction of, or erasure of the personal or health data you've shared with us, or to withdraw a consent you previously gave — including the optional consent for future contact from Nirog Bhumi. This does not withdraw the accuracy declaration or safety consents required to remain an active expedition participant; contact us directly for that.</p>
+      <p>Use this form to request access to, correction of, or erasure of the personal or health data you've shared with us, or to withdraw a consent you previously gave — including the optional consent for future contact from Nirog Bhumi. Withdrawal of consent will not invalidate processing lawfully undertaken before withdrawal. However, where particular personal or health information is necessary to assess, screen or administer your application, withdrawal may mean that Nirog Bhumi is unable to continue processing your application or permit your participation.</p>
       <div class="policy-meta"><span>Reviewed by our team directly</span><span>Response by email</span></div>
       <img class="policy-divider" src="/assets/botanicals/webp/52-mossy-twig-divider.webp" alt="" aria-hidden="true">
     </div>
 
     <div class="policy-form-wrap">
-      <p>Full details of what we collect, why, how long we keep it and your rights under the Digital Personal Data Protection Act, 2023 are in the consent notice shown at the medical-consent step of the <a href="/apply.html">application form</a>, and summarised in Section 6 of the <a href="/policies/participant-terms.html">Participant Terms &amp; Conditions</a>. You can also reach us directly at <a href="mailto:priyanshu@nirogbhumi.com">priyanshu@nirogbhumi.com</a>.</p>
-
       <form class="policy-form" id="privacy-request-form">
         <div class="policy-form-row">
           <label class="policy-field"><span>Full name *</span><input name="fullName" autocomplete="name" required></label>
@@ -75,11 +82,44 @@
     </div>
 
     <nav class="policy-related" aria-label="Related documents">
-      <h2>Read together with</h2>
-      <div class="policy-related-grid">
-        <a href="/policies/participant-terms.html"><small>Policy</small><strong>Participant Terms &amp; Conditions</strong><span>Section 6 covers required documents and personal data.</span></a>
-        <a href="/apply.html"><small>Application</small><strong>Application Form</strong><span>The full DPDP consent notice is shown at the medical-consent step.</span></a>
-        <a href="/policies/index.html"><small>Hub</small><strong>All Policies</strong><span>Accommodation, fees, cancellations and participant terms.</span></a>
+      <h2>Read the policies in accordance with</h2>
+      <div class="policy-index-grid">
+        <a class="policy-index-card" href="/policies/participant-terms.html">
+          <small>Policy 1</small>
+          <strong>Participant Terms &amp; Conditions</strong>
+          <p>Risks of high-altitude trekking, fitness and medical declarations, and the safety protocols that apply throughout the expedition.</p>
+          <span class="go">Read the terms</span>
+        </a>
+        <a class="policy-index-card" href="/policies/programme-fee-payments.html">
+          <small>Policy 2</small>
+          <strong>Programme Fee &amp; Payments</strong>
+          <p>What the programme fee includes and excludes, payment stages, the Indiahikes Shield, add-ons and rental rates.</p>
+          <span class="go">Read the fee guide</span>
+        </a>
+        <a class="policy-index-card" href="/policies/cancellation-refunds.html">
+          <small>Policy 3</small>
+          <strong>Cancellation, Refunds &amp; Changes</strong>
+          <p>How withdrawals, medical non-clearance, trek suspensions and itinerary changes are handled, and how refunds are calculated.</p>
+          <span class="go">Read the cancellation policy</span>
+        </a>
+        <a class="policy-index-card" href="/policies/accommodation-guide.html">
+          <small>Policy 4</small>
+          <strong>Accommodation Guide</strong>
+          <p>Where participants stay before, during and immediately after the expedition — Dehradun hotels and on-trek camping arrangements.</p>
+          <span class="go">Read the accommodation guide</span>
+        </a>
+        <a class="policy-index-card" href="/policies/food-meal-arrangements.html">
+          <small>Policy 5</small>
+          <strong>Food &amp; Meal Arrangements</strong>
+          <p>Which meals Indiahikes and Nirog Bhumi arrange during the expedition, which you'll need to arrange yourself, and how to carry emergency glucose on the trail.</p>
+          <span class="go">Read the food guide</span>
+        </a>
+        <a class="policy-index-card" href="/policies/travel-guidelines.html">
+          <small>Policy 6</small>
+          <strong>Travel Guidelines</strong>
+          <p>Getting to Dehradun, the Indiahikes pickup and return schedule, and how to plan for weather-related changes.</p>
+          <span class="go">Read the travel guide</span>
+        </a>
       </div>
     </nav>
   </main>
@@ -89,7 +129,6 @@
       <div class="policy-page-footer-links">
         <a href="/">Expedition Home</a>
         <a href="/policies/index.html">All Policies</a>
-        <a href="/apply.html">Apply</a>
         <a href="/consent-withdrawal.html">Privacy &amp; Consent</a>
       </div>
       <p>Nirog Bhumi does not replace medical advice, diagnosis, emergency care or treatment. Speak with your treating physician before changing medication, diet or physical activity.</p>
