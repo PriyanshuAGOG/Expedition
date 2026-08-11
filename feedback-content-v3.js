@@ -107,8 +107,8 @@
 
     const steps = [...document.querySelectorAll('#trail .xp-step')];
     setStep(steps[0], {
-      heading: 'Apply.',
-      body: 'Express your interest, and our team will personally reach out to you.',
+      heading: 'Express your interest.',
+      body: 'Our team will personally reach out to you.',
       footer: 'Initial application · 20 seconds'
     });
     setStep(steps[1], { footer: 'About one hour each morning' });
