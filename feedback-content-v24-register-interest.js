@@ -98,7 +98,7 @@
     <div class="fee-v24-register-panel">
       <p class="kicker">Registrations open</p>
       <h2>Register your <em>interest.</em></h2>
-      <p>We're finalising the full programme details. Register your interest on WhatsApp and our team will personally walk you through the next steps.</p>
+      <p>Register your interest on WhatsApp and our team will personally walk you through the next steps.</p>
       <a class="primary-apply-button fee-v24-register-button" href="${WHATSAPP_URL}" target="_blank" rel="noopener noreferrer">Register Interest</a>
     </div>`;
 
@@ -112,11 +112,22 @@
     inner.insertAdjacentHTML('beforeend', registerPanelMarkup());
   };
 
+  // The #register section ("Ready to apply?" → rewritten above to "Register
+  // your interest") now sits directly under #pricing's own "Register your
+  // interest" panel, saying the same thing twice back to back. Hide it the
+  // same reversible way as pricing — rewriteRegistrationCard() above still
+  // runs first, so the text is ready to reappear correctly once this
+  // section is unhidden alongside the pricing/transaction details.
+  const hideRedundantRegisterSection = () => {
+    document.querySelector('#register')?.classList.add('register-mode-hidden');
+  };
+
   const run = () => {
     hidePricingDetails();
     convertApplyButtons();
     hideApplyContext();
     rewriteRegistrationCard();
+    hideRedundantRegisterSection();
   };
 
   if (document.readyState === 'loading') {

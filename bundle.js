@@ -1211,7 +1211,11 @@
     document.querySelector('#trail .xp-legend')?.remove();
 
     const steps = [...document.querySelectorAll('#trail .xp-step')];
-    setStep(steps[0], { footer: 'Initial application · 5 minutes' });
+    setStep(steps[0], {
+      heading: 'Apply.',
+      body: 'Express your interest, and our team will personally reach out to you.',
+      footer: 'Initial application · 20 seconds'
+    });
     setStep(steps[1], { footer: 'About one hour each morning' });
     setStep(steps[2], {
       heading: 'Receive approval to trek.',
@@ -1284,6 +1288,13 @@
 
     const afterSelection = document.querySelector('.participant-future > summary');
     if (afterSelection) afterSelection.innerHTML = 'After selection: meet the participants <span>+</span>';
+
+    // The journal section's three <details> ("Before selection", "After
+    // selection", "What will be documented") are static markup, never
+    // rebuilt by any script, so nothing else needs to re-bind this after
+    // us — unlike the FAQ list, which gets its own copy of this same
+    // pattern where it's actually needed (see feedback-content-v14.js).
+    bindSingleOpen(document.querySelector('#journal'));
   };
 
   const nominationMarkup = () => `
@@ -2735,6 +2746,26 @@
 
   const DAYARA_URL = 'https://indiahikes.com/dayara-bugyal-trek';
 
+  // Same small helper as feedback-content-v3.js's bindSingleOpen — each
+  // module IIFE keeps its own copy rather than sharing state, matching
+  // this codebase's existing convention (see e.g. CONTACT_EMAIL/
+  // CONTACT_PHONE redefined locally in every file that needs them).
+  // Needed here specifically because trimFaqs() below replaces
+  // .faq-list's innerHTML wholesale, which drops any listeners bound by
+  // earlier scripts (v3.js's own updateFaqs() binds this same list, but
+  // v12/v13/v14 each rebuild it again afterward with different content).
+  const bindSingleOpen = container => {
+    container?.querySelectorAll('details').forEach(detail => {
+      detail.open = false;
+      detail.addEventListener('toggle', () => {
+        if (!detail.open) return;
+        container.querySelectorAll('details[open]').forEach(other => {
+          if (other !== detail) other.open = false;
+        });
+      });
+    });
+  };
+
   const removeNavigation = () => {
     document.querySelectorAll('.floating-nav, [class*="floating-nav"]').forEach(node => node.remove());
     document.documentElement.classList.add('navigation-removed-v14');
@@ -2831,6 +2862,7 @@
       <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No previous trekking experience is required. The planned route is suitable for physically fit beginners, but every participant must complete the preparation program and receive final medical clearance.</p></details>
       <details class="reveal visible"><summary>What is the Dayara Bugyal route like?<span>+</span></summary><p>The reference route covers about 21 km over four trekking days within a six-day journey. It rises from roughly 7,100 ft to 11,830 ft, with gradual sections as well as some steeper forest and meadow climbs.</p></details>
       <details class="reveal visible"><summary>What fitness level should I work towards?<span>+</span></summary><p>Work towards steady walking endurance, stronger legs and core, better balance, mobility and the ability to recover between active days. Final readiness will be assessed through programme participation, submitted medical information and final medical clearance.</p></details>`;
+    bindSingleOpen(list);
   };
 
   const tightenTransitions = () => {
@@ -3626,7 +3658,7 @@
     <div class="fee-v24-register-panel">
       <p class="kicker">Registrations open</p>
       <h2>Register your <em>interest.</em></h2>
-      <p>We're finalising the full programme details. Register your interest on WhatsApp and our team will personally walk you through the next steps.</p>
+      <p>Register your interest on WhatsApp and our team will personally walk you through the next steps.</p>
       <a class="primary-apply-button fee-v24-register-button" href="${WHATSAPP_URL}" target="_blank" rel="noopener noreferrer">Register Interest</a>
     </div>`;
 
@@ -3640,11 +3672,22 @@
     inner.insertAdjacentHTML('beforeend', registerPanelMarkup());
   };
 
+  // The #register section ("Ready to apply?" → rewritten above to "Register
+  // your interest") now sits directly under #pricing's own "Register your
+  // interest" panel, saying the same thing twice back to back. Hide it the
+  // same reversible way as pricing — rewriteRegistrationCard() above still
+  // runs first, so the text is ready to reappear correctly once this
+  // section is unhidden alongside the pricing/transaction details.
+  const hideRedundantRegisterSection = () => {
+    document.querySelector('#register')?.classList.add('register-mode-hidden');
+  };
+
   const run = () => {
     hidePricingDetails();
     convertApplyButtons();
     hideApplyContext();
     rewriteRegistrationCard();
+    hideRedundantRegisterSection();
   };
 
   if (document.readyState === 'loading') {
