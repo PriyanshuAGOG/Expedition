@@ -2406,6 +2406,23 @@ body{padding-bottom:82px}
   .campaign-v14 .xp-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+/* Centre the incomplete last row of the 5-card journey grid on wider
+   screens. Six notional columns let the five cards occupy a column each in
+   pairs (span:2) on rows one and two, while the two cards on the leftover
+   third row are shifted to sit centred as a pair instead of flush left
+   with empty space on the right. Scoped to min-width:1041px so it never
+   overlaps the dedicated 681-1040px 2-column tablet rule above. */
+@media(min-width:1041px){
+  .campaign-v14 .xp-timeline{
+    grid-template-columns:repeat(6,minmax(0,1fr));
+  }
+  .campaign-v14 .xp-step{
+    grid-column:span 2;
+  }
+  .campaign-v14 .xp-timeline .xp-step:nth-of-type(4){grid-column:2 / 4}
+  .campaign-v14 .xp-timeline .xp-step:nth-of-type(5){grid-column:4 / 6}
+}
+
 /* Clean reveal timing
    Blur during scrolling is expensive and leaves text soft while the page is
    moving. A short opacity-and-rise transition keeps hierarchy without lag. */
