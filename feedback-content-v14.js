@@ -3,6 +3,26 @@
 
   const DAYARA_URL = 'https://indiahikes.com/dayara-bugyal-trek';
 
+  // Same small helper as feedback-content-v3.js's bindSingleOpen — each
+  // module IIFE keeps its own copy rather than sharing state, matching
+  // this codebase's existing convention (see e.g. CONTACT_EMAIL/
+  // CONTACT_PHONE redefined locally in every file that needs them).
+  // Needed here specifically because trimFaqs() below replaces
+  // .faq-list's innerHTML wholesale, which drops any listeners bound by
+  // earlier scripts (v3.js's own updateFaqs() binds this same list, but
+  // v12/v13/v14 each rebuild it again afterward with different content).
+  const bindSingleOpen = container => {
+    container?.querySelectorAll('details').forEach(detail => {
+      detail.open = false;
+      detail.addEventListener('toggle', () => {
+        if (!detail.open) return;
+        container.querySelectorAll('details[open]').forEach(other => {
+          if (other !== detail) other.open = false;
+        });
+      });
+    });
+  };
+
   const removeNavigation = () => {
     document.querySelectorAll('.floating-nav, [class*="floating-nav"]').forEach(node => node.remove());
     document.documentElement.classList.add('navigation-removed-v14');
@@ -99,6 +119,7 @@
       <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No previous trekking experience is required. The planned route is suitable for physically fit beginners, but every participant must complete the preparation program and receive final medical clearance.</p></details>
       <details class="reveal visible"><summary>What is the Dayara Bugyal route like?<span>+</span></summary><p>The reference route covers about 21 km over four trekking days within a six-day journey. It rises from roughly 7,100 ft to 11,830 ft, with gradual sections as well as some steeper forest and meadow climbs.</p></details>
       <details class="reveal visible"><summary>What fitness level should I work towards?<span>+</span></summary><p>Work towards steady walking endurance, stronger legs and core, better balance, mobility and the ability to recover between active days. Final readiness will be assessed through programme participation, submitted medical information and final medical clearance.</p></details>`;
+    bindSingleOpen(list);
   };
 
   const tightenTransitions = () => {

@@ -106,7 +106,11 @@
     document.querySelector('#trail .xp-legend')?.remove();
 
     const steps = [...document.querySelectorAll('#trail .xp-step')];
-    setStep(steps[0], { footer: 'Initial application · 5 minutes' });
+    setStep(steps[0], {
+      heading: 'Apply.',
+      body: 'Express your interest, and our team will personally reach out to you.',
+      footer: 'Initial application · 20 seconds'
+    });
     setStep(steps[1], { footer: 'About one hour each morning' });
     setStep(steps[2], {
       heading: 'Receive approval to trek.',
@@ -179,6 +183,13 @@
 
     const afterSelection = document.querySelector('.participant-future > summary');
     if (afterSelection) afterSelection.innerHTML = 'After selection: meet the participants <span>+</span>';
+
+    // The journal section's three <details> ("Before selection", "After
+    // selection", "What will be documented") are static markup, never
+    // rebuilt by any script, so nothing else needs to re-bind this after
+    // us — unlike the FAQ list, which gets its own copy of this same
+    // pattern where it's actually needed (see feedback-content-v14.js).
+    bindSingleOpen(document.querySelector('#journal'));
   };
 
   const nominationMarkup = () => `
