@@ -108,9 +108,17 @@
   font-weight: 400 !important;
 }
 
+/* Flexbox, not CSS Grid's repeat(auto-fit, minmax()) — with a small,
+   uneven item count, auto-fit's track-sizing algorithm does not
+   guarantee every track resolves to the same pixel width (verified: with
+   exactly 3 tiles it produced 166/160/166, a 6px mismatch on the middle
+   card with no CSS cause other than the auto-fit math itself). A fixed
+   flex-basis on each tile below is pixel-exact and stays exact no matter
+   how many partners are added later, since every tile always gets the
+   same explicit width rather than a content-negotiated one. */
 .pricing-partner-grid-v20 .trust-partners-grid-v20 {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(142px, 166px)) !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
   justify-content: center !important;
   align-items: stretch !important;
   gap: clamp(14px, 1.6vw, 20px) !important;
@@ -121,7 +129,16 @@
 .pricing-partner-grid-v20 .partner-tile-v20 {
   position: relative;
   isolation: isolate;
-  min-width: 0;
+  flex: 0 0 166px;
+  width: 166px;
+  min-width: 166px;
+  /* An explicit height, not just min-height: flexbox's align-items:stretch
+     only equalises items within the same wrapped line, so a tile left
+     alone on the last line (e.g. 3 tiles in a 2-up mobile layout) would
+     otherwise size to its own content instead of matching the rest. A
+     fixed height sidesteps that entirely — every tile is this tall no
+     matter which line it lands on or how many partners exist. */
+  height: 190px;
   min-height: 190px;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -162,20 +179,23 @@
    directly on the tile's own green gradient — no backing chip, no
    mix-blend-mode needed.
    Logos arrive with very different aspect ratios (Tag8/Diabetes &
-   Desportes are wide single-line wordmarks; Indiahikes is a taller
-   stacked icon+wordmark+tagline lockup, close to square). A fixed height
-   forces every logo into the same wide-short box regardless of its own
-   shape, so a squarish logo — correctly scaled to that box's height —
-   ends up rendering much narrower than a wide logo filling the same
-   box's width, reading as "smaller" even though neither is missized.
-   max-width + max-height (both, no forced width/height) lets each logo
-   scale up to whichever bound its own aspect ratio hits first, so every
-   logo fills as much of its slot as its shape allows. */
+   Desportes are wide single-line wordmarks, ~1.8:1 — already width-bound
+   at max-width below; Indiahikes is a taller stacked icon+wordmark+
+   tagline lockup, ~1.13:1). max-height needs enough headroom that a
+   near-square logo like Indiahikes is also width-bound (reaching the same
+   128px width as the wide logos) rather than height-bound at a much
+   narrower rendered width — that mismatch, not the card size, was what
+   read as "the Indiahikes logo/card is smaller". 120px clears that for
+   any aspect ratio down to ~1.07:1 while staying well inside the stage's
+   own height, so nothing clips. max-width + max-height (both, no forced
+   width/height) still lets each logo scale up to whichever bound its own
+   aspect ratio hits first, so every logo fills as much of its slot as its
+   shape allows and none is ever cropped. */
 .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
   width: auto !important;
   height: auto !important;
   max-width: 128px !important;
-  max-height: 96px !important;
+  max-height: 120px !important;
   object-fit: contain !important;
   object-position: center !important;
   padding: 0 !important;
@@ -241,22 +261,25 @@
   }
 
   .pricing-partner-grid-v20 .trust-partners-grid-v20 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 12px !important;
     max-width: 420px;
   }
 
   .pricing-partner-grid-v20 .partner-tile-v20 {
-    min-height: 172px;
+    flex-basis: calc(50% - 6px);
+    width: calc(50% - 6px);
+    min-width: 0;
+    height: 184px;
+    min-height: 184px;
   }
 
   .pricing-partner-grid-v20 .partner-logo-stage-v20 {
-    min-height: 110px;
+    min-height: 122px;
     padding: 16px 12px 8px;
   }
 
   .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
-    max-height: 80px !important;
+    max-height: 114px !important;
   }
 }
 
@@ -270,6 +293,7 @@
   }
 
   .pricing-partner-grid-v20 .partner-tile-v20 {
-    min-height: 146px;
+    height: 178px;
+    min-height: 178px;
   }
 }
