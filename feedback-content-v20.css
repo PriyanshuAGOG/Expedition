@@ -122,7 +122,7 @@
   position: relative;
   isolation: isolate;
   min-width: 0;
-  min-height: 168px;
+  min-height: 190px;
   display: grid;
   grid-template-rows: 1fr auto;
   overflow: hidden;
@@ -152,19 +152,30 @@
   z-index: 1;
   display: grid;
   place-items: center;
-  min-height: 108px;
-  padding: 22px 18px 10px;
+  min-height: 130px;
+  padding: 20px 18px 10px;
   overflow: hidden;
 }
 
 /* Partner logo assets are genuinely transparent PNGs (background removed
    at the source-asset level, not faked with a blend trick), so they sit
    directly on the tile's own green gradient — no backing chip, no
-   mix-blend-mode needed. */
+   mix-blend-mode needed.
+   Logos arrive with very different aspect ratios (Tag8/Diabetes &
+   Desportes are wide single-line wordmarks; Indiahikes is a taller
+   stacked icon+wordmark+tagline lockup, close to square). A fixed height
+   forces every logo into the same wide-short box regardless of its own
+   shape, so a squarish logo — correctly scaled to that box's height —
+   ends up rendering much narrower than a wide logo filling the same
+   box's width, reading as "smaller" even though neither is missized.
+   max-width + max-height (both, no forced width/height) lets each logo
+   scale up to whichever bound its own aspect ratio hits first, so every
+   logo fills as much of its slot as its shape allows. */
 .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
-  width: 100% !important;
-  height: 74px !important;
+  width: auto !important;
+  height: auto !important;
   max-width: 128px !important;
+  max-height: 96px !important;
   object-fit: contain !important;
   object-position: center !important;
   padding: 0 !important;
@@ -236,16 +247,16 @@
   }
 
   .pricing-partner-grid-v20 .partner-tile-v20 {
-    min-height: 154px;
+    min-height: 172px;
   }
 
   .pricing-partner-grid-v20 .partner-logo-stage-v20 {
-    min-height: 96px;
-    padding: 18px 12px 8px;
+    min-height: 110px;
+    padding: 16px 12px 8px;
   }
 
   .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
-    height: 64px !important;
+    max-height: 80px !important;
   }
 }
 

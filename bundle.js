@@ -2794,13 +2794,13 @@
     const grid = document.querySelector('#glance .glance-grid');
     if (!grid) return;
 
-    // Six cards now (was five) — Indiahikes joins as the first, trek-partner
-    // card. That makes the grid an even 2-column/3-row rectangle, so the
-    // "Trekking Experience" card no longer needs the v18 full-width fold
-    // (that fold existed specifically to avoid an odd fifth/sixth card —
-    // see feedback-content-v18-launch-polish.css's own comment on
-    // .glance-v18-experience). Its Dayara Bugyal link now sits inline at
-    // the bottom of a normal-sized card instead of a full-width row.
+    // Six cards in a 3-column/2-row grid — Indiahikes (trek partner),
+    // Expedition, Altitude on row one; Trekking Experience, Training
+    // Period, Daily Commitment on row two. The Dayara Bugyal route link
+    // used to live inline inside the Trekking Experience card; it now
+    // lives as its own button just below the grid instead (see
+    // addRouteButton below), so every card keeps the same plain
+    // small/strong/span shape.
     grid.className = 'glance-grid glance-grid-v14 glance-grid-v18 reveal visible';
     grid.innerHTML = `
       <div class="glance-v14-card">
@@ -2822,10 +2822,6 @@
         <small>Trekking Experience</small>
         <strong>Not required</strong>
         <span>readiness is built progressively</span>
-        <a class="glance-v18-route-link glance-v14-route-link-inline" href="${DAYARA_URL}" target="_blank" rel="noopener" aria-label="View the Dayara Bugyal trek details on Indiahikes">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c2.5-5 4-8 7-8s3.5-4 7-6"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/></svg>
-          <span>View Dayara Bugyal Trek Details</span>
-        </a>
       </div>
       <div class="glance-v14-card">
         <small>Training Period</small>
@@ -2837,6 +2833,14 @@
         <strong>60 min</strong>
         <span>approximately one hour each morning</span>
       </div>`;
+
+    if (!grid.nextElementSibling?.classList.contains('glance-v14-route-button')) {
+      grid.insertAdjacentHTML('afterend', `
+        <a class="glance-v14-route-button" href="${DAYARA_URL}" target="_blank" rel="noopener" aria-label="View the Dayara Bugyal trek details on Indiahikes">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c2.5-5 4-8 7-8s3.5-4 7-6"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/></svg>
+          <span>View Dayara Bugyal Trek Details</span>
+        </a>`);
+    }
   };
 
   const simplifyPricingHeading = () => {

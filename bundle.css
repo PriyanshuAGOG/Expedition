@@ -4122,7 +4122,7 @@
 .final-simplification-v14 .glance-grid-v14 {
   position: relative;
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   border: 1px solid rgba(215, 246, 168, .24) !important;
   border-radius: 26px;
   overflow: hidden;
@@ -4209,6 +4209,55 @@
   bottom: clamp(24px, 4vw, 38px);
   color: rgba(215, 246, 168, .72);
   font-size: 2.2rem;
+}
+
+/* Dayara Bugyal route button, sitting just below the glance grid. Same
+   visual treatment as the site's primary pill CTA (.primary-apply-button)
+   but under its own class name — it must never be swept up by
+   feedback-content-v24-register-interest.js's convertApplyButtons(),
+   which would silently redirect this link to WhatsApp instead of the
+   Dayara Bugyal trek page. */
+.final-simplification-v14 .glance-v14-route-button {
+  position: relative;
+  z-index: 1;
+  min-height: 52px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: clamp(28px, 4svh, 46px) auto 0;
+  padding: 0 26px;
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--leaf);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .28);
+  font-size: .64rem;
+  font-weight: 760;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.final-simplification-v14 .glance-v14-route-button svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (hover: hover) and (pointer: fine) {
+  .final-simplification-v14 .glance-v14-route-button:hover,
+  .final-simplification-v14 .glance-v14-route-button:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, .34);
+  }
+}
+.final-simplification-v14 .glance-v14-route-button:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 3px;
 }
 
 /* Pricing intro */
@@ -7166,7 +7215,7 @@ html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
   position: relative;
   isolation: isolate;
   min-width: 0;
-  min-height: 168px;
+  min-height: 190px;
   display: grid;
   grid-template-rows: 1fr auto;
   overflow: hidden;
@@ -7196,19 +7245,30 @@ html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
   z-index: 1;
   display: grid;
   place-items: center;
-  min-height: 108px;
-  padding: 22px 18px 10px;
+  min-height: 130px;
+  padding: 20px 18px 10px;
   overflow: hidden;
 }
 
 /* Partner logo assets are genuinely transparent PNGs (background removed
    at the source-asset level, not faked with a blend trick), so they sit
    directly on the tile's own green gradient — no backing chip, no
-   mix-blend-mode needed. */
+   mix-blend-mode needed.
+   Logos arrive with very different aspect ratios (Tag8/Diabetes &
+   Desportes are wide single-line wordmarks; Indiahikes is a taller
+   stacked icon+wordmark+tagline lockup, close to square). A fixed height
+   forces every logo into the same wide-short box regardless of its own
+   shape, so a squarish logo — correctly scaled to that box's height —
+   ends up rendering much narrower than a wide logo filling the same
+   box's width, reading as "smaller" even though neither is missized.
+   max-width + max-height (both, no forced width/height) lets each logo
+   scale up to whichever bound its own aspect ratio hits first, so every
+   logo fills as much of its slot as its shape allows. */
 .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
-  width: 100% !important;
-  height: 74px !important;
+  width: auto !important;
+  height: auto !important;
   max-width: 128px !important;
+  max-height: 96px !important;
   object-fit: contain !important;
   object-position: center !important;
   padding: 0 !important;
@@ -7280,16 +7340,16 @@ html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
   }
 
   .pricing-partner-grid-v20 .partner-tile-v20 {
-    min-height: 154px;
+    min-height: 172px;
   }
 
   .pricing-partner-grid-v20 .partner-logo-stage-v20 {
-    min-height: 96px;
-    padding: 18px 12px 8px;
+    min-height: 110px;
+    padding: 16px 12px 8px;
   }
 
   .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
-    height: 64px !important;
+    max-height: 80px !important;
   }
 }
 
