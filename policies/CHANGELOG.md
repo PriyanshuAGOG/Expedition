@@ -18,10 +18,16 @@ formatting or clarity fixes that don't change meaning.
 
 ## policies/food-meal-arrangements.html
 
+### 1.1 — 2026-08-13
+Removed the trailing full stop from the H1 ("Food & Meal Arrangements", not "Arrangements."); §3 (Return Journey — 18 November 2026) now says "breakfast and/or lunch" instead of "breakfast and lunch", since the second paragraph already explains lunch may be a packed meal or a restaurant stop; the "Meal Coverage at a Glance" table's 17 Nov row label changed from "Return to Raithal" to "Trek day", matching the 14/15/16 Nov rows (17 Nov is itself a trek day on the current itinerary, not a return-to-Raithal day); closing statement now reads "and all the policies and guidelines are applicable to each participant" (was "and all the policies").
+
 ### 1.0 — 2026-08-11 (initial publication)
 Built from Google Drive Doc `10KrpTpTV9cdGfzQGdrVVgmzEmg-xm8DK`, fetched 2026-08-11, authored directly in this house style rather than transcribed-then-revised (unlike the original four policy pages). No substantive content was added, removed or changed from the source. Formatting adaptations: the "Meal Coverage at a Glance" list rendered as a `.policy-doc-table-wrap` table; the emergency-glucose (honey) guidance split into a `.policy-callout` plus supporting paragraphs. No applicability meta (that pattern was retired sitewide before this page was built). Closing "This document should be read together with..." line replaced with the standard cross-policy statement, and the source's raw Google Drive cross-links replaced with the canonical 6-card related-policy nav used on every other policy page.
 
 ## policies/travel-guidelines.html
+
+### 1.1 — 2026-08-13
+Intro paragraph now reads "...based on the recommendations of Indiahikes, our Trek Partner." (was "...our trek partner/vendor."); closing statement now reads "and all the policies and guidelines are applicable to each participant" (was "and all the policies").
 
 ### 1.0 — 2026-08-11 (initial publication)
 Built from Google Drive Doc `1R11t-hvpMDrxr526JnYHYzNnI52_Z0qr`, fetched 2026-08-11, authored directly in this house style rather than transcribed-then-revised. No substantive content was added, removed or changed from the source. Formatting adaptations: the pickup-details block (date/time/location/distance/journey time) rendered as a table; "Important notes" reorganised into `<h3>` subsections with an `.policy-callout` for the Indiahikes Shield paragraph. Terminology: "Trek Partner" normalized to "trek partner/vendor"; dates normalized from "November 13, 2026" style to this site's "13 November 2026" style throughout; "ie," corrected to "i.e.,". No applicability meta. Closing "read together with" line replaced with the standard cross-policy statement and the canonical 6-card related-policy nav.
@@ -30,6 +36,9 @@ Built from Google Drive Doc `1R11t-hvpMDrxr526JnYHYzNnI52_Z0qr`, fetched 2026-08
 Adding the two pages above grew the canonical related-policy card set from 5 to 7 (Participant Terms, Programme Fee & Payments, Cancellation Refunds & Changes, Accommodation Guide, Food & Meal Arrangements, Travel Guidelines, Privacy & Consent Withdrawal). Every existing page's related-policy nav and the All Policies hub grid were updated to include the two new cards (each page excludes its own card, per the existing convention); participant-terms.html §11's previously plain-text "Travel Guide"/"Food Guide" bullets are now real links to the new pages, per the standing instruction to incorporate Travel/Food policies into every location that lists the complete policy set once those pages existed. See each page's own 1.2 entry below and its in-page version comment for the specific diff.
 
 ## policies/accommodation-guide.html
+
+### 1.3 — 2026-08-13
+Closing statement now reads "and all the policies and guidelines are applicable to each participant" (was "and all the policies").
 
 ### 1.2 — 2026-08-11
 Added Food & Meal Arrangements and Travel Guidelines to the related-policy cards now that those pages exist.
@@ -42,6 +51,12 @@ Transcribed verbatim from Google Doc `1TM0LkMdm66IamaX7G1rxOP2WfVNvKfxk`, fetche
 
 ## policies/programme-fee-payments.html
 
+### 1.4 — 2026-08-13
+Rewrote the closing Trek Partner/Vendor Terms paragraph again: it now reads "Any operational or optional service, add-on or partner/vendor charge will be governed by the policies of both Nirog Bhumi and Indiahikes/other partner/vendor, as the case may be, applicable to that service. Partner/vendor prices, taxes, availability and policies can change. The final amount and terms displayed or communicated by Indiahikes/other partner/vendor, as the case may be, at the time of booking will prevail for the partner/vendor service, subject also to Nirog Bhumi's Participant Terms & Conditions and Cancellation, Refunds & Changes guide." — explicitly covering partners/vendors other than Indiahikes, not only Indiahikes itself. Closing footnote statement now reads "and all the policies and guidelines are applicable to each participant" (was "and all the policies").
+
+### 1.3 — 2026-08-13
+"Read the policies in accordance with" -> "Read the policies and guidelines in conjunction with"; the closing Trek Partner/Vendor Terms paragraph now attributes governing charges to "the policies of Nirog Bhumi and Indiahikes, or such other partner/vendor policy" rather than only "the Indiahikes policy" (superseded by 1.4 above).
+
 ### 1.2 — 2026-08-11
 Added Food & Meal Arrangements and Travel Guidelines to the related-policy cards now that those pages exist.
 
@@ -49,6 +64,9 @@ Added Food & Meal Arrangements and Travel Guidelines to the related-policy cards
 Website content revision — no longer a verbatim transcription of the source, see the in-page version comment for the full list. Two-line hero title ("Programme" / green-italic "Fee & Payments."); removed the applicability meta; hero subtext now opens "Payable in two installments."; "trek partner" normalized to "trek partner/vendor" throughout (heading, body, footnote); the two evacuation/early-descent cost bullets in §4 now use definite "shall" instead of "may" for participant-borne costs; closing statement normalized to the standard cross-policy statement (partner/vendor-rates sentence kept as a second sentence); "Read together with" replaced with "Read the policies in accordance with" and its cards now match the All Policies hub cards exactly, including the full 4-card canonical set; removed the public Apply footer link. Programme pricing figures (₹30,000 / ₹19,500 / ₹49,500) in the body are unchanged — the ₹49,500 removal applies only to the All Policies hub card summary, not this substantive page.
 
 ## policies/cancellation-refunds.html
+
+### 1.3 — 2026-08-13
+Closing statement now reads "and all the policies and guidelines are applicable to each participant" (was "and all the policies").
 
 ### 1.2 — 2026-08-11
 Added Food & Meal Arrangements and Travel Guidelines to the related-policy cards now that those pages exist.
@@ -60,6 +78,9 @@ Website content revision — no longer a verbatim transcription of the source, s
 Transcribed verbatim from Google Doc `1uxxsg-4kPcXCUHLpgKnjrs5l2HhCOMnG`, fetched 2026-08-10. No content changes from source.
 
 ## policies/participant-terms.html
+
+### 1.4 — 2026-08-13
+Closing statement now reads "and all the policies and guidelines are applicable to each participant" (was "and all the policies").
 
 ### 1.2 — 2026-08-11
 Added Food & Meal Arrangements and Travel Guidelines to the related-policy cards now that those pages exist, and linked §11's previously plain-text "Travel Guide"/"Food Guide" bullets to those new pages.
@@ -82,6 +103,9 @@ Removed the applicability meta; hero intro rewritten to drop "documents that for
 No source document — Nirog Bhumi-authored index page linking the four policies above plus the consent-withdrawal form and a pointer to the DPDP consent notice shown in the application form.
 
 ## consent-withdrawal.html
+
+### 1.4 — 2026-08-13
+Reordered this page's related-policy cards so Travel Guidelines shows first, labeled "Policy 1"; the rest keep their existing relative order, renumbered 2-6 (Participant Terms & Conditions, Programme Fee & Payments, Cancellation Refunds & Changes, Accommodation Guide, Food & Meal Arrangements). This ordering is specific to this page, at the user's request — every other page's related-policy nav keeps the standard numbering (Participant Terms = Policy 1, etc.), unchanged.
 
 ### 1.2 — 2026-08-11
 Added Food & Meal Arrangements and Travel Guidelines to the related-policy cards now that those pages exist.

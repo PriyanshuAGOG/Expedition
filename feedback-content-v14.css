@@ -31,7 +31,7 @@
 .final-simplification-v14 .glance-grid-v14 {
   position: relative;
   display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   border: 1px solid rgba(215, 246, 168, .24) !important;
   border-radius: 26px;
   overflow: hidden;
@@ -118,6 +118,55 @@
   bottom: clamp(24px, 4vw, 38px);
   color: rgba(215, 246, 168, .72);
   font-size: 2.2rem;
+}
+
+/* Dayara Bugyal route button, sitting just below the glance grid. Same
+   visual treatment as the site's primary pill CTA (.primary-apply-button)
+   but under its own class name — it must never be swept up by
+   feedback-content-v24-register-interest.js's convertApplyButtons(),
+   which would silently redirect this link to WhatsApp instead of the
+   Dayara Bugyal trek page. */
+.final-simplification-v14 .glance-v14-route-button {
+  position: relative;
+  z-index: 1;
+  min-height: 52px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: clamp(28px, 4svh, 46px) auto 0;
+  padding: 0 26px;
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--leaf);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .28);
+  font-size: .64rem;
+  font-weight: 760;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.final-simplification-v14 .glance-v14-route-button svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (hover: hover) and (pointer: fine) {
+  .final-simplification-v14 .glance-v14-route-button:hover,
+  .final-simplification-v14 .glance-v14-route-button:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, .34);
+  }
+}
+.final-simplification-v14 .glance-v14-route-button:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 3px;
 }
 
 /* Pricing intro */
