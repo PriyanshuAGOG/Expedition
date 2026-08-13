@@ -164,6 +164,15 @@ html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
   .glance-v18-route-link { width: 100%; justify-content: center; }
 }
 
+/* Six-card glance grid (v14+): the Trekking Experience card is now a
+   normal-sized card rather than the v18 full-width fold above, so its
+   route link sits inline at the card's own bottom instead of beside the
+   card copy in a full-width row. */
+.glance-v14-route-link-inline {
+  margin-top: 14px;
+  align-self: flex-start;
+}
+
 /* ============ 4. Eligibility + countdown — tighter frame, same content ============ */
 #eligibility.campaign-v14.basecamp-check,
 .campaign-v14 .basecamp-check {
