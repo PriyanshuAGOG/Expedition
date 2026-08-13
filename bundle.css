@@ -7201,6 +7201,10 @@ html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
   overflow: hidden;
 }
 
+/* Partner logo assets are genuinely transparent PNGs (background removed
+   at the source-asset level, not faked with a blend trick), so they sit
+   directly on the tile's own green gradient — no backing chip, no
+   mix-blend-mode needed. */
 .pricing-partner-grid-v20 .partner-logo-stage-v20 img {
   width: 100% !important;
   height: 74px !important;
@@ -7212,8 +7216,8 @@ html:not(.expedition-ready) .parallax-hero .hero-presents { opacity: 0; }
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-  mix-blend-mode: multiply;
-  filter: contrast(1.16) saturate(1.08);
+  mix-blend-mode: normal;
+  filter: none;
 }
 
 .pricing-partner-grid-v20 .partner-tile-meta-v20 {
