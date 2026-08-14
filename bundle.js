@@ -153,7 +153,7 @@
   const ambientAudio = document.querySelector('#nature-audio');
   const ambientControl = document.querySelector('.ambient-control');
   const ambientLabel = ambientControl?.querySelector('[data-ambient-label]');
-  let natureOn = false, audible = false, audioCtx, audioGraphReady = false;
+  let natureOn = true, audible = false, audioCtx, audioGraphReady = false;
   const setAmbientUI = (playing, label = playing ? 'Sound on' : 'Sound ready') => {
     ambientControl?.setAttribute('aria-pressed', String(playing));
     ambientControl?.setAttribute('aria-label', playing ? 'Mute nature ambience' : 'Play nature ambience');
@@ -213,7 +213,12 @@
       natureOn = true; onActivationEvent();
     }
   });
-  setAmbientUI(false, 'Sound off');
+  /* Sound defaults on: the very first gesture anywhere on the page (scroll included,
+     see activationEvents above) is what actually starts it, since browsers never allow
+     audible autoplay before one. primeNature() below only gets the muted element playing
+     immediately so that first gesture is a synchronous unmute with no play() delay. */
+  setAmbientUI(false, 'Sound ready');
+  primeNature();
 
   const archiveButtons = [...document.querySelectorAll('[data-filter]')];
   const archiveCards = [...document.querySelectorAll('[data-category]')];
