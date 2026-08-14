@@ -37,7 +37,16 @@ html.expedition-ready body {
     transform: translateY(6px);
   }
   html.expedition-ready body {
-    transform: translateY(0);
+    /* "none", not translateY(0): a non-none transform value — even an
+       identity one — makes this element the containing block for every
+       position:fixed descendant (the .ambient-control sound toggle chief
+       among them), so those stop being fixed to the viewport and instead
+       track this element's own (page-length) box. That's what made the
+       toggle only reachable near the very bottom of the page. Animating
+       to the "none" keyword still transitions smoothly from translateY(6px)
+       and clears the containing block the instant the transition ends,
+       restoring normal viewport-fixed behavior everywhere else. */
+    transform: none;
     transition: opacity 220ms ease-out, transform 220ms ease-out;
   }
 }
