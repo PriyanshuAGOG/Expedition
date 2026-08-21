@@ -1,3 +1,12 @@
 User-agent: *
 Disallow: /entries/
+# Superseded internal snapshot/export files — not the live site, kept only
+# for historical reference. Disallowed so they are never crawled or indexed
+# in place of the current pages, which they predate and no longer match.
+Disallow: /World-Diabetes-Day-Expedition-2026-Full-Site.html
+Disallow: /World-Diabetes-Day-Expedition-2026-V6-Cloud-Arrival.html
+Disallow: /World-Diabetes-Expedition-2026-Parallax-Hero.html
+Disallow: /vercel-bundle/
 Allow: /
+
+Sitemap: https://nirogbhumi.com/sitemap.xml
