@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#06110c">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Register for Nirog Bhumi's World Diabetes Day webinar.">
+  <title>World Diabetes Day Webinar · Nirog Bhumi</title>
+  <link rel="icon" type="image/webp" href="/assets/branding/webp/nirogbhumi-icon.webp">
+  <link rel="stylesheet" href="/styles-base.css">
+  <link rel="stylesheet" href="/assets/policies.css">
+</head>
+<!--
+  INTERNAL — not rendered, not shown on the site.
+  Document: World Diabetes Day Webinar registration form
+  Version: 1.0 — 2026-08-21
+  No source Google Doc — Nirog Bhumi-authored form, submitted to the
+  webinarRegistrations Appwrite table for internal review. Deliberately
+  minimal (name, email, phone only) and marked noindex/nofollow — this is a
+  standalone page meant to be shared directly as a link, not discovered via
+  search or linked from the main site nav.
+  Full revision history: /policies/CHANGELOG.md — update that file, and this
+  comment's version line, on every future edit to this page's form or copy.
+-->
+<body class="policy-page">
+  <a class="skip-link" href="#policy-main">Skip to the registration form</a>
+
+  <div class="application-background" aria-hidden="true">
+    <img src="/assets/sections/webp/12-research-archive.webp" alt="" decoding="async">
+  </div>
+
+  <header class="application-page-header">
+    <a href="/" aria-label="Return to the expedition homepage"><img src="/assets/branding/webp/nirogbhumi-wordmark.webp" alt="Nirog Bhumi" width="900" height="206"></a>
+    <a class="application-back" href="/"><span aria-hidden="true">←</span> Back to Expedition Page</a>
+  </header>
+
+  <main class="policy-main" id="policy-main">
+    <div class="policy-hero">
+      <div class="policy-flora botanical-field" aria-hidden="true">
+        <img class="flora flora-a" src="/assets/botanicals/webp/53-white-wildflowers.webp" alt="">
+        <img class="flora flora-b" src="/assets/botanicals/webp/54-yellow-wildflowers.webp" alt="">
+      </div>
+      <p class="kicker">World Diabetes Day</p>
+      <h1>Register for our <em>webinar.</em></h1>
+      <p>Leave your details below and we'll be in touch with the webinar link, timing and any updates ahead of the session.</p>
+      <img class="policy-divider" src="/assets/botanicals/webp/52-mossy-twig-divider.webp" alt="" aria-hidden="true">
+    </div>
+
+    <div class="policy-form-wrap">
+      <form class="policy-form" id="webinar-registration-form">
+        <label class="policy-field"><span>Full name *</span><input name="fullName" autocomplete="name" required></label>
+        <label class="policy-field"><span>Email *</span><input type="email" name="email" autocomplete="email" required></label>
+        <label class="policy-field"><span>Phone *</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" required></label>
+        <label class="policy-hp-field" aria-hidden="true" tabindex="-1"><span>Leave this field blank</span><input type="text" name="companyWebsite" tabindex="-1" autocomplete="off"></label>
+        <output class="policy-form-status" aria-live="polite"></output>
+        <button class="policy-form-submit" type="submit">Register</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="policy-page-footer">
+    <div class="policy-page-footer-inner">
+      <div class="policy-page-footer-links">
+        <a href="/">Expedition Home</a>
+        <a href="/policies/index.html">All Policies</a>
+        <a href="/consent-withdrawal.html">Privacy &amp; Consent</a>
+      </div>
+      <div class="policy-page-footer-bottom">
+        <span>© 2026 Nirog Bhumi</span>
+        <a href="mailto:priyanshu@nirogbhumi.com">priyanshu@nirogbhumi.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="/assets/vendor/appwrite/sdk.js"></script>
+  <script type="module" src="/assets/js/webinar-registration-form.js"></script>
+</body>
+</html>
