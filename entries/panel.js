@@ -48,6 +48,16 @@ const TABLE_CONFIG = {
     ],
     searchKeys: ['fullName', 'email', 'phone', 'applicationReference', 'details'],
   },
+  webinarRegistrations: {
+    label: 'Webinar Registrations',
+    statuses: ['new', 'confirmed', 'attended', 'no_show', 'cancelled'],
+    columns: [
+      { key: 'fullName', label: 'Name' },
+      { key: 'email', label: 'Email' },
+      { key: 'phone', label: 'Phone' },
+    ],
+    searchKeys: ['fullName', 'email', 'phone'],
+  },
 };
 
 const FIELD_LABELS = {

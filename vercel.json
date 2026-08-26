@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/webinar", "destination": "/webinar.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

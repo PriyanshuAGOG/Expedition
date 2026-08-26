@@ -32,6 +32,7 @@ export const TABLES = {
   partnerships: 'partnerships',
   applicationHistory: 'applicationHistory',
   privacyRequests: 'privacyRequests',
+  webinarRegistrations: 'webinarRegistrations',
 };
 export const ADMIN_TEAM_ID = 'admins';
 export const UPLOADS_BUCKET_ID = 'evidence_uploads';

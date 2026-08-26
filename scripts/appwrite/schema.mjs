@@ -28,6 +28,7 @@ const APPLICATION_STATUSES = [
 const NOMINATION_STATUSES = ['new', 'contacted', 'invited', 'declined', 'archived'];
 const PARTNERSHIP_STATUSES = ['new', 'in_discussion', 'confirmed', 'declined', 'archived'];
 const PRIVACY_REQUEST_STATUSES = ['new', 'in_progress', 'completed', 'rejected'];
+const WEBINAR_REGISTRATION_STATUSES = ['new', 'confirmed', 'attended', 'no_show', 'cancelled'];
 // Mirrors the rights listed in the DPDP Consent Notice (feedback-content-v22-privacy.js,
 // section 8): access, correction, erasure, withdrawal of consent, and grievance
 // redressal, plus a catch-all for anything that doesn't fit those categories.
@@ -218,6 +219,26 @@ export const collections = [
       str('applicationReference', 200, false),
       str('details', 2000, true),
       enumAttr('status', PRIVACY_REQUEST_STATUSES, false, { default: 'new' }),
+      str('source', 60, false, { default: 'web' }),
+      str('internalNotes', 2000, false),
+    ],
+    indexes: [
+      { key: 'idx_status', type: 'key', attributes: ['status'] },
+    ],
+  },
+  {
+    // Backs webinar.html — a standalone, unlinked registration page meant to
+    // be shared directly (not part of the landing-page nav). Deliberately
+    // minimal: name, email and phone only, per the brief ("we don't need to
+    // do anything, just a form").
+    id: 'webinarRegistrations',
+    name: 'Webinar Registrations',
+    permissions: adminOnlyPermissions(),
+    attributes: [
+      str('fullName', 200, true),
+      email('email', true),
+      str('phone', 40, true),
+      enumAttr('status', WEBINAR_REGISTRATION_STATUSES, false, { default: 'new' }),
       str('source', 60, false, { default: 'web' }),
       str('internalNotes', 2000, false),
     ],
