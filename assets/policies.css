@@ -347,6 +347,7 @@
   font-weight: 600;
 }
 .policy-form-status[data-tone="error"] { color: #f3a5a5; }
+.policy-form-status a { text-decoration: underline; font-weight: 700; }
 
 .policy-form-success {
   padding: clamp(26px, 4vw, 44px);
