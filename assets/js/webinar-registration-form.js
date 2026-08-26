@@ -35,22 +35,37 @@ function bindForm(form) {
     if (tone) status.setAttribute('data-tone', tone); else status.removeAttribute('data-tone');
   };
 
+  // A silent `window.location.href = 'mailto:...'` redirect only ever works
+  // if the browser has a default mail handler configured — with none set
+  // (common on a phone with only Gmail's app, or a browser profile with no
+  // handler at all) it does nothing visible, and the visitor is left with
+  // no confirmation and no way to still get in touch. Rendering the same
+  // mailto: link as a clickable, visible fallback means there's always a
+  // next step even when the automatic hand-off silently fails.
+  const showMailtoFallback = (data) => {
+    if (!status) return;
+    const subject = encodeURIComponent('World Diabetes Day webinar registration');
+    const body = encodeURIComponent(
+      `Name: ${data.get('fullName')}\nEmail: ${data.get('email')}\n`
+      + `Phone: ${normalisePhone(data.get('phone'))}`,
+    );
+    const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    status.innerHTML = '';
+    status.setAttribute('data-tone', 'error');
+    status.append('We couldn’t submit this automatically. ');
+    const link = document.createElement('a');
+    link.href = mailtoHref;
+    link.textContent = `Tap here to email ${CONTACT_EMAIL} instead`;
+    status.append(link);
+    status.append(' — your details are already filled in.');
+  };
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     validatePhone();
     if (!form.reportValidity()) return;
 
     const data = new FormData(form);
-
-    const mailtoFallback = () => {
-      const subject = encodeURIComponent('World Diabetes Day webinar registration');
-      const body = encodeURIComponent(
-        `Name: ${data.get('fullName')}\nEmail: ${data.get('email')}\n`
-        + `Phone: ${normalisePhone(data.get('phone'))}`,
-      );
-      setStatus('Opening your email app…');
-      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    };
 
     submitButton && (submitButton.disabled = true);
     setStatus('Submitting…');
@@ -59,10 +74,11 @@ function bindForm(form) {
       email: String(data.get('email') || '').trim().toLowerCase(),
       phone: normalisePhone(data.get('phone')),
     }, { honeypot: data.get('companyWebsite') })).then(() => {
-      setStatus('You’re registered — we’ll be in touch with the webinar link and any updates.');
+      setStatus('You’re registered — we’ll be in touch with the webinar link and any updates.', 'success');
       form.reset();
-    }).catch(() => {
-      mailtoFallback();
+    }).catch((err) => {
+      console.error('[webinar] registration submission failed', err);
+      showMailtoFallback(data);
     }).finally(() => {
       submitButton && (submitButton.disabled = false);
     });

@@ -9,4 +9,4 @@ Disallow: /World-Diabetes-Expedition-2026-Parallax-Hero.html
 Disallow: /vercel-bundle/
 Allow: /
 
-Sitemap: https://nirogbhumi.com/sitemap.xml
+Sitemap: https://expedition.nirogbhumi.com/sitemap.xml
