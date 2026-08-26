@@ -138,6 +138,30 @@ async function existingColumnKeys(tableId) {
   return new Set(columns.map((c) => c.key));
 }
 
+// A string<->text mismatch normally has to block for a human to resolve
+// manually (Appwrite can't change a column's type in place, so fixing it
+// means deleting and recreating the column — destructive if any row is
+// actually relying on the old data). But that's only actually risky if a
+// row holds a real value there. Query.isNotNull + limit(1) proves, for the
+// whole table (not a sample), whether that's true — if it comes back
+// empty, deleting and recreating the column can't lose anything, so it's
+// safe to do automatically instead of leaving it for a manual console step
+// every single run.
+async function columnHasAnyData(tableId, key) {
+  try {
+    const res = await tablesDB.listRows({
+      databaseId: DATABASE_ID,
+      tableId,
+      queries: [Query.isNotNull(key), Query.limit(1)],
+    });
+    return (res.total ?? res.rows.length) > 0;
+  } catch {
+    // If the query itself fails for any reason, don't guess — treat the
+    // column as if it might hold data so the safe (manual) path is taken.
+    return true;
+  }
+}
+
 async function createColumn(tableId, attr) {
   const { type, key, required: isRequired, array, size, min, max, default: xdefault, elements } = attr;
   const base = { databaseId: DATABASE_ID, tableId, key, required: isRequired, array };
@@ -219,11 +243,28 @@ async function ensureColumns(def) {
     const wantsText = attr.type === 'text';
     const isText = column.type === 'text';
     if (wantsText !== isText) {
-      blockedBy(
-        `${def.id}.${attr.key} — type ${column.type} → ${attr.type}`,
-        `Appwrite does not support changing a column's type in place.`,
-        `Delete the "${attr.key}" column on the "${def.id}" table in the Appwrite console, then re-run this workflow to recreate it as ${attr.type}. If the table has no rows depending on this column yet, this is safe.`,
-      );
+      const hasData = await columnHasAnyData(def.id, attr.key);
+      if (hasData) {
+        blockedBy(
+          `${def.id}.${attr.key} — type ${column.type} → ${attr.type}`,
+          `Appwrite does not support changing a column's type in place, and at least one row holds a real value in "${attr.key}".`,
+          `Back up the "${attr.key}" values on the "${def.id}" table, delete the column in the Appwrite console, then re-run this workflow to recreate it as ${attr.type} and restore the values.`,
+        );
+        continue;
+      }
+      try {
+        await tablesDB.deleteColumn({ databaseId: DATABASE_ID, tableId: def.id, key: attr.key });
+        await waitForColumnDeleted(def.id, attr.key);
+        await createColumn(def.id, attr);
+        ok(`recreated column ${attr.key} as ${attr.type} (no existing row held a value, so this was safe)`);
+      } catch (err) {
+        warn(`could not auto-migrate column ${attr.key}: ${err?.message || err}`);
+        blockedBy(
+          `${def.id}.${attr.key} — type ${column.type} → ${attr.type}`,
+          err?.message || String(err),
+          `Delete the "${attr.key}" column on the "${def.id}" table in the Appwrite console, then re-run this workflow to recreate it as ${attr.type}.`,
+        );
+      }
       continue;
     }
 
@@ -328,6 +369,19 @@ async function waitForColumnsReady(tableId, timeoutMs = 120_000) {
     await new Promise((r) => setTimeout(r, 2000));
   }
   throw new Error(`Timed out waiting for columns on ${tableId} to become available`);
+}
+
+// Deleting a column is itself async server-side; recreating one with the
+// same key before the delete has actually finished processing 409s. Poll
+// until it's genuinely gone (or the table's column list settles without it).
+async function waitForColumnDeleted(tableId, key, timeoutMs = 60_000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const columns = await listAllColumns(tableId);
+    if (!columns.some((c) => c.key === key)) return;
+    await new Promise((r) => setTimeout(r, 1500));
+  }
+  throw new Error(`Timed out waiting for column "${key}" on ${tableId} to finish deleting`);
 }
 
 async function existingIndexKeys(tableId) {
