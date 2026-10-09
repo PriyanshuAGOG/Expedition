@@ -11,7 +11,7 @@
         const parent = node.parentElement;
         if (!parent || parent.matches('script, style, textarea')) return NodeFilter.FILTER_REJECT;
         const text = node.nodeValue || '';
-        return /8[–-]10\s*(minutes|min)|November\s+12\s*[–-]\s*19|12\s*[–-]\s*19\s+Nov|nirogbhumi@gmail\.com|\+91\s*73575\s*42882/i.test(text)
+        return /8[–-]10\s*(minutes|min)|nirogbhumi@gmail\.com|\+91\s*73575\s*42882/i.test(text)
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_REJECT;
       }
@@ -23,9 +23,6 @@
       node.nodeValue = node.nodeValue
         .replace(/8[–-]10\s*minutes/gi, '5 minutes')
         .replace(/8[–-]10\s*min/gi, '5 min')
-        .replace(/November\s+12\s*[–-]\s*19,?\s*2026/gi, 'November 13–18, 2026')
-        .replace(/November\s+12\s*[–-]\s*19/gi, 'November 13–18')
-        .replace(/12\s*[–-]\s*19\s+Nov(?:ember)?/gi, '13–18 Nov')
         .replace(/nirogbhumi@gmail\.com/gi, CONTACT_EMAIL)
         .replace(/\+91\s*73575\s*42882/g, CONTACT_PHONE);
     });
@@ -166,8 +163,8 @@
       list.innerHTML = `
         <li>Adults living with Type 2 diabetes or prediabetes (based on a 2026 report)</li>
         <li>Should not have any diabetes-related complications</li>
-        <li>Able to commit about an hour each morning from September to mid-November.</li>
-        <li>Available from November 13–18, 2026 for the expedition</li>`;
+        <li>Able to commit about an hour each morning for the 60-day preparation programme, starting 14 November 2026.</li>
+        <li>Available in April 2027 for the expedition</li>`;
     }
   };
 
@@ -283,7 +280,7 @@
       const label = item.querySelector('span')?.textContent || '';
       if (/programme fee|pricing|programme amount/i.test(label)) item.remove();
       if (/^time$/i.test(label)) item.querySelector('strong').textContent = '5 min';
-      if (/^dates$/i.test(label)) item.querySelector('strong').textContent = '13–18 Nov';
+      if (/^dates$/i.test(label)) item.querySelector('strong').textContent = 'April 2027';
     });
     meta?.classList.add('registration-meta-no-price');
 
@@ -319,7 +316,7 @@
     if (commitment) commitment.textContent = 'Can you commit about one hour each morning? *';
 
     const availability = document.querySelector('select[name="availability"]')?.closest('label')?.querySelector(':scope > span');
-    if (availability) availability.textContent = 'Available from November 13–18, 2026? *';
+    if (availability) availability.textContent = 'Available in April 2027 for the expedition? *';
   };
 
   const updateFooter = () => {

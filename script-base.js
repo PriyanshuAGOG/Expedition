@@ -332,7 +332,7 @@
       fullName: 'Full name', email: 'Email', phone: 'Phone / WhatsApp', age: 'Age', city: 'City', state: 'State / region', country: 'Country',
       diagnosisYear: 'Year diagnosed with Type 2 diabetes', treatment: 'Current treatment',
       bpSystolic: 'Blood pressure — systolic (mmHg)', bpDiastolic: 'Blood pressure — diastolic (mmHg)',
-      timeCommitment: 'Can commit about one hour each morning', availability: 'Available Nov 12–19, 2026',
+      timeCommitment: 'Can commit about one hour each morning', availability: 'Available April 2027',
       motivation: 'Why you want to join', emergencyName: 'Emergency contact name', emergencyPhone: 'Emergency contact phone', emergencyRelationship: 'Relationship to you',
     };
     const buildReview = () => {

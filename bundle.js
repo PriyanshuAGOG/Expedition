@@ -337,7 +337,7 @@
       fullName: 'Full name', email: 'Email', phone: 'Phone / WhatsApp', age: 'Age', city: 'City', state: 'State / region', country: 'Country',
       diagnosisYear: 'Year diagnosed with Type 2 diabetes', treatment: 'Current treatment',
       bpSystolic: 'Blood pressure — systolic (mmHg)', bpDiastolic: 'Blood pressure — diastolic (mmHg)',
-      timeCommitment: 'Can commit about one hour each morning', availability: 'Available Nov 12–19, 2026',
+      timeCommitment: 'Can commit about one hour each morning', availability: 'Available April 2027',
       motivation: 'Why you want to join', emergencyName: 'Emergency contact name', emergencyPhone: 'Emergency contact phone', emergencyRelationship: 'Relationship to you',
     };
     const buildReview = () => {
@@ -1121,7 +1121,7 @@
         const parent = node.parentElement;
         if (!parent || parent.matches('script, style, textarea')) return NodeFilter.FILTER_REJECT;
         const text = node.nodeValue || '';
-        return /8[–-]10\s*(minutes|min)|November\s+12\s*[–-]\s*19|12\s*[–-]\s*19\s+Nov|nirogbhumi@gmail\.com|\+91\s*73575\s*42882/i.test(text)
+        return /8[–-]10\s*(minutes|min)|nirogbhumi@gmail\.com|\+91\s*73575\s*42882/i.test(text)
           ? NodeFilter.FILTER_ACCEPT
           : NodeFilter.FILTER_REJECT;
       }
@@ -1133,9 +1133,6 @@
       node.nodeValue = node.nodeValue
         .replace(/8[–-]10\s*minutes/gi, '5 minutes')
         .replace(/8[–-]10\s*min/gi, '5 min')
-        .replace(/November\s+12\s*[–-]\s*19,?\s*2026/gi, 'November 13–18, 2026')
-        .replace(/November\s+12\s*[–-]\s*19/gi, 'November 13–18')
-        .replace(/12\s*[–-]\s*19\s+Nov(?:ember)?/gi, '13–18 Nov')
         .replace(/nirogbhumi@gmail\.com/gi, CONTACT_EMAIL)
         .replace(/\+91\s*73575\s*42882/g, CONTACT_PHONE);
     });
@@ -1276,8 +1273,8 @@
       list.innerHTML = `
         <li>Adults living with Type 2 diabetes or prediabetes (based on a 2026 report)</li>
         <li>Should not have any diabetes-related complications</li>
-        <li>Able to commit about an hour each morning from September to mid-November.</li>
-        <li>Available from November 13–18, 2026 for the expedition</li>`;
+        <li>Able to commit about an hour each morning for the 60-day preparation programme, starting 14 November 2026.</li>
+        <li>Available in April 2027 for the expedition</li>`;
     }
   };
 
@@ -1393,7 +1390,7 @@
       const label = item.querySelector('span')?.textContent || '';
       if (/programme fee|pricing|programme amount/i.test(label)) item.remove();
       if (/^time$/i.test(label)) item.querySelector('strong').textContent = '5 min';
-      if (/^dates$/i.test(label)) item.querySelector('strong').textContent = '13–18 Nov';
+      if (/^dates$/i.test(label)) item.querySelector('strong').textContent = 'April 2027';
     });
     meta?.classList.add('registration-meta-no-price');
 
@@ -1429,7 +1426,7 @@
     if (commitment) commitment.textContent = 'Can you commit about one hour each morning? *';
 
     const availability = document.querySelector('select[name="availability"]')?.closest('label')?.querySelector(':scope > span');
-    if (availability) availability.textContent = 'Available from November 13–18, 2026? *';
+    if (availability) availability.textContent = 'Available in April 2027 for the expedition? *';
   };
 
   const updateFooter = () => {
@@ -2144,7 +2141,7 @@
 
         <aside class="fee-v11-final-note v11-reveal">
           <span aria-hidden="true">i</span>
-          <p><strong>Admission to the 45-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong> Full terms: <a href="policies/programme-fee-payments.html">Programme Fee &amp; Payments</a> and <a href="policies/cancellation-refunds.html">Cancellation, Refunds &amp; Changes</a>.</p>
+          <p><strong>Admission to the 60-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong> Full terms: <a href="policies/programme-fee-payments.html">Programme Fee &amp; Payments</a> and <a href="policies/cancellation-refunds.html">Cancellation, Refunds &amp; Changes</a>.</p>
         </aside>
       </div>
 
@@ -2351,48 +2348,6 @@
 
   const DAYARA_URL = 'https://indiahikes.com/dayara-bugyal-trek';
 
-  const replaceDurationText = value => {
-    if (!value || typeof value !== 'string') return value;
-    return value
-      .replace(/\b60-day\b/gi, '45-day')
-      .replace(/\b60[\s\u00a0]+days\b/gi, '45 days')
-      .replace(/\bsixty-day\b/gi, '45-day')
-      .replace(/\bsixty[\s\u00a0]+days\b/gi, 'Forty-five days')
-      .replace(/\b0\s*\/\s*60\b/g, '0 / 45');
-  };
-
-  const updatePreparationDuration = () => {
-    const root = document.body;
-    if (!root) return;
-
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode(node) {
-        const parent = node.parentElement;
-        if (!parent) return NodeFilter.FILTER_REJECT;
-        if (parent.closest('script, style, noscript, textarea, input, select, option')) {
-          return NodeFilter.FILTER_REJECT;
-        }
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    });
-
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(node => {
-      const revised = replaceDurationText(node.nodeValue);
-      if (revised !== node.nodeValue) node.nodeValue = revised;
-    });
-
-    document.querySelectorAll('[aria-label], [title], [alt], [placeholder], meta[content]').forEach(element => {
-      ['aria-label', 'title', 'alt', 'placeholder', 'content'].forEach(attribute => {
-        if (!element.hasAttribute(attribute)) return;
-        const current = element.getAttribute(attribute);
-        const revised = replaceDurationText(current);
-        if (revised !== current) element.setAttribute(attribute, revised);
-      });
-    });
-  };
-
   const addPricingNote = () => {
     const pricing = document.querySelector('#pricing');
     if (!pricing || pricing.querySelector('.fee-v12-participant-note')) return;
@@ -2417,7 +2372,7 @@
 
   const faqMarkup = () => `
     <details class="reveal visible">
-      <summary>What happens during the 45 days of preparation?<span>+</span></summary>
+      <summary>What happens during the 60 days of preparation?<span>+</span></summary>
       <p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds consistency, walking capacity, strength, mobility and readiness for the trek.</p>
     </details>
     <details class="reveal visible">
@@ -2430,11 +2385,11 @@
     </details>
     <details class="reveal visible">
       <summary>What fitness level should I work towards?<span>+</span></summary>
-      <p>The 45-day preparation programme is designed to build progressive readiness. As a route-specific benchmark, Indiahikes recommends being able to walk, jog or run 5 km within 40 minutes. NirogBhumi will assess expedition readiness through its own preparation, medical-review and final-clearance process.</p>
+      <p>The 60-day preparation programme is designed to build progressive readiness. As a route-specific benchmark, Indiahikes recommends being able to walk, jog or run 5 km within 40 minutes. NirogBhumi will assess expedition readiness through its own preparation, medical-review and final-clearance process.</p>
     </details>
     <details class="reveal visible">
-      <summary>What weather should I expect in November?<span>+</span></summary>
-      <p>November conditions can change quickly. Daytime temperatures may be pleasant, while rain can make trails colder and slippery. At higher camps, nights may fall around or below freezing. Participants should be prepared for cold mornings, changing weather and route decisions made for safety.</p>
+      <summary>What weather should I expect in April?<span>+</span></summary>
+      <p>April conditions can change quickly with altitude. Lower sections can be mild and spring-like, while higher camps may still see overnight freezing temperatures and possible residual snow or icy patches. Participants should be prepared for cold mornings, changing weather and route decisions made for safety.</p>
     </details>
     <details class="reveal visible">
       <summary>Can altitude sickness happen on this trek?<span>+</span></summary>
@@ -2454,11 +2409,9 @@
   };
 
   const run = () => {
-    updatePreparationDuration();
     if (!document.body.classList.contains('application-page')) {
       addPricingNote();
       rebuildFaqs();
-      updatePreparationDuration();
     }
     document.documentElement.classList.add('feedback-content-v12-ready');
   };
@@ -2580,7 +2533,7 @@
         <small>Daily commitment</small><strong>75 min</strong><span>each morning during preparation</span>
       </div>
       <div class="glance-v13-card">
-        <small>Preparation</small><strong>45 days</strong><span>structured readiness programme</span>
+        <small>Preparation</small><strong>60 days</strong><span>structured readiness programme</span>
       </div>
       <div class="glance-v13-card glance-v13-experience">
         <small>Experience</small><strong>Not required</strong><span>readiness is built progressively</span>
@@ -2663,7 +2616,7 @@
               <small>Return and continue</small>
               <h3>Raithal to Dehradun</h3>
               <div class="itinerary-v13-metrics"><span>Road transfer</span><span>Journey close</span></div>
-              <p>Return from the mountains with a closing review, practical recovery guidance and a plan to continue the habits built during the 45-day programme.</p>
+              <p>Return from the mountains with a closing review, practical recovery guidance and a plan to continue the habits built during the 60-day programme.</p>
             </div>
           </article>
         </div>
@@ -2684,7 +2637,7 @@
     if (!list) return;
     list.className = 'faq-list faq-list-v13';
     list.innerHTML = `
-      <details class="reveal visible"><summary>What happens during the 45 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
+      <details class="reveal visible"><summary>What happens during the 60 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
       <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No previous Himalayan trekking experience is required. The planned route is easy-moderate and suitable for fit beginners, but every participant must complete the preparation programme and receive final medical clearance.</p></details>
       <details class="reveal visible"><summary>What is the Dayara Bugyal route like?<span>+</span></summary><p>The reference route covers about 21 km over four trekking days within a six-day journey. It rises from roughly 7,100 ft to 11,830 ft. Much of the trail is gradual, although the initial forest ascent and the approach to the high point can be steep.</p></details>
       <details class="reveal visible"><summary>What fitness level should I work towards?<span>+</span></summary><p>Work towards steady walking endurance, stronger legs and core, better balance, mobility and the ability to recover between active days. Final expedition readiness will be assessed through programme participation, submitted medical information and final medical clearance.</p></details>
@@ -2830,7 +2783,7 @@
       </div>
       <div class="glance-v14-card">
         <small>Training Period</small>
-        <strong>45 days</strong>
+        <strong>60 days</strong>
         <span>structured readiness programme</span>
       </div>
       <div class="glance-v14-card">
@@ -2879,7 +2832,7 @@
     list.innerHTML = `
       <details class="reveal visible"><summary>Why are we doing this?<span>+</span></summary><p>The expedition is designed to explore how structured preparation, daily movement, medical screening, and community support can help people living with Type 2 diabetes or prediabetes build confidence and sustainable routines while preparing for a carefully planned Himalayan trek.</p></details>
       <details class="reveal visible"><summary>What will I gain from this expedition?<span>+</span></summary><p>The experience is intended to help participants build confidence, strengthen daily routines, connect with a supportive community, and carry practical habits such as exercise, meditation, and alignment with the circadian rhythm beyond the expedition. Individual experiences and outcomes may vary.</p></details>
-      <details class="reveal visible"><summary>What happens during the 45 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
+      <details class="reveal visible"><summary>What happens during the 60 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
       <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No previous trekking experience is required. The planned route is suitable for physically fit beginners, but every participant must complete the preparation program and receive final medical clearance.</p></details>
       <details class="reveal visible"><summary>What is the Dayara Bugyal route like?<span>+</span></summary><p>The reference route covers about 21 km over four trekking days within a six-day journey. It rises from roughly 7,100 ft to 11,830 ft, with gradual sections as well as some steeper forest and meadow climbs.</p></details>
       <details class="reveal visible"><summary>What fitness level should I work towards?<span>+</span></summary><p>Work towards steady walking endurance, stronger legs and core, better balance, mobility and the ability to recover between active days. Final readiness will be assessed through programme participation, submitted medical information and final medical clearance.</p></details>`;
@@ -3423,14 +3376,14 @@
           <h3>5. Retention, erasure and purpose limitation</h3>
           <p>Personal data collected through this application will be retained only for as long as reasonably necessary to complete the application, selection and initial screening process and to deal with related administrative, grievance or legal requirements.</p>
           <p>Personal and health information relating to applicants who do not progress further will thereafter be securely deleted or anonymised in accordance with Nirog Bhumi's data-retention procedures, unless continued retention is reasonably necessary for an ongoing grievance, dispute or legal obligation.</p>
-          <p>If your application progresses into medical screening, the 45-day preparation programme, expedition participation or another activity governed by a separate privacy or consent notice, relevant information may continue to be retained in accordance with the notice and retention period applicable to that activity.</p>
+          <p>If your application progresses into medical screening, the 60-day preparation programme, expedition participation or another activity governed by a separate privacy or consent notice, relevant information may continue to be retained in accordance with the notice and retention period applicable to that activity.</p>
           <p>Contact information used for future programmes or initiatives under a separate optional consent will be retained only while that separate consent remains valid or until the relevant purpose ends, subject to any retention required by applicable law.</p>
           <p>Personal data will not be retained merely because it may potentially be useful for an unrelated future purpose.</p>
         </section>
 
         <section>
           <h3>6. Future research participation</h3>
-          <p>Nirog Bhumi may separately undertake a research or evaluation study connected with the 45-day preparation programme and/or the Himalayan Expedition.</p>
+          <p>Nirog Bhumi may separately undertake a research or evaluation study connected with the 60-day preparation programme and/or the Himalayan Expedition.</p>
           <p>If your application progresses and you are invited to participate in such a study, you will be provided with a separate Research Participant Information Sheet and/or Research Consent Notice explaining the proposed research and any additional use of your personal or health data.</p>
           <p>Where consent is required, information collected through this application will not be used for that research merely on the basis of the consent provided through this application.</p>
           <p>The separate research notice will explain, as applicable:</p>
