@@ -75,14 +75,14 @@
           <h3>5. Retention, erasure and purpose limitation</h3>
           <p>Personal data collected through this application will be retained only for as long as reasonably necessary to complete the application, selection and initial screening process and to deal with related administrative, grievance or legal requirements.</p>
           <p>Personal and health information relating to applicants who do not progress further will thereafter be securely deleted or anonymised in accordance with Nirog Bhumi's data-retention procedures, unless continued retention is reasonably necessary for an ongoing grievance, dispute or legal obligation.</p>
-          <p>If your application progresses into medical screening, the 45-day preparation programme, expedition participation or another activity governed by a separate privacy or consent notice, relevant information may continue to be retained in accordance with the notice and retention period applicable to that activity.</p>
+          <p>If your application progresses into medical screening, the 60-day preparation programme, expedition participation or another activity governed by a separate privacy or consent notice, relevant information may continue to be retained in accordance with the notice and retention period applicable to that activity.</p>
           <p>Contact information used for future programmes or initiatives under a separate optional consent will be retained only while that separate consent remains valid or until the relevant purpose ends, subject to any retention required by applicable law.</p>
           <p>Personal data will not be retained merely because it may potentially be useful for an unrelated future purpose.</p>
         </section>
 
         <section>
           <h3>6. Future research participation</h3>
-          <p>Nirog Bhumi may separately undertake a research or evaluation study connected with the 45-day preparation programme and/or the Himalayan Expedition.</p>
+          <p>Nirog Bhumi may separately undertake a research or evaluation study connected with the 60-day preparation programme and/or the Himalayan Expedition.</p>
           <p>If your application progresses and you are invited to participate in such a study, you will be provided with a separate Research Participant Information Sheet and/or Research Consent Notice explaining the proposed research and any additional use of your personal or health data.</p>
           <p>Where consent is required, information collected through this application will not be used for that research merely on the basis of the consent provided through this application.</p>
           <p>The separate research notice will explain, as applicable:</p>

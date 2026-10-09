@@ -3,48 +3,6 @@
 
   const DAYARA_URL = 'https://indiahikes.com/dayara-bugyal-trek';
 
-  const replaceDurationText = value => {
-    if (!value || typeof value !== 'string') return value;
-    return value
-      .replace(/\b60-day\b/gi, '45-day')
-      .replace(/\b60[\s\u00a0]+days\b/gi, '45 days')
-      .replace(/\bsixty-day\b/gi, '45-day')
-      .replace(/\bsixty[\s\u00a0]+days\b/gi, 'Forty-five days')
-      .replace(/\b0\s*\/\s*60\b/g, '0 / 45');
-  };
-
-  const updatePreparationDuration = () => {
-    const root = document.body;
-    if (!root) return;
-
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode(node) {
-        const parent = node.parentElement;
-        if (!parent) return NodeFilter.FILTER_REJECT;
-        if (parent.closest('script, style, noscript, textarea, input, select, option')) {
-          return NodeFilter.FILTER_REJECT;
-        }
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    });
-
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(node => {
-      const revised = replaceDurationText(node.nodeValue);
-      if (revised !== node.nodeValue) node.nodeValue = revised;
-    });
-
-    document.querySelectorAll('[aria-label], [title], [alt], [placeholder], meta[content]').forEach(element => {
-      ['aria-label', 'title', 'alt', 'placeholder', 'content'].forEach(attribute => {
-        if (!element.hasAttribute(attribute)) return;
-        const current = element.getAttribute(attribute);
-        const revised = replaceDurationText(current);
-        if (revised !== current) element.setAttribute(attribute, revised);
-      });
-    });
-  };
-
   const addPricingNote = () => {
     const pricing = document.querySelector('#pricing');
     if (!pricing || pricing.querySelector('.fee-v12-participant-note')) return;
@@ -69,7 +27,7 @@
 
   const faqMarkup = () => `
     <details class="reveal visible">
-      <summary>What happens during the 45 days of preparation?<span>+</span></summary>
+      <summary>What happens during the 60 days of preparation?<span>+</span></summary>
       <p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds consistency, walking capacity, strength, mobility and readiness for the trek.</p>
     </details>
     <details class="reveal visible">
@@ -82,11 +40,11 @@
     </details>
     <details class="reveal visible">
       <summary>What fitness level should I work towards?<span>+</span></summary>
-      <p>The 45-day preparation programme is designed to build progressive readiness. As a route-specific benchmark, Indiahikes recommends being able to walk, jog or run 5 km within 40 minutes. NirogBhumi will assess expedition readiness through its own preparation, medical-review and final-clearance process.</p>
+      <p>The 60-day preparation programme is designed to build progressive readiness. As a route-specific benchmark, Indiahikes recommends being able to walk, jog or run 5 km within 40 minutes. NirogBhumi will assess expedition readiness through its own preparation, medical-review and final-clearance process.</p>
     </details>
     <details class="reveal visible">
-      <summary>What weather should I expect in November?<span>+</span></summary>
-      <p>November conditions can change quickly. Daytime temperatures may be pleasant, while rain can make trails colder and slippery. At higher camps, nights may fall around or below freezing. Participants should be prepared for cold mornings, changing weather and route decisions made for safety.</p>
+      <summary>What weather should I expect in April?<span>+</span></summary>
+      <p>April conditions can change quickly with altitude. Lower sections can be mild and spring-like, while higher camps may still see overnight freezing temperatures and possible residual snow or icy patches. Participants should be prepared for cold mornings, changing weather and route decisions made for safety.</p>
     </details>
     <details class="reveal visible">
       <summary>Can altitude sickness happen on this trek?<span>+</span></summary>
@@ -106,11 +64,9 @@
   };
 
   const run = () => {
-    updatePreparationDuration();
     if (!document.body.classList.contains('application-page')) {
       addPricingNote();
       rebuildFaqs();
-      updatePreparationDuration();
     }
     document.documentElement.classList.add('feedback-content-v12-ready');
   };

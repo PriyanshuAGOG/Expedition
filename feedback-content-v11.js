@@ -38,7 +38,7 @@
 
         <aside class="fee-v11-final-note v11-reveal">
           <span aria-hidden="true">i</span>
-          <p><strong>Admission to the 45-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong> Full terms: <a href="policies/programme-fee-payments.html">Programme Fee &amp; Payments</a> and <a href="policies/cancellation-refunds.html">Cancellation, Refunds &amp; Changes</a>.</p>
+          <p><strong>Admission to the 60-day programme does not guarantee expedition eligibility.</strong> <strong>Final participation is subject to medical clearance.</strong> Full terms: <a href="policies/programme-fee-payments.html">Programme Fee &amp; Payments</a> and <a href="policies/cancellation-refunds.html">Cancellation, Refunds &amp; Changes</a>.</p>
         </aside>
       </div>
 

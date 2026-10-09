@@ -107,7 +107,7 @@
         <small>Daily commitment</small><strong>75 min</strong><span>each morning during preparation</span>
       </div>
       <div class="glance-v13-card">
-        <small>Preparation</small><strong>45 days</strong><span>structured readiness programme</span>
+        <small>Preparation</small><strong>60 days</strong><span>structured readiness programme</span>
       </div>
       <div class="glance-v13-card glance-v13-experience">
         <small>Experience</small><strong>Not required</strong><span>readiness is built progressively</span>
@@ -190,7 +190,7 @@
               <small>Return and continue</small>
               <h3>Raithal to Dehradun</h3>
               <div class="itinerary-v13-metrics"><span>Road transfer</span><span>Journey close</span></div>
-              <p>Return from the mountains with a closing review, practical recovery guidance and a plan to continue the habits built during the 45-day programme.</p>
+              <p>Return from the mountains with a closing review, practical recovery guidance and a plan to continue the habits built during the 60-day programme.</p>
             </div>
           </article>
         </div>
@@ -211,7 +211,7 @@
     if (!list) return;
     list.className = 'faq-list faq-list-v13';
     list.innerHTML = `
-      <details class="reveal visible"><summary>What happens during the 45 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
+      <details class="reveal visible"><summary>What happens during the 60 days of preparation?<span>+</span></summary><p>Participants follow an approximately one-hour morning routine of yogic practices, meditation and physical fitness. The programme also builds walking capacity, strength, mobility, consistency and readiness for the trek.</p></details>
       <details class="reveal visible"><summary>Do I need previous trekking experience?<span>+</span></summary><p>No previous Himalayan trekking experience is required. The planned route is easy-moderate and suitable for fit beginners, but every participant must complete the preparation programme and receive final medical clearance.</p></details>
       <details class="reveal visible"><summary>What is the Dayara Bugyal route like?<span>+</span></summary><p>The reference route covers about 21 km over four trekking days within a six-day journey. It rises from roughly 7,100 ft to 11,830 ft. Much of the trail is gradual, although the initial forest ascent and the approach to the high point can be steep.</p></details>
       <details class="reveal visible"><summary>What fitness level should I work towards?<span>+</span></summary><p>Work towards steady walking endurance, stronger legs and core, better balance, mobility and the ability to recover between active days. Final expedition readiness will be assessed through programme participation, submitted medical information and final medical clearance.</p></details>
